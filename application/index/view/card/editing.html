@@ -1,0 +1,216 @@
+{include file="public:head" /}
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/cyq-post.css"/>
+	</head>
+	<body>
+		<!--顶部-->
+		
+		{include file="public:header" /}
+
+		<!--弹窗-->
+		<div id="tanchuang"></div>
+		
+		<!--内容-->
+		<div class="container" id="content" v-cloak>
+			<img src="__STATIC__/Home/img/cyq/newtie-title.png" class="title-img" />
+			<div class="creat-box">
+				<div class="input-box">
+					<input type="text" id="title" placeholder="请输入发帖标题" />
+					<div>
+						<p><img src="__STATIC__/Home/img/cyq/huati-icon.png" >#话题</p>
+						<div class="huati-hover">
+							<div class="title">#插入我的新话题</div>
+							<h5>热搜榜单</h5>
+							<ul data-arr="hothuati">
+								<li v-for="(item, index) in topicall" @click="addhuatiRm(index, $event)"><a>{{index+1}}</a><p>{{item.name}}</p><span>{{item.time}}</span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+				<ul class="huati-select" data-arr="tuijianhuati">
+					<li v-for="(item, index) in tuijianhuati" @click="addhuatiTj(index, $event)">{{'#'+item.name+'#'}}</li>
+				</ul>
+				
+				<div class="textarea">
+					<!--<div class="file-box">
+						<div class="file-img file">
+							<img src="__STATIC__/Home/img/cyq/file-img-icon.png" />
+							<input type="file" id="img" accept="image/*" />
+						</div>
+						<div class="file-video file">
+							<img src="__STATIC__/Home/img/cyq/file-video-icon.png" />
+							<input type="file" id="video" @change="upload()" accept="video/*" />
+						</div>
+						<div class="file-word file">
+							<img src="__STATIC__/Home/img/cyq/file-word-icon.png" />
+							<input type="file" accept="application/msword" />
+						</div>
+						<div class="file-pdf file">
+							<img src="__STATIC__/Home/img/cyq/file-pdf-icon.png" />
+							<input type="file" accept="application/pdf" />
+						</div>
+					</div>-->
+					
+					<ul class="showhuati">
+						<li v-for="(item, index) in selecthuati" id="topic" title="删除该话题" @click="deletehuati(index)">#{{item.name}}#</li>
+					</ul>
+					<div id="div1" class="toolbar"></div>
+			    	<div id="div2" class="text"></div>
+					
+				</div>
+				
+				<div class="fabiao" @click="addCard()">发 表</div>
+			</div>
+			
+		</div>
+		
+		<!--底部-->
+		
+		{include file="public:footer" /}
+
+<script src="__STATIC__/Home/js/swiper.js"></script>
+<script src="__STATIC__/Home/js/jquery.pagination.js"></script>
+<script src="__STATIC__/Home/js/vue.js" ></script>
+<script src="__STATIC__/Home/js/wangEditor.js" ></script>
+<script>
+	var vm = new Vue({
+  	el: '#content',
+  	data:{
+  		editor:'',
+  		topicall: [],
+  		//推荐话题
+  		tuijianhuati:'',
+  		selecthuati:[],
+  	},
+  	
+    created:function(){
+    	$('.nav .cyq').addClass('active');
+      var self = this;
+      $.get("{:url('card/editload')}",function(data){
+        var data = eval("("+data+")");
+        console.log(data);
+        self.topicall = data.topicAll;
+        self.tuijianhuati = data.tuijianhuati;
+        //self.selecthuati = data.selecthuati;
+      })
+    },
+
+    mounted: function(){
+    	//富文本
+    	var self = this;
+		$(function(){
+			var E = window.wangEditor;
+	    	var editor1 = new E('#div1', '#div2');
+	    
+	    	editor1.customConfig.menus = [
+	      		'head',  // 标题
+		    	'bold',  // 粗体
+		    	'fontSize',  // 字号
+		    	'fontName',  // 字体
+		    	'italic',  // 斜体
+		    	'underline',  // 下划线
+		    	'strikeThrough',  // 删除线
+		    	'foreColor',  // 文字颜色
+		    	'backColor',  // 背景颜色
+		    	'link',  // 插入链接
+		    	'list',  // 列表
+		    	'justify',  // 对齐方式
+		    	'quote',  // 引用
+		    	'emoticon',  // 表情
+		    	'image',  // 插入图片
+		    	'table',  // 表格
+		    	'video',  // 插入视频
+		    	'code',  // 插入代码
+		    	'undo',  // 撤销
+		    	'redo'  // 重复
+	    	];
+	    	editor1.customConfig.debug = true;
+	    	editor1.customConfig.uploadImgShowBase64 = true;
+
+	    	editor1.customConfig.uploadImgServer = "{:url('Upload/uploads')}";
+	    	editor1.customConfig.uploadVideoServer = "{:url('Upload/videos')}";
+	    	
+	    	editor1.customConfig.uploadFileName = 'file';
+	    	editor1.customConfig.onchange = function(html){
+	    		self.editor = html;
+	    	}
+	    	editor1.create();
+		});
+    },
+  	
+  	methods:{
+  		deletehuati: function(i){
+  			this.selecthuati.splice(i,1);
+  		},
+  		addhuatiTj: function(i, e){
+  			let whicharr = $(e.target).parent().data('arr');
+  			let select = this[whicharr].slice(i,i+1)[0];
+  			var ishas = $.inArray(select,this.topicall);
+  			if(ishas == -1){
+  				if (this.selecthuati.length == 0) {
+  					this.selecthuati.push(select);
+  				}else{
+  					this.selecthuati.splice(0,1);
+  					this.selecthuati.push(select);
+  				}
+  				
+  			}else{ return false; }
+  		},
+  		addhuatiRm: function(i, e){
+  			let whicharr = $(e.currentTarget).parent().data('arr');
+  			let select = this[whicharr].slice(i,i+1)[0].title;
+  			var ishas = $.inArray(select,this.selecthuati);
+  			if(ishas == -1){
+  				this.selecthuati.push(select);
+  			}else{ return false; }
+  		},
+      addCard:function(){
+      	var uid = "{$Think.session.user.id}";
+        var title = $('#title').val();
+        if (this.selecthuati.length == 0) {
+        	var topic = "";
+        }else{
+        	var topic = this.selecthuati[0]['id'];
+        }
+        var content = this.editor;
+        console.log(topic);
+        $.ajax({
+        	url:"{:url('card/addCard')}",
+        	data:{uid:uid,title:title,topic:topic,content:content},
+        	type:"post",
+        	dataType:"json",
+        	success:function(data){
+        		if (data.status == 0) {
+        			alert(data.error)
+        		}else{
+        			alert(data.msg);
+        			location.reload()
+        		}
+        	}
+        })
+      },
+      upload:function(){
+        var fileobj = $('#video')[0].files[0];
+        console.log($('#video')[0].files[0])
+        var formData = new FormData();
+        formData.append('file',fileobj);
+        var data = formData;
+        $.ajax({
+          url:"{:url('Upload/uploads')}",
+          data:data,
+          type:"post",
+          dataType:"json",
+          processData: false,
+          contentType: false,
+          success:function(data){
+            console.log(data)
+          }
+        })
+      }
+      
+  	}
+  });
+ 
+	
+</script>
+

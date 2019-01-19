@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {include file="meta" /}
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span> 文章管理
+    <span class="c-gray en">&gt;</span> {$title}
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a class="btn btn-primary radius" href="{:url('tutor/tutor_set')}"><i class="Hui-iconfont">&#xe600;</i> 添加导师</a>
+        </span>
+    </div>
+    <table class="table table-border table-bordered table-bg table-hover table-sort">
+        <thead>
+        <tr class="text-c">
+            <th width="50">ID</th>
+            <th width="50">排序</th>
+            <th>姓名</th>
+            <th width="50">头像</th>
+            <th>tel</th>
+            <th>微信首页图片</th>
+            <th width="80">所在地</th>
+            <th width="80">电子邮件</th>
+            <th width="80">行业名称</th>
+            <th width="80">资质</th>
+            <th width="80">创业项目</th>
+            <th width="80">首页推荐</th>
+            <th width="80">状态</th>
+            <th width="60">管理操作</th>
+        </tr>
+        </thead>
+        {foreach $list as $key=>$item }
+        <tbody>
+        <tr>
+            <td class="center">{$item.id}</td>
+            <td class="center"><input type="text" style="border:1px solid;width:30px;text-align:center" value="{$item.sort}" onchange="change(this.value,'{$item.id}','{:url(\"tutor/sort\")}')"></td>
+            <td class="center">{$item.name}</td>
+            <td class="center"><img src="{$item.headimg}" height="100"></td>
+            <td class="center">{$item.tel}</td>
+            <td class="center">
+            {if $item.wx_index_img}
+                <img height="100" src="__STATIC__{$item.wx_index_img}">
+            {else/}
+                <img width="50%" src="">
+            {/if}
+            </td>
+            <td class="center">{$item.are}</td>
+            <td class="center">{$item.mail}</td>
+            <td class="center">{$item.hyname}</td>
+            <td class="center">{$item.zizhi}</td>
+            <td class="center">{$item.xiangmu}</td>
+            <td class="center">
+                <span style="width:30px;cursor:pointer" onclick="statusClick('{$item.tuijian}','{$item.id}','{:url(\"tutor/clickStrict\")}')" class="label radius {if $item.tuijian==1} label-success">是{else/}label-danger">否{/if}
+                </span>
+            </td>
+            <td class="center">{if $item.status == 1 }<span class="label label-success radius">启用</span> {else} <span class="label label-danger radius">关闭</span> {/if}</td>
+            <td>
+                <a class="href-a" href="{:url('tutor/tutor_set','id='.$item.id)}" title="编辑">编辑</a>&nbsp;|
+                <a class="href-a" href="javascript:;" title="删除" onclick="confirm_del('{:url(\"tutor/tutor_del?id=\".$item.id)}')">删除</a>
+            </td>
+        </tr>
+        </tbody>
+        {/foreach}
+    </table>
+    {$page}
+</div>
+{include file="script" /}
+</body>
+</html>

@@ -1,0 +1,67 @@
+[v-cloak]{ visibility: hidden; }
+			
+/*banner样式*/
+#content{ width: 1200px; margin: 20px auto; position: relative; }
+.banner-box{ width: 100%; height: 400px; position: relative; }
+.banner-box .big-bg{ width: 1920px; height: 100%; padding-top: 120px; box-sizing: border-box; text-align: center; background: url(../img/cyds/banner.png); position: absolute; top: 0; left: -360px; z-index: -1; }
+.banner-box h1{ font-size: 56px; font-weight: normal; color: #323232; }
+.banner-box p{ font-size: 28px; color: #12c173; margin-top: 15px; }
+
+/*ceo样式*/
+.ceo-box{ width: 1200px; height: 525px; background: #fff; margin: 20px 0; border-radius: 5px; overflow: hidden; padding-top: 40px; box-sizing: border-box; }
+.ceo-box>h3{ font-size: 36px; color: #323232; margin-bottom: 70px; text-align: center; }
+.ceo-box .ceo-header, .ceo-box .ceo-describe{ float: left; }
+.ceo-box .ceo-header{ width: 330px; height: 330px; margin: 0 40px; }
+.ceo-box .ceo-describe{ width: 790px; padding: 0 40px 0 10px; box-sizing: border-box; text-align: justify; line-height: 32px; }
+.ceo-box .ceo-describe h3{ font-size: 20px; color: #323232; line-height: 35px; }
+.ceo-box .ceo-describe h5{ font-size: 20px; color: #12C173; line-height: 35px; }
+.ceo-box .ceo-describe p{ width: 100%; font-size: 16px; color: #848484; }
+.ceo-box .ceo-describe div{ width: auto; height: 24px; color: #323232; margin-top: 20px; }
+.ceo-box .ceo-describe div img{ float: left; margin-right: 30px; }
+.ceo-box .ceo-describe div span{ display: inline-block; line-height: 24px; }
+
+
+/*导师样式*/
+.daoshi-box{ width: 1200px; position: relative; background: #fff; margin-top: 20px; padding-top: 25px; }
+
+.daoshi-box-t .daoshi-title{ width: 142px; height: 55px; margin: 0 auto; font-size: 35px; color: #323232; background: url(../img/cyds/ds-border-bottom.png)no-repeat bottom; }
+.daoshi-box-t .daoshi-select-box{ width: 100%; padding: 0 20px; box-sizing: border-box; }
+.daoshi-box-t .select-profession{ width: 100%; height: 60px; margin-top: 20px; background: url(../img/cyds/line.png)no-repeat bottom; }
+.select-profession ul, .select-profession ul li, .select-profession span, .select-profession>a{ float: left; }
+.select-profession span{ line-height: 34px; }
+.select-profession a.select-all{ font-size: 14px; color: #747474; line-height: 34px; padding-left: 18px; background: url(../img/cyds/all-icon.png)no-repeat 0 11px; margin: 0 10px 0 20px; }
+.select-profession a.select-all:hover{ color: #12C173; }
+.select-profession ul, .select-sort ul{ padding-top: 3px; }
+.select-profession ul li, .select-sort ul li{ float: left; border-radius: 14px; margin-left: 8px; }
+.select-profession ul li a, .select-sort ul li a{ float: left; color: #747474; font-size: 14px; padding: 3px 11px; border-radius: 14px; border: 1px solid #fff; }
+.select-profession ul li a.active, .select-sort ul li a.active{ border-color: #12C173; color: #12C173; }
+.select-profession ul li a:hover, .select-sort ul li a:hover{ border-color: #12C173; color: #12C173; }
+.daoshi-box-t .input-box{ float: right; width: 276px; height: 34px; box-sizing: border-box; position: relative; }
+.daoshi-box-t .input-box input{ width: 252px; height: 32px; font-size: 12px; border: 1px solid #dcdcdc; border-radius: 16px; padding-left: 22px; transition: .3s; }
+.daoshi-box-t .input-box input::-webkit-input-placeholder{ color: #b5b5b5; }
+.daoshi-box-t .input-box input::-ms-input-placeholder{ color: #b5b5b5; }
+.daoshi-box-t .input-box input::-moz-placeholder{ color: #b5b5b5; }
+.daoshi-box-t .input-box a{ width: 20px; height: 20px; position: absolute; right: 10px; top: 7px; background: url(../img/index/search-btn.png)no-repeat;  }
+.daoshi-box-t .input-box input:focus{ outline: none; border-color: #12bd61; }
+.daoshi-box-t .select-sort{ width: 100%; height: 60px; margin-top: 10px; background: url(../img/cyds/line.png)no-repeat bottom; padding-top: 5px; box-sizing: border-box; }
+.daoshi-box-t .select-profession,.daoshi-box-t .select-sort{ background-size: 1160px; }
+.select-sort span, .select-sort ul{ float: left; }
+.select-sort span{ line-height: 30px; }
+
+.daoshi-box-b{ padding: 0 5px; margin: 30px 0; box-sizing: border-box; overflow: hidden; }
+.daoshi-box-b li{ width: 220px; height: 340px; float: left; border-radius: 5px; text-align: center; margin: 0 0 20px 60px; border: 1px solid #f2f2f2; transition: .2s; }
+.daoshi-box-b li:hover{ box-shadow: 0 0 10px #f2f2f2; }
+.daoshi-box-b li:hover .daoshi-describe{ top: 170px; }
+.daoshi-item .daoshi-header{ width: 220px; height: 230px; overflow: hidden; position: relative; }
+.daoshi-item .daoshi-header .daoshi-describe{ width: 100%; height: 60px; padding: 11px 10px; box-sizing: border-box; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; background: rgba(18,193,115,.8);  line-height: 20px; font-size: 12px; position: absolute; top: 100%; transition: .4s; color: #fff; text-align: center; }
+.daoshi-item .daoshi-header .daoshi-describe>p:first-child{ overflow: hidden; }
+.daoshi-item .daoshi-header span.jianjian{ position: absolute; bottom: 0; left: 50%; margin-left: -8px; width: 0; height: 0; border-width: 0 8px 6px 8px; border-style: solid; border-color: #fff transparent; }
+.daoshi-item h1{ font-size: 18px; color: #323232; margin-top: 6px; }
+.daoshi-item h3{ font-size: 14px; color: #12C173; }
+.daoshi-item .daoshi-detail p{ float: left; font-size: 12px; padding-left: 29px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; box-sizing: border-box; color: #323232; text-align: left; margin: 6px 0; }
+.daoshi-item p.zili, .daoshi-item p.address{ width: 90px; padding-left: 17px; }
+.daoshi-item p.obj, .daoshi-item p.age{ width: 130px; }
+.daoshi-item p.age{ background: url(../img/cyds/daoshi-nl.png)no-repeat 12px 0; }
+.daoshi-item p.zili{ background: url(../img/cyds/daoshi-zl.png)no-repeat 0px 0; }
+.daoshi-item p.obj{ background: url(../img/cyds/daoshi-xm.png)no-repeat 12px 0; }
+.daoshi-item p.address{ background: url(../img/cyds/daoshi-dz.png)no-repeat 0px 0; }

@@ -1,0 +1,42 @@
+
+<div class="header" id='header'>
+	<div class="container">
+		<div class="title">您好，欢迎来到返乡创业网！</div>
+		<ul>
+			<li><a href="{:url('xiangmu/xiangmu')}" target="_blank">项目合作</a></li>
+			<li><a href="{:url('card/index')}">创业圈</a></li>
+			<li><a href="javascript:;">微信</a></li>
+			{if condition="$Think.session.user eq ''"}
+				<li class="user"><a href="{:url('Login/login')}">登录</a><a> / </a><a href="{:url('Login/register')}">注册</a></li>
+			{else /}
+				<li class="user">
+					<a href="{:url('Ucenter/index')}">{$Think.session.user.nickname}</a>
+					<a href="{:url('Login/quit')}">退出</a>
+					<!-- <a href="index.html">登录</a><a> / </a><a href="register.html">注册</a> -->
+				</li>
+			{/if}
+		</ul>
+	</div>
+</div>
+
+
+<!--导航-->
+<div class="nav">
+	<div class="container">
+		<a href="{:url('/')}"><img src="__STATIC__/Home/img/index/logo.png" /></a>
+		<ul>
+			<li class="index"><a href="{:url('/')}">首页</a></li>
+			<li class="cyq"><a href="{:url('card/index')}">创业圈</a></li>
+			<li class="jmzd"><a href="{:url('diagnosis/index')}">加盟诊断</a></li>
+			<li class="jmdp"><a href="{:url('review/index')}">加盟点评</a></li>
+			<li class="yxxm"><a href="{:url('strict/index')}">严选项目</a></li>
+			<li class="cyds"><a href="{:url('tutor/index')}">创业导师</a></li>
+			<li class="cygs"><a href="{:url('story/index')}">创业故事</a></li>
+			<li class="gywm"><a href="{:url('about/index')}">关于我们</a></li>
+		</ul>
+		<div class="input-box">
+			<input type="text" id="find" value="" />
+			<a href="javascript:;" id="onfind"></a>
+		</div>
+	</div>
+</div>

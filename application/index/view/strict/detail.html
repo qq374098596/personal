@@ -1,0 +1,890 @@
+{include file="public:head" /}
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/yxxm-detail.css"/>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/radio.css"/>
+	</head>
+	<body>
+		<!--顶部-->
+		
+		{include file="public:header" /}
+
+	  <!--内容部分-->
+	  <div id="content" v-cloak>
+	  	<div class="describe">
+	  		<!--头部-->
+	  		<div class="title">
+					<h5>{{thisone.name}}<span>筛选优质项目，让好的品牌脱颖而出</span></h5>
+					<div>当前位置：严选项目 - {{thisone.hyname}} - <span>{{thisone.name}}</span></div>
+				</div>
+				<!--图文部份-->
+				<div class="img-text">
+					<!--图片展示-->
+					<div class="zhanshiimg">
+						<div class="swiper-container bigimgbox">
+							<div class="header-box"><img :src="thisone.imgsrc" /></div>
+							<div class="swiper-wrapper">
+					      <div class="swiper-slide" v-for="item in thisone.ppimglist"><img :src="item" /></div>
+					    </div>
+						</div>
+						<div class="smallimgbox swiper-container">
+							<div class="swiper-wrapper">
+					      <div class="swiper-slide" v-for="item in thisone.ppimglist"><img :src="item" /></div>
+					    </div>
+						</div>
+					</div>
+					<!--文字展示-->
+					<div class="zhanshitext">
+						<div class="title">{{thisone.name}}<span>-{{thisone.hyname}}-</span></div>
+						<div class="comment">
+							<div class="star-box">
+      					<div class="noactive"></div>
+      					<div class="active" :style="{width:Math.floor(thisone.soure/thisone.count)*22+'px'}"></div>
+      				</div>
+      				<span>{{thisone.count?thisone.count:0}}人点评</span>
+      				<span>好评率：{{Math.floor(100/7*Math.floor(thisone.soure/thisone.count))?Math.floor(100/7*Math.floor(thisone.soure/thisone.count))+'%':'暂无资料'}}</span>
+						</div>
+						<p class="joinmoney">
+							<span>加盟费：<a>{{thisone.jiamengfei?'￥'+thisone.jiamengfei+'W':'暂无数据'}}</a></span>
+							<span>{{thisone.dailiren?thisone.dailiren:0}}人代理</span>
+						</p>
+						<p class="joinstore">加盟门店：<a>{{thisone.jiamengshop?thisone.jiamengshop:'暂无数据'}}</a></p>
+						<p class="zhiying">直营门店：<a>{{thisone.jiamengshop?thisone.jiamengshop:'暂无数据'}}</a></p>
+						<p class="company">公司：<a>{{thisone.company?thisone.company:'暂无数据'}}</a></p>
+						<p class="tel">电话：<a>{{thisone.tel?thisone.tel:'暂无数据'}}</a></p>
+						<p class="shoucangnum"><img src="__STATIC__/Home/img/yxxm/like2.png" />{{shoucangnum|| 0}}人收藏</p>
+						<div class="btn-group">
+							{if condition="$Think.session.user eq ''"}
+							<p class="shoucang"><img src="__STATIC__/Home/img/jmdp-detail/like1.png">收藏</p>
+							{else/}
+							<p class="shoucang" @click="getshoucan(thisone.id)" v-if="getshoucang==null"><img src="__STATIC__/Home/img/jmdp-detail/like1.png" />收藏</p>
+							<p class="shoucang" @click="getshoucan(thisone.id)" v-else><img src="__STATIC__/Home/img/jmdp-detail/like2.png" />&nbsp;&nbsp;已收藏</p>
+							{/if}
+							<p class="zixun" @click="zixun">项目咨询</p>
+							<p class="kefu" @click="kefu">联系客服</p>
+							{if condition="$Think.session.user eq ''"}
+							<a href="javascript:;" class="dianping"><img src="__STATIC__/Home/img/yxxm/yxdp-icon.png" />写点评</a>
+							{else/}
+							<a :href="'{:url('review/addreview')}/id/'+thisone.id+''" target="_blank" class="dianping"><img src="__STATIC__/Home/img/yxxm/yxdp-icon.png" />写点评</a>
+							{/if}
+						</div>
+					</div>
+				</div>
+	  	</div>
+	  	
+	  	<!--项目下部分-->
+	  	<div class="bottom-content">
+	  		<img src="__STATIC__/Home/img/yxxm/select-list.png" class="select-list">
+	  		<ul class="selectpage-btn">
+	  			<li>品牌简介</li>
+	  			<li>品牌点评</li>
+	  			<li>品牌问答</li>
+	  			<li>线下实访</li>
+	  		</ul>
+	  		<div class="selectpages">
+	  			<!--简介页-->
+	  			<div class="page jianjie-page">
+					<div id="jianjie" style="margin-top: 40px;margin-bottom: 40px;"></div>
+				</div>
+	  			<!--点评页-->
+	  			<div class="page dianping-page">
+	  				<div class="reviews-btn">
+	  					<p @click="selectpingjia" data-val="全部">全部</p>
+	  					<p @click="selectpingjia" data-val="图片">图片（{{isImg}}）</p>
+	  					<p @click="selectpingjia" data-val="好评">好评（{{good}}）</p>
+	  					<p @click="selectpingjia" data-val="中评">中评（{{average}}）</p>
+	  					<p @click="selectpingjia" data-val="差评">差评（{{bad}}）</p>
+	  				</div>
+	  				<div style="margin-top: 20px;" v-if="!review.length">暂无点评</div>
+	  				<ul class="reviews-content reviews-content-pingjia">
+	  					<li v-for="(item,index) in review" v-if="pingjia(item)" :key="item.id">
+	  						<div class="header-box"><img :src="item.headimg" onerror="this.src='__STATIC__/Home/img/loading.gif'" /></div>
+	  						<div class="content-right">
+	  							<h5>{{item.nickname}}<span>{{item.state}}</span></h5>
+	  							<div class="star-box">
+		      					<div class="noactive"></div>
+		      					<div class="active" :style="{width:item.pingfen*22+'px'}"></div>
+		      				</div>
+		      				<!--严选信息-->
+		      				<div class="join-infor">
+		      					<p>加盟费：<span>{{'￥'+item.jiamengfei+'万'}}</span></p>
+		      					<p>总成本：<span>￥{{item.zongchengben}}万</span></p>
+		      					<p>加盟时间：<span>{{item.date}}</span></p>
+		      					<p>月营收：<span>￥{{item.yueyingshou}}万</span></p>
+		      					<p>开店城市：<span>{{item.city}}</span></p>
+		      					<span><img src="__STATIC__/Home/img/yxxm/company-icon.png" />{{item.company}}</span>
+		      				</div>
+		      				<!--评论内容-->
+		      				<div class="comment-content">
+		      					<p>{{item.content}}</p>
+		      				</div>
+		      				
+		      				<div class="comment-btn">
+		      					<p>{{item.time}}</p>
+		      					<p class="btn"><span>展开评论</span><a></a></p>
+		      				</div>
+		      				<!--图片部分-->
+		      				<div class="comment-img" v-if="item.imglist">
+		      					<div class="small-img" :data-index="index" ref="smallimg">
+								      <img :src="img" onerror="this.src='__STATIC__/Home/img/loading.gif'" v-for="(img,index2) in item.imglist.slice(0,5)" :style="{background:randomColor}" @click="showbigimg($event,index,index2)" class="smallimg"  />
+										</div>
+										<div class="big-img" v-if="item.bigimg">
+								      <img :src="item.bigimg" onerror="this.src='__STATIC__/Home/img/loading.gif'" :data-index="index" @click="hidebigimg(index,$event)" />
+								      <div @click="previmg($event)" class="prev-btn btn"><p>&lt;</p></div>
+								      <div @click="nextimg($event)" class="next-btn btn"><p>&gt;</p></div>
+										</div>
+		      				</div>
+		      				
+		      				<div class="comment-reply">
+
+		      					<span class="write-btn" @click="writeClick(index,$event)">回应  &nbsp;</span>
+								{if condition="$Think.session.user eq ''"}
+								<span class="good"><img src="__STATIC__/Home/img/cygs/good-icon1.png" > {{item.cou||0}}</span>
+								{else/}
+								<span class="good" @click="pdianzan(id,item.id)" v-if="item.status==1" ><img src="__STATIC__/Home/img/cygs/good-icon2.png" /> {{item.cou||0}}</span>
+								<span class="good" @click="pdianzan(id,item.id)" v-else><img src="__STATIC__/Home/img/cygs/good-icon1.png" /> {{item.cou ||0}}</span>
+								{/if}
+								<div class="write-comment">
+		      						<textarea></textarea>
+		      						<p @click="fabiao(item.id,index,$event)">发表</p>
+		      					</div>
+		      				</div>
+		      				<!--网友回应-->
+		      				<div class="reply-box" v-if="item.reply!=''">
+		      					<div class="title">网友回应</div>
+		      					<ul>
+		      						<li v-for="(reply,index2) in item.reply">
+		      							<div class="header">
+		      								<img :src="reply.headimg" onerror="this.src='__STATIC__/Home/img/loading.gif'" :style="{background:randomColor}" />
+		      							</div>
+		      							<div class="reply-right">
+		      								<h5>{{reply.nickname}}</h5>
+			      							<p>{{reply.content}}</p>
+			      							<div class="reply-bottom">
+			      								<p>{{reply.time}}</p>
+			      								<span @click="tworeply($event)">回应</span>
+			      							</div>
+		      							</div>
+		      							<div class="replycom-box">
+													<textarea style="max-height: 80px;"></textarea>
+													<p @click="replytwo(item.id,index,index2,$event)">回应</p>
+												</div>
+												<ul>
+													<li v-for="(replyreply,index3) of reply.replyreply">
+														<a>{{replyreply.uid1name}}</a>
+														<span>回应</span>
+														<a>{{replyreply.uid2name}}</a>
+														<span>:</span>
+														<b @click="threereply($event)">{{replyreply.content}}</b>
+														<div class="replyreply-box">
+															<textarea style="max-height: 80px;"></textarea>
+															<p @click="replythree(item.id,index,index2,index3,$event)">回应</p>
+														</div>
+													</li>
+												</ul>
+		      						</li>
+		      					</ul>
+		      				</div>
+	  						</div>
+	  					</li>
+	  				</ul>
+	  				
+	  			</div>
+	  			<!--问答页-->
+	  			<div class="page wenda-page">
+	  				<div class="write-question">
+	  					{if condition="$Think.session.user.id eq ''"}
+	  					<div class="questiontest" v-if="{$Think.session.user.id}">
+	  						<a href="{:url('login/login')}">登录</a>后才能进行提问
+	  					</div>
+	  					{/if}
+	  					<div class="write-row">
+	  						<div class="prompt-text">您需要询问的是哪个方面:</div>
+		  					<div class="prompt-write">
+		  						<label><input type="radio" v-model="questionClass" value="1" />收益</label>
+			  					<label><input type="radio" v-model="questionClass" value="2" />成本</label>
+			  					<label><input type="radio" v-model="questionClass" value="3" />靠谱</label>
+			  					<label><input type="radio" v-model="questionClass" value="4" />指导</label>
+			  					<label><input type="radio" v-model="questionClass" value="5" />市场</label>
+		  					</div>
+	  					</div>
+	  					<div class="write-row">
+	  						<div class="prompt-text">请输入您要询问的内容:</div>
+	  						<div class="prompt-write"><input type="text" v-model="questionContent" /></div>
+	  					</div>
+	  					<p @click="writeQuestion">提问</p>
+	  				</div>
+	  				<div class="wenda-btn" >
+	  					<p @click="selectclass($event)" data-val="">全部</p>
+	  					<p @click="selectclass($event)" data-val="1">收益（{{syNum}}）</p>
+	  					<p @click="selectclass($event)" data-val="2">成本（{{cbNum}}）</p>
+	  					<p @click="selectclass($event)" data-val="3">靠谱（{{kpNum}}）</p>
+	  					<p @click="selectclass($event)" data-val="4">指导（{{zdNum}}）</p>
+	  					<p @click="selectclass($event)" data-val="5">市场（{{scNum}}）</p>
+	  				</div>
+	  				<ul>
+	  					<!--问答-->
+	  					<li v-for="(item,index) in wenda" v-if="wendaclass ? item.status==wendaclass : true">
+	  						<!--问-->
+	  						<div class="question-box">
+	  							<img src="__STATIC__/Home/img/yxxm/wen-icon.png" />
+	  							<div class="question-right">
+	  								<h5>{{item.content}}</h5>
+	  								<p>{{item.nickname}}<span>提问于{{item.time}}</span></p>
+	  							</div>
+	  							<div class="answer-btn" @click="answerClick($event)">回答</div>
+	  							<div class="writeAnswer">
+	  								<textarea></textarea>
+	  								<div class="writeAnswerBtn" @click="writeAnswerBtn(index,$event)">回答</div>
+	  							</div>
+	  						</div>
+	  						<!--答-->
+	  						<div class="answer-box" v-if="item.reply != ''">
+	  							<img src="__STATIC__/Home/img/yxxm/da-icon.png" />
+	  							<div class="answer-right">
+	  								<div class="answer" v-for="reply in isShowAllAnswer(item)">
+	  									<h5>{{reply.nickname}}<span>{{reply.state}}</span></h5>
+	  									<span>{{reply.time}}</span>
+	  									<p>{{reply.content}}</p>
+	  									<!-- <a>有用({{reply.goodnum}})</a> -->
+	  								</div>
+	  							</div>
+	  						</div>
+	  						<div v-show="isShowReplyBtn(item)" :class="{showanswer:true, develop: !item.showall}" @click="item.showall = !item.showall">全部{{item.reply.length}}个回答<span></span></div>
+	  					</li>
+	  				</ul>
+	  			</div>
+	  			<!--实访页-->
+	  			<div class="page jianjie-page">
+					<div id="shifang" style="margin-top: 40px;margin-bottom: 40px"></div>
+				</div>
+	  		</div>
+	  	</div>
+		  <!--项目咨询-->
+		  <div class="model-bg xmzx" style="display: none;">
+			  <div class="model-box">
+				  <span class="close"><img src="__STATIC__/Home/img/yxxm/close-icon.png" /></span>
+				  <h5>项目咨询</h5>
+				  <div class="textarea-box">
+					  <span>留言内容：</span>
+					  <textarea placeholder="请输入您要了解的内容" name="message"></textarea>
+				  </div>
+				  <div class="input-box">
+					  <span>意向城市：</span>
+					  <input type="text" placeholder="请输入您期望加盟的城市" name="city" />
+				  </div>
+				  <div class="input-box">
+					  <span>投资预算：</span>
+					  <input type="number" placeholder="请输入您的投资预算" name="budget" />
+				  </div>
+				  <div class="input-box">
+					  <span>姓名：</span>
+					  <input type="text" placeholder="请问怎么称呼您"  name="name"/>
+				  </div>
+				  <div class="input-box">
+					  <span>手机号：</span>
+					  <input type="text" placeholder="请输入您的手机号码" name="phone" />
+					  <input type="hidden" name="uid" value="{$Think.session.user.id}">
+				  </div>
+				  <p @click="advice()">提交留言</p>
+			  </div>
+		  </div>
+	  </div>
+	  
+
+		
+		<!--联系客服-->
+		<div class="model-bg lxkf" style="display: none;">
+			<div class="model-box">
+				<span class="close"></span>
+				<div class="zixun-btn"><img src="__STATIC__/Home/img/yxxm/qq-icon.png" />点击咨询</div>
+				<div class="kf-bottom">
+					<p><img src="__STATIC__/Home/img/yxxm/kf-tel-icon.png" />400-123-1234</p>
+					<p><img src="__STATIC__/Home/img/yxxm/kf-time-icon.png" />周一至周五 9:00-18:00</p>
+				</div>
+			</div>
+		</div>
+			
+		
+		<!--底部-->
+
+		{include file="public:footer" /}
+
+<script src="__STATIC__/Home/js/swiper.js"></script>
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script>
+	var vm = new Vue({
+		el: '#content',
+		data: {
+			ishaoping: '',
+			thisone: {
+				"id":'',
+				"name":"",
+				"imgsrc":"",
+				"ppimglist":'',
+				"hangyeid":'',
+				"jiamengfei":"",
+				"hyname":"",
+				"score":"",
+				"count": '',
+				"jianjie":''
+			},
+			allwendaclass: ['收益', '成本', '靠谱', '指导', '市场'],
+			wendaclass: '',
+			questionClass: '',
+			questionContent: '',
+			dianping: '',
+			average:"",
+			bad:"",
+			good:"",
+			isImg:"",
+			review: [],
+			wenda: [],
+            //收藏
+            getshoucang:'',
+            //收藏数
+            shoucangnum:'',
+			cbNum:'',
+			kpNum:'',
+			scNum:'',
+			syNum:'',
+			zdNum:'',
+		},
+
+		created:function(){
+			var self = this;
+                var data = {$data};
+                console.log(data);
+                self.thisone = data.detail;
+                self.id = data.detail.id;
+                self.review = data.review;
+                self.average = data.reviewStatus.average;
+                self.bad = data.reviewStatus.bad;
+                self.good = data.reviewStatus.good;
+                self.isImg = data.reviewStatus.isImg;
+                self.wenda = data.question;
+                self.getshoucang = data.getshoucang;
+                self.shoucangnum = data.shoucangnum;
+                self.cbNum = data.statusNum.cbNum;
+                self.kpNum = data.statusNum.kpNum;
+                self.scNum = data.statusNum.scNum;
+                self.syNum = data.statusNum.syNum;
+                self.zdNum = data.statusNum.zdNum;
+                self.wenda.forEach(function (e, i) {
+                    self.$set(self.wenda[i], 'showall', 'false');
+                });
+
+            var jianjie=self.thisone.jianjie;
+            $('#jianjie').html(jianjie);
+            var shifang=self.thisone.shifang;
+            $('#shifang').html(shifang);
+		},
+		mounted: function(){
+			var self = this;
+			setTimeout(function(){
+				self.swiper();
+			},100)
+			
+		},
+
+		computed: {
+			randomColor: function(i){
+				let bgcolor = 'rgba('+Math.floor(Math.random() * 256)+','+Math.floor(Math.random() * 256)+','+Math.floor(Math.random() * 256)+', .2)'
+				return bgcolor;
+			},
+			maxSmallImg: function(){
+				if(this.thisone.ppimglist){
+					console.log(this.thisone.ppimglist.length)
+					return this.thisone.ppimglist.length>=5? 5:this.thisone.ppimglist.length
+				}else{
+					return 0
+				}
+			},
+		},
+		
+		methods:{
+			//项目咨询
+			zixun: function(){
+				$('.xmzx').fadeIn();
+			},
+			//联系客服
+			kefu: function(){
+				$('.lxkf').fadeIn();
+			},
+			swiper: function(){
+				var galleryThumbs = new Swiper('.smallimgbox', {
+					loop:false,
+			    spaceBetween: 12,
+			    slidesPerView: 5,
+			    watchSlidesVisibility: true,
+			    watchSlidesProgress: true,
+			  });
+			  var galleryTop = new Swiper('.bigimgbox', {
+			  	loop:false,
+			    spaceBetween: 10,
+			    thumbs: {
+			      swiper: galleryThumbs,
+			    },
+			  });
+			},
+            //评论点赞/取消点赞
+            pdianzan: function (mid,pid) {
+                var self = this;
+                var mid = mid;
+                var pid = pid;
+                $.ajax({
+                    url:"{:url('Strict/pdianzan')}",
+                    data:{mid:mid,pid:pid},
+                    type:"post",
+                    success:function(data) {
+                        if(!data){
+                            return;
+                        }
+                        self.review = data;
+                    }
+                })
+            },
+			//咨询提交
+            advice:function(){
+                var city=$('input[name="city"]').val();
+                var message=$('textarea[name="message"]').val();
+                var budget=$('input[name="budget"]').val();
+                var name=$('input[name="name"]').val();
+                var phone=$('input[name="phone"]').val();
+                var uid=$('input[name="uid"]').val();
+                var mid=this.thisone.id;
+                if(budget<1){
+                    alert('请正确输入预算资金');
+                    return;
+				}
+                if(!uid){
+                    uid=0;
+                }
+                if(!city||!message||!budget||!name){
+                    alert('请完整填写表单');
+                    return;
+				}
+                $.ajax({
+                    type: "post",
+                    url: "{:url('strict/advice')}",
+                    data: {city:city,mid:mid,message:message,budget:budget,name:name,phone:phone,uid:uid},
+                    success: function(data){
+                        if(data.code==222){
+                            alert(data.msg);
+                        }
+                        if(data.code==200){
+                            alert(data.msg);
+                            window.location.reload();
+						}
+                    }
+                })
+            },
+
+			
+			pingjia: function(item){
+				if(typeof(this.ishaoping)=='string'){
+					return item.imglist.length
+				}else{
+					return item.pingfen>=this.ishaoping[0]&&item.pingfen<=this.ishaoping[1]
+				}
+			},
+			//根据评价进行选择
+			selectpingjia: function(e){
+				var val = $(e.target).data('val');
+				if(val == '好评'){
+					this.ishaoping = [6,7]
+				}else if(val == '中评'){
+					this.ishaoping = [4,5]
+				}else if(val == '差评'){
+					this.ishaoping = [1,3]
+				}else if(val == '全部'){
+					this.ishaoping = [1,7]
+				}else if(val == '图片'){
+					this.ishaoping = 'img'
+				}
+				this.review.forEach(function(obj,index){
+					vm.$delete(obj,'bigimg')
+				});
+				$('.smallimg').removeClass('active')
+			},
+
+
+			//点击小图显示大图
+			showbigimg: function(e,i,i2){
+			  var i = $(e.target).parent().data('index');
+			  var self = this;
+			  if($(e.target).hasClass('active')){
+			  	$(e.target).removeClass('active');
+			  	self.review[i].bigimg = '';
+			  }else{
+			  	$(e.target).siblings().removeClass('active');
+				  $(e.target).addClass('active');
+				 	self.$set(self.review[i],'bigimg',self.review[i].imglist[i2])
+			  }
+			},
+			//切换放大图
+			previmg: function(e){
+				let index = $(e.currentTarget).parent().siblings('.small-img').children('.active').index();
+				let length = $(e.currentTarget).parent().siblings('.small-img').children('img').length;
+				if(length==1){
+					return false;
+				}else{
+					index--;
+					if(index == -1 ){
+						index = length -1;
+					}
+					$(e.currentTarget).parent().siblings('.small-img').children('img').eq(index).click();
+				}
+			},
+			nextimg: function(e){
+				let index = $(e.currentTarget).parent().siblings('.small-img').children('.active').index();
+				let length = $(e.currentTarget).parent().siblings('.small-img').children('img').length;
+				if(length==1){
+					return false;
+				}else{
+					index++;
+					if(index == length ){
+						index = 0;
+					}
+					$(e.currentTarget).parent().siblings('.small-img').children('img').eq(index).click();
+				}
+			},
+            //收藏功能
+            getshoucan:function(id) {
+                var self = this;
+                $.get("{:url('Review/getShoucang')}/id/"+id,function (data) {
+                    self.getshoucang = data.getshoucang;
+                    self.shoucangnum = data.shoucangnum;
+                })
+            },
+			//点击大图隐藏
+			hidebigimg: function(i,e){
+				$(this.$refs.smallimg).children('img').removeClass('active');
+				this.review[i].bigimg = '';
+			},
+			
+			//打开二级评论框
+			writeClick: function(i,e){
+				if('{$Think.session.user.id}'){
+					$(e.target).siblings('.write-comment').fadeToggle(100);
+				}else{
+					if(confirm('还未登录，是否前往登录')){
+						location.href="{:url('Login/login')}"
+					}
+				}
+			},
+			//发表二级评论
+			fabiao: function(id,i,e){
+				console.log('fabiao');
+				var content = $(e.target).siblings('textarea').val();
+				var uid = "{$Think.session.user.id}";
+				var uid1 = this.review[i].reply
+				var mid = id;
+				var self = this;
+				var myDate = new Date();
+				$.ajax({
+					url:"{:url('Strict/comment')}",
+					data:{uid1:uid,uid2:0,mid:mid,gid:0,content:content},
+					type:"post",
+					dataType:"json",
+					success:function(data){
+						if (data.status == 0) {
+							alert(data.error)
+						}else{
+							self.review[i].reply.push({
+								uid1: "{$Think.session.user.id}",
+								content: content,
+								nickname: "{$Think.session.user.nickname}",
+								time: myDate.toLocaleString('chinese', { hour12: false }).slice(0,-3),
+								headimg: data.headimg,
+								replyreply:	[],
+							});
+						}
+					}
+				})
+				// this.review[i].reply.push({
+				// 	header: '__STATIC__/Home/img/cyq/user1.png',
+				// 	nickname: '你妈喊你回家吃饭',
+				// 	content: content,
+				// 	time: '2018-11-09',
+				// });
+				$(e.target).siblings('textarea').val('');
+				$(e.target).parent().fadeOut(100);
+			},
+			
+			//打开回复二级评论框
+			tworeply:function(e){
+				if('{$Think.session.user.id}'){
+					$(e.target).parent().parent().siblings('.replycom-box').fadeToggle(100);
+				}else{
+					if(confirm('还未登录，是否前往登录')){
+						location.href="{:url('Login/login')}"
+					}
+				}
+			},
+			//回复二级评论
+			replytwo: function(id,i1,i2,e){
+				console.log('replytwo');
+				var self = this;
+				var content = $(e.target).siblings('textarea').val();
+				var myDate = new Date();
+				if(content != ''){
+					var uid1 = "{$Think.session.user.id}";
+					var uid2name = this.review[i1].reply[i2].nickname;
+					var uid1name = '{$Think.session.user.nickname}';
+					var uid2 = this.review[i1].reply[i2].uid1;
+					var mid = id;
+					$.ajax({
+						url:"{:url('review/comment')}",
+						data:{uid1:uid1,uid2:uid2,mid:mid,gid:this.review[i1].reply[i2].id,content:content},
+						type:"post",
+						dataType:"json",
+						success:function(data){
+							if(data.status == 0){
+								alert(data.error);
+							}else{
+								self.review[i1].reply[i2].replyreply.push({
+									id: mid,
+									uid1: uid1,
+									uid2: uid2,
+									gid: self.review[i1].reply[i2].id,
+									content: content,
+									time: myDate.toLocaleString('chinese', { hour12: false }).slice(0,-3),
+									uid1name: uid1name,
+									uid2name: uid2name
+								});
+							}
+						}
+					})
+					
+					$(e.target).siblings('textarea').val('');
+					$(e.target).parent().fadeOut(100);
+				}else{
+					alert('请不要回复空内容')
+				}
+			},
+			//打开回复三级评论框
+			threereply: function(e){
+				console.log('threereply');
+				if('{$Think.session.user.id}'){
+					$(e.target).siblings('.replyreply-box').fadeToggle(100);
+				}else{
+					if(confirm('还未登录，是否前往登录')){
+						location.href="{:url('Login/login')}"
+					}
+				}
+			},
+			//回复三级评论
+			replythree: function(id,i1,i2,i3,e){
+				console.log('replythree');
+				var self = this;
+				var content = $(e.target).siblings('textarea').val();
+				if(content != ''){
+					var uid2name = this.review[i1].reply[i2].replyreply[i3].uid1name;
+					var uid1name = '{$Think.session.user.nickname}';
+					var uid1 = "{$Think.session.user.id}";
+					var uid2 = this.review[i1].reply[i2].replyreply[i3].uid1;
+					var mid = id;
+					var myDate = new Date();
+					$.ajax({
+						url:"{:url('review/comment')}",
+						data:{uid1:uid1,uid2:uid2,mid:mid,gid:this.review[i1].reply[i2].replyreply[i3].gid,content:content},
+						type:"post",
+						dataType:"json",
+						success:function(data){
+							if(data.status == 0){
+								alert(data.error);
+							}else{
+								self.review[i1].reply[i2].replyreply.push({
+									id: mid,
+									uid1: uid1,
+									uid2: uid2,
+									gid: self.review[i1].reply[i2].id,
+									content: content,
+									time: myDate.toLocaleString('chinese', { hour12: false }).slice(0,-3),
+									uid1name: uid1name,
+									uid2name: uid2name
+								});
+							}
+						}
+					})
+					// this.review[i1].reply[i2].replyreply.push({
+					// 	uid1name:uid1name,
+					// 	uid2name:uid2name,
+					// 	content:content,
+					// });
+					$(e.target).siblings('textarea').val('');
+					$(e.target).parent().fadeOut(100);
+				}else{
+					alert('请不要回复空内容');
+				}
+			},
+			//选择问答分类
+			selectclass: function(e){
+				this.wendaclass = $(e.target).data('val');
+			},
+			//写问题
+			writeQuestion: function(){
+				var pid = this.thisone.id;
+				var uid = "{$Think.session.user.id}";
+				var content = this.questionContent;
+				var questionClass = this.questionClass;
+
+				if(content != ''){
+					if(this.questionClass!=''){
+						var myDate = new Date();
+						$.ajax({
+							url:"{:url('strict/addQuestion')}",
+							data:{pid:pid,uid:uid,gid:0,questionClass:questionClass,content:content},
+							type:"post",
+							dataType:"json",
+							success:function(data){
+							}
+						})
+						this.wenda.push({
+							content: content,
+							selectclass: this.allwendaclass[parseInt(this.questionClass)], 
+							nickname: '{$Think.session.user.nickname}',
+							time: myDate.toLocaleString('chinese', { hour12: false }).slice(0,-3),
+							showall: false,
+							reply: []
+						});
+						this.questionClass = this.questionContent = '';
+						alert('发布问题成功');
+						window.location.reload();
+					}else{
+						alert('请选择您要询问的方面')
+					}
+				}else{
+					alert('不能发布空内容')
+				}
+			},
+			//回答框
+			answerClick: function(e){
+				if('登录了'){
+					$(e.target).siblings('.writeAnswer').fadeToggle(100);
+				}else{
+					alert('请先登录再进行回答');
+				}
+				
+			},
+			//提交回答
+			writeAnswerBtn: function(i,e){
+				var myDate = new Date();
+				var content = $(e.target).siblings('textarea').val();
+				var pid = this.thisone.id;
+				var uid = "{$Think.session.user.id}";
+				var uid2 = this.wenda[i].uid;
+				var questionClass = this.wenda[i].status;
+				var gid = this.wenda[i].id;
+				if(content!=''){
+					$.ajax({
+						url:"{:url('strict/questionComment')}",
+						data:{pid:pid,uid:uid,uid2:uid2,gid:gid,questionClass:questionClass,content:content},
+						type:"post",
+						dataType:"json",
+						success:function(data){
+							if (data.status == 0) {
+								alert(data.error);
+							}else{
+								alert(data.msg);
+								window.location.reload();
+							}
+						}
+					})
+					// this.wenda[i].reply.unshift({
+					// 	nickname: '{$Think.session.user.nickname}', 
+					// 	state: '开店中', 
+					// 	time: '2018-11-10', 
+					// 	content: content, 
+					// 	goodnum: 0,
+					// });
+					$(e.target).siblings('textarea').val('')
+					$(e.target).parent().fadeOut(100)
+				}else{
+					alert('请输入内容')
+				}
+			},
+			//是否显示所有回答
+			isShowAllAnswer: function(ele){
+				console.log(ele.showall)
+				if(ele.showall){
+					return ele.reply.slice(0,2)
+				}else{
+					
+					return ele.reply
+				}
+				
+			},
+			//展开所有回答的按钮显示
+			isShowReplyBtn: function(ele){
+				if(ele.reply!=''){
+					return ele.reply.length>2
+				}else{
+					return false
+				}
+			}
+		}
+	});
+	
+	//项目评论中的功能
+	$(function(){
+		//评论是否需要展开
+		$('.comment-content').each(function(i){
+			if($(this).height()>=80){
+				$(this).height(80);
+				$(this).siblings('.comment-btn').children('.btn').show();
+			}else{
+				$(this).height('auto');
+				$(this).siblings('.comment-btn').children('.btn').hide();
+			}
+		});
+		
+		//展开收起评论文本内容
+		$('.comment-btn .btn').click(function(){
+			if($(this).hasClass('develop')){
+				$(this).children('span').html('展开评论');
+				$(this).parent().siblings('.comment-content').height(80);
+				$(this).removeClass('develop');
+			}else{
+				$(this).children('span').html('收起评论');
+				$(this).parent().siblings('.comment-content').height('auto');
+				$(this).addClass('develop');
+			}
+		});
+		
+	});   //评论功能 end
+	
+	
+	//选择切换分页
+	$('.selectpages .page').hide().eq(1).show();
+	$('.selectpage-btn li').click(function(e){
+		let index = $(e.target).index();
+		$('.select-list').stop().animate({left:index*154+22});
+		$('.selectpages .page').hide().eq(index).show();
+	});
+	
+	//切换好评差评
+	$('.reviews-btn p').click(function(){
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+	});
+	
+	//关闭模态框
+	$('.close').click(function(){
+		let self = this;
+		$(this).parent().parent().fadeOut(function(){
+			$(self).siblings('div').children('input, textarea').val('');
+		});
+		
+	});
+	
+	
+	//头部导航选择
+	// $('.nav ul li').click(function(){
+	// 	$(this).siblings().removeClass('active');
+	// 	$(this).addClass('active');
+	// });
+	$('.nav ul li').siblings().removeClass('active');
+	$('.yxxm').addClass('active');
+
+	
+</script>

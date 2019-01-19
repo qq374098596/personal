@@ -1,0 +1,44 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	{include file="meta" /}
+</head>
+<body>
+<div class="page-container">
+	
+	<form action="{:url('Product/addDiagnoseimg?id='.$diagnoseimg.id)}" role="form" enctype="multipart/form-data" method="post" class="form form-horizontal" id="form-article-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>备注：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{if $diagnoseimg} {$diagnoseimg.record} {/if}" placeholder="" id="record" name="record">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>诊断报告书：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea class="input-text hide" id="diagnoseImg" name="diagnoseImg">{if $diagnoseimg} {$diagnoseimg.jsfs} {/if}</textarea>
+			</div>
+		</div>
+		
+		<div class="row cl" style="margin-top: 30px">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 提交修改</button>
+			</div>
+		</div>
+	</form>
+	
+</div>
+
+            {include file="script" /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+	function cb(box, d) {
+        if (d.ret != 0) return alert(d.msg);
+        box.find('> .nup-img-img').attr('src', cdn + d.url);
+        box.find('> .nup-img-img').parent('.nup-img-item').css('height','600px');
+    }
+    $('#diagnoseImg').upload({ path: cdn, url: root+ '/product/uploads', width:120, height:100,length:1 }, cb);
+</script>
+</body>
+</html>

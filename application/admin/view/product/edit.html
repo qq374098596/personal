@@ -1,0 +1,109 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	{include file="meta" /}
+	<style>
+		/* 去除数字输入框后面加减 */
+		/* 谷歌 */
+		input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			appearance: none;
+			margin: 0;
+		}
+		/* 火狐 */
+		input{
+			-moz-appearance:textfield;
+		}
+	</style>
+</head>
+<body>
+<div class="page-container">
+	{volist name="product" id="v"}
+	<form action="{:url('Product/editnow')}?id={$v.id}"  role="form" enctype="multipart/form-data" method="post" class="form form-horizontal" id="form-article-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>品牌名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$v.name}" name="name">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">所属行业：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select class="select" name="op">
+					<option value="{$v.hangyeid}">{$v.hyname}</option>
+					{volist name="hangye" id="vo"}
+					<option value="{$vo.id}">{$vo.hyname}</option>
+					{/volist}
+				</select>
+				</span> </div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">公司：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$v.company}" name="company">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">加盟费 (万)：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="money" value="{$v.jiamengfei}" class="input-text">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">热门品牌：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select class="select" name="or">
+					{if condition="$v.order_id eq 1"}
+					<option value="1" selected>是</option>
+					<option value="0">否</option>
+					{/if}
+					{if condition="$v.order_id eq 0"}
+					<option value="1">是</option>
+					<option value="0" selected>否</option>
+					{/if}
+				</select>
+				</span> </div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">排序：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="sort" value="{$v.sort}" class="input-text">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">图片：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<a style="display: inline-block;" class="btn btn-info">上传图片</a>
+				<input type="file" name="img" onchange="showPrevie(this)" style="width: 100px;border: 1px solid red;position: absolute;top:80px;left: 0px;height: 30px;opacity: 0;">
+				<img src="{$v.imgsrc}" style="width: 220px" id="portraitl">
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 提交修改</button>
+			</div>
+		</div>
+	</form>
+	{/volist}
+</div>
+
+            {include file="script" /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    function showPrevie(source) {
+        var file = source.files[0];
+        if(window.FileReader) {
+            var fr = new FileReader();
+
+            var portraitl = document.getElementById('portraitl');
+            fr.onloadend = function(e) {
+                portraitl.src = e.target.result;
+            };
+            fr.readAsDataURL(file);
+            portraitl.style.display = ' inline-block';
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+[v-cloak]{ visibility: hidden; }
+.swiper-banner{ width: 1200px; height: 380px; margin: 20px auto; overflow: hidden; position: relative; }
+.swiper-banner img{ width: 100%; }
+.swiper-banner .swiper-pagination{ width: 100%; left: 0; bottom: 40px; }
+.swiper-banner .swiper-pagination span{ width: 12px; height: 12px; border-radius: 0; }
+.swiper-banner .swiper-pagination-bullet{ opacity: .2; }
+.swiper-banner .swiper-pagination-bullet-active{ opacity: 1; }
+
+/*内容样式*/
+.content-box, .comment-box, .hot-box{ width: 1200px; height: auto; background: #fff; margin: 20px auto; padding: 40px 0; border-radius: 10px; }
+.content-box .story-box{ width: 100%; height: auto; padding: 20px 40px; box-sizing: border-box; }
+.content-box .story-box h5{ font-size: 22px; color: #343434; }
+.content-box .story-box .story-infor{ overflow: hidden; font-size: 14px; width: 100%; margin: 26px 0; color: #9f9f9f; }
+.content-box .story-box .story-infor .user{ float: left; color: #009151; cursor: default; }
+.content-box .story-box .story-infor .time{ float: left; color: #9f9f9f; margin-left: 20px; }
+.content-box .story-box .story-infor .icon-box{ float: right; }
+.content-box .story-box .story-infor .icon-box p{ float: left; margin: 4px 4px; cursor: default; }
+.content-box .story-box .story-infor .icon-box p img{ float: left; margin: 4px 4px; }
+.content-box .story-box .story-infor .icon-box p:not(.look-icon):not(.replay-icon){ cursor: pointer; }
+.content-box .story-box .story-content p{ font-size: 14px; line-height: 22px; color: #343434; }
+
+/*观点样式*/
+.comment-box{ overflow: hidden; }
+.comment-box .input-box{ width: 100%; box-sizing: border-box; padding: 0 40px; }
+.comment-box .input-box textarea{ width: 100%; min-height: 81px; outline: none; border: none; border: 1px solid #f2f2f2; margin: 30px 0; resize: none; padding: 10px; line-height: 22px; box-sizing: border-box; }
+.comment-box .input-box p{ float: right; width: 268px; line-height: 46px; font-size: 22px; color: #fff; text-align: center; background: #12C173; border-radius: 10px; cursor: pointer; }
+
+/*热门评论样式*/
+.hot-box ul{ width: 100%; height: auto; padding: 0 40px; box-sizing: border-box; }
+.hot-box ul li{ overflow: hidden; padding: 20px 0; border-bottom: 1px solid #f2f2f2; }
+.hot-box ul li:last-child{ border: none; }
+.hot-box ul li .header{ float: left; width: 74px; height: 74px; border-radius: 50%; box-shadow: 0px 3px 4px 0px rgba(153, 153, 153, 0.47); overflow: hidden; }
+.hot-box ul li .header img{ width: 74px; height: 74px; }
+.hot-box ul li .replay-right{ float: left; width: 1030px; line-height: 28px; margin-left: 16px; }
+.hot-box ul li .replay-right h5{ float: left; font-size: 14px; margin-top: 10px; font-weight: normal; color: #424242; }
+.hot-box ul li .replay-right h5 span{ float: right; font-size: 12px; line-height: 14px; padding: 0 4px; background: #12C173; margin: 7px 0 0 10px; color: #fff; }
+.hot-box ul li .replay-right>p{ float: left; width: 100%; font-size: 14px; color: #4c4c4c; }
+.hot-box ul li .replay-right div{ float: left; width: 100%; font-size: 14px; color: #ccc; }
+.hot-box ul li .replay-right div p{ float: left; color: #424242; }
+.hot-box ul li .replay-right div.replay-bottom span{ float: right; cursor: pointer; }
+.hot-box ul li .replay-right .reply-box{ display: none; float: left; position: relative; width: 100%; margin-top: 10px; }
+.hot-box ul li .replay-right .reply-box textarea{ resize: none; padding: 10px; box-sizing: border-box; width: 100%; border: none; outline: none; background: #f9f9f9; }
+.hot-box ul li .replay-right .reply-box p{ float: right; width: 100px; height: 32px; background: #FE9B12; border-radius: 10px; line-height: 32px; text-align: center; color: #fff; font-size: 18px; cursor: pointer; }
+.hot-box ul li .replay-right .replyreply{ float: right; width: 100%; font-size: 14px; margin: 10px 0; }
+.hot-box ul li .replay-right .replyreply{ margin: 5px 0; }
+.hot-box ul li .replay-right .replyreply a{ color: #12C173; cursor: pointer; }
+.hot-box ul li .replay-right .replyreply b{ cursor: pointer; font-weight: normal; }
+.hot-box ul li .replay-right .replyreply .replyreply-box{ display: none; float: left; position: relative; width: 100%; margin-top: 10px; }
+.hot-box ul li .replay-right .replyreply .replyreply-box textarea{ resize: none; padding: 10px; box-sizing: border-box; width: 100%; border: none; outline: none; background: #f9f9f9; }
+.hot-box ul li .replay-right .replyreply .replyreply-box p{ float: right; width: 100px; height: 32px; background: #FE9B12; border-radius: 10px; line-height: 32px; text-align: center; color: #fff; font-size: 18px; cursor: pointer; }
+
+
+/*分页样式*/
+.page{ position: relative; width: 650px; left: 50%; margin-left: -325px; overflow: hidden; }
+.page a,.page span{ float:left; width: 40px; height: 40px; box-sizing: border-box; border-radius: 50%; text-align: center; line-height: 38px; margin:10px 5px; color:#bababa; transition: .2s; border:1px solid #bababa; }
+.page a.prev, .page a.next{ font-size: 18px; }
+.page a:not(.next):not(.prev):hover{ background: #12C173; color: #fff; border-color: #12C173; }
+.page input{ width: 30px; height: 40px; float: left; margin-top: 11px; box-sizing: border-box; }
+.page .active{ background:#12C173; color: white; border-color: #12C173; }

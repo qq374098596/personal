@@ -1,0 +1,162 @@
+{include file="public:head" /}
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/daoshi-detail.css"/>
+	</head>
+	<body>
+		<!--顶部-->
+		
+		{include file="public:header" /}
+		
+		<!--banner-->
+		<div class="banner-box">
+			<div class="big-bg">
+				<h1>创业导师</h1>
+				<p>帮助你创业·并爱上返乡创业</p>
+			</div>
+		</div>
+			
+		<div id="content" v-cloak>
+			
+			<!--导师详情-->
+			<div class="daoshi-l">
+				<!--导师信息-->
+				<div class="daoshi-detail">
+					<img style="width:300px;height:400px" :src="detail.headimg" />
+					<div class="daoshi-describe">
+						<h3>{{detail.name}}</h3>
+						<h5>{{detail.hyname}}</h5>
+						<p v-html="detail.jieshao"></p>
+						<div><img src="__STATIC__/Home/img/ds-detail/daoshi-nl.png" />年龄：<span>{{detail.old}}岁</span></div>
+						<div><img src="__STATIC__/Home/img/ds-detail/daoshi-zl.png" />资历：<span>{{detail.zizhi}}年</span></div>
+						<div><img src="__STATIC__/Home/img/ds-detail/daoshi-dz.png" />地址：<span>{{detail.are}}</span></div>
+						<div><img src="__STATIC__/Home/img/ds-detail/daoshi-xm.png" />项目：<span>{{detail.xiangmu}}</span></div>
+					</div>
+				</div>	
+				
+				<!--创业经历-->
+				<div class="experience-box">
+					<div class="title">创业历程</div>
+					<div class="experience" v-for="item in detail.cyjl">
+						<div class="experience-time">{{item.time}}</div>
+						<p v-html="item.text"></p>
+					</div>
+				</div>
+				
+				<!--项目详情-->
+				<div class="xiangmu-box">
+					<div class="title">项目详情</div>
+					<p v-html="detail.xiangmuxiangqing"></p>
+					<img style="width:180px;height:180px" v-for="item in detail.imglist" :src="item"  />
+					<div class="btn-box"><a href="{:url('tutor/index')}">查看更多导师</a></div>
+				</div>
+			</div>
+			
+			<div class="daoshi-r">
+				<!--导师二维码-->
+				<div class="daoshi-erwei">
+					<h3>联系导师</h3>
+					<img :src="detail.qrcodeurl" />
+					<p>扫二维码联系导师</p>
+					<a href="javascript:;" v-if="status" @click="shoucang()"><img src="__STATIC__/Home/img/yxxm/like1.png" /><span>收藏导师</span></a>
+					<a href="javascript:;" v-else class="yishoucang" v-else @click="shoucang()"><img src="__STATIC__/Home/img/yxxm/like2.png" /><span>已收藏</span></a>
+				</div>
+				
+				<!--相似导师-->
+				<div class="simple-daoshi">
+					<div class="title">相似导师</div>
+					<ul class="daoshi-box-b">
+						
+						<li class="daoshi-item" v-for="item in similar"><a target="_blank" :href="item.id" >
+							<div class="daoshi-header">
+								<img style="width:220px;height:230px" :src="item.headimg" />
+								<span class="jianjian"></span>
+							</div>
+							
+							<div class="daoshi-detail">
+								<h1>{{item.name}}</h1>
+								<h3>{{item.hyname}}</h3>
+								<p class="age">年龄：<span>{{item.old}}岁</span></p>
+								<p class="zili">资历：<span>{{item.zizhi}}年</span></p>
+								<p class="obj">项目：<span>{{item.xiangmu}}</span></p>
+								<p class="address">地址：<span>{{item.are}}</span></p>
+							</div>
+						</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		
+		</div>
+		
+		<!--底部-->
+		
+	{include file="public:footer" /}
+
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script>
+	var vm = new Vue({
+		el: '#content',
+		data: {
+			status:'',
+			detail:{},
+			// detail: {
+			// 	name: '年康',
+			// 	headerUrl: '__STATIC__/Home/img/ds-detail/daoshi-header.png',
+			// 	job: '餐饮导师',
+			// 	age: 32,
+			// 	zili: 5,
+			// 	obj: '奶茶店',
+			// 	address: '安徽',
+			// 	describe: '精致女人护肤导师明智，本名明辰智，1989年8月出生在辽宁锦州，毕业于复旦大学上海医学院，医学博士学位，现为护肤协会东北区的特级专业护肤导师，Acymer项目培训师，MMF（Make ME Fabulous）首席彩妆顾问。主攻医学及美容专业，学业期间发表多篇以科学护肤为主题的文章被法国著名杂志《COSMOPOLITAN》(时尚)、《VOGUE》(服饰与美容)收录并受邀为专栏作家。',
+			// 	erwei: 'img/ds-detail/daoshi-erwei.jpg',
+			// 	cyjl:[
+			// 		{ time: '2008-2010', text: '从工厂上班族，偶然接触到了奶茶行业，兴起开店创业的念头。苦于没有经验，最终选择了去奶茶店学习，在经过半年的学习中，开始对行业有了自己独特的了解。于是选择回到自己的河南老家开店，经过四年多的拼搏，有了自己的品牌和自己的分店。创业过程中经历了开店，关店，开店，但是如今对于行业有着自己独特的见解，为了让更多有创业想法的人少走弯路，年老师愿意免费提供各种创业上的帮助及见解。' },
+			// 		{ time: '2008-2010', text: '从工厂上班族，偶然接触到了奶茶行业，兴起开店创业的念头。苦于没有经验，最终选择了去奶茶店学习，在经过半年的学习中，开始对行业有了自己独特的了解。于是选择回到自己的河南老家开店，经过四年多的拼搏，有了自己的品牌和自己的分店。创业过程中经历了开店，关店，开店，但是如今对于行业有着自己独特的见解，为了让更多有创业想法的人少走弯路，年老师愿意免费提供各种创业上的帮助及见解。' },
+			// 	],
+			// 	detail: '从工厂上班族，偶然接触到了奶茶行业，兴起开店创业的念头。苦于没有经验，最终选择了去奶茶店学习，在经过半年的学习中，开始对行业有了自己独特的了解。于是选择回到自己的河南老家开店，经过四年多的拼搏，有了自己的品牌和自己的分店。创业过程中经历了开店，关店，开店，但是如今对于行业有着自己独特的见解，为了让更多有创业想法的人少走弯路，年老师愿意免费提供各种创业上的帮助及见解。',
+			// 	detailimg:[
+			// 		'__STATIC__/Home/img/ds-detail/xm-detail1.png', '__STATIC__/Home/img/ds-detail/xm-detail2.png', '__STATIC__/Home/img/ds-detail/xm-detail3.png', '__STATIC__/Home/img/ds-detail/xm-detail4.png',
+			// 	],
+			// },
+			similar: [
+				{ header: '__STATIC__/Home/img/ds-detail/simple-ds1.png', src: 'javascript:;', name: '年康', jump:'javascript:;', job: '餐饮导师', age: 32, zili: 5, obj: '奶茶店', address: '安徽', },
+				{ header: '__STATIC__/Home/img/ds-detail/simple-ds1.png', src: 'javascript:;', name: '年康', jump:'javascript:;', job: '餐饮导师', age: 32, zili: 5, obj: '奶茶店', address: '安徽', },
+				{ header: '__STATIC__/Home/img/ds-detail/simple-ds1.png', src: 'javascript:;', name: '年康', jump:'javascript:;', job: '餐饮导师', age: 32, zili: 5, obj: '奶茶店', address: '安徽', }
+			],
+			
+		},
+
+		created:function(){
+			var self = this;
+			var data = {$data};
+			console.log(data)
+			self.detail = data.detail;
+			self.similar = data.similar;
+			self.status = data.getchick;
+		},
+		
+		methods: {
+			shoucang: function(){
+				var self = this;
+				if ("{$Think.session.user.id}" != "") {
+					console.log(this.detail.id);
+					$.get("{:url('tutor/collect')}/id/"+this.detail.id,function(data){
+						if (data.code == 200) {
+							self.status = data.status;	
+						}
+					})
+				}
+			},
+			quxiaoshoucang: function(){
+				this.islike = 0;
+			},
+		},
+	})
+</script>
+<script>	
+	//头部导航选择
+	$('.nav ul li').click(function(){
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+	});
+	
+</script>

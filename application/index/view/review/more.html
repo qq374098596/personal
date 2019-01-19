@@ -1,0 +1,213 @@
+{include file="public:head" /}
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/jmdp.css"/>
+	</head>
+	<body>
+		<!--顶部-->
+		
+		{include file="public:header" /}
+
+
+		<!--内容部分-->
+		<div class="container" id="content" v-cloak>
+			
+
+			<!--侧导航-->
+			<ul class="right-nav">
+				<li value="header" @click="rightClick(13,$event)" class="gotop"><a href="javascript:;"><img src="__STATIC__/Home/img/jmdp/go-top.png" />返回顶部</a></li>
+			</ul>
+		
+		
+			<!--banner-->
+			<!--<div class="banner-box">-->
+				<!--<div class="swiper-banner">-->
+			    <!--<div class="swiper-wrapper">-->
+			      <!--<div class="swiper-slide" v-for="img in banner"><img :src="img.img"/></div>-->
+			    <!--</div>-->
+			  <!--</div>-->
+			  <!---->
+			  <!--<div class="login-box">-->
+			  	<!--<div class="header-box">-->
+			  		<!--{if condition="$Think.session.user eq ''"}-->
+			  		<!--<img src="__STATIC__/Home/img/jmdp/normal-header.png" />-->
+			  		<!--{else /}-->
+						<!--<img src="{$Think.session.user.headimg}" onerror="this.src='__STATIC__/Home/img/jmdp/normal-header.png'" />-->
+						<!--{/if}-->
+			  	<!--</div>-->
+
+				<!--{if condition="$Think.session.user eq ''"}-->
+			  	<!--<div class="btn-box">-->
+			  		<!--<a href="{:url('Login/register')}">注册</a>-->
+			  		<!--<a href="{:url('Login/login')}">登录</a>-->
+			  	<!--</div>-->
+			  	<!--<p class="p-bottom">登陆返乡创业网，开启你的创业之路！</p>-->
+			  	<!--<a class="dianping-btn" href="javascript:;" target="_blank"><img src="__STATIC__/Home/img/jmdp/dp-icon.png" />我来点评</a>-->
+				<!--{else /}-->
+					<!--<p class="user-box">-->
+			  		<!--你好啊，<a href="javascript:;">{$Think.session.user.nickname}</a>-->
+			  	<!--</p>-->
+			  	<!--<p class="p-bottom">您已点评<a>{if condition="$Think.session.user.reviewNum"}{$Think.session.user.reviewNum}{else/}0{/if}</a>家品牌</p>-->
+			  	<!--<a class="dianping-btn" href="{:url('review/addreview')}" target="_blank"><img src="__STATIC__/Home/img/jmdp/dp-icon.png" />我来点评</a>-->
+				<!--{/if}-->
+
+			  <!--</div>-->
+			  <!--<div class="xcx-box">-->
+			  	<!--<img src="__STATIC__/Home/img/jmdp/banner-xcx.png" />-->
+			  	<!--<p>扫描二维码查看小程序</p>-->
+			  <!--</div>-->
+			<!--</div>-->
+		
+		
+			<!--选择导航-->
+			<div class="nav-box" style="margin-top: 20px">
+				<span> </span>
+				<ul>
+					<li><a href="{:url('review/index')}">&nbsp;&nbsp;返回&nbsp;&nbsp;</a></li>
+				</ul>
+
+				<div class="input-box" v-for="obj in allprofession">
+					<input type="text" name="search" placeholder="请输入你要查找的内容" @keyup.enter="search(obj.id)" />
+					<a @click="search(obj.id)"></a>
+				</div>
+			</div>
+			
+			
+			<!--所有品牌盒子-->
+			<div class="all-box all-box1">
+				
+
+				<div class="kcms" :id="obj.id" v-for="obj in allprofession">
+					<div class="title" :style="{background: obj.bgcolor}">
+						<p>{{obj.hyname}}</p>
+					</div>
+					<ul class="pinpais">
+						<li class="pinpai" v-for="item in obj.review"><a :href="'{:url('review/detail')}/id/'+item.id+''">
+							<img :src="item.imgsrc" />
+							<div class="pinpai-text">
+								<h5>{{item.name}}</h5>
+								<div class="star-box">
+		    					<div class="noactive"></div>
+		    					<div class="active" :style="{width: Math.floor(item.soure/item.count)*22+'px'}"></div>
+		    				</div>
+		    				<p class="good-com">好评率：<span>{{Math.floor(100/7*Math.floor(item.soure/item.count))?Math.floor(100/7*Math.floor(item.soure/item.count))+'%':'暂无数据'}}</span></p>
+		    				<p class="com-num">评论人数：<span>{{item.replyCount ? item.replyCount+'人': '暂无数据'}}</span></p>
+		    				<p class="joiner-com">加盟者评论：<span>{{item.count ? item.count+'人': '暂无数据'}}</span></p>
+							</div>
+						</a></li>
+					</ul>
+				</div>
+			</div><!--all-box1   end-->
+
+		</div><!--container   end-->
+		
+		
+		<!--底部-->
+		{include file="public:footer" /}
+		
+	
+<script src="__STATIC__/Home/js/swiper.js"></script>
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script>
+	
+	var vm = new Vue({
+		el: '#content',
+		data: {
+			nav: [],
+			nav11: [],
+			allprofession:[],
+		},
+
+		created:function(){
+			var self = this;
+			$.get("{:url('review/more')}",function(data){
+				var data = {$data};
+				self.allprofession = data;
+			})
+		},
+		mounted: function(){
+			//监听屏幕滚动 侧边栏事件
+			this.contRightNav;
+			window.addEventListener('scroll',this.contRightNav); 
+			window.addEventListener('resize',this.contRightNav); 
+		},
+
+		methods: {
+			//获取.right-nav 到顶部的距离
+			contRightNav: function(){
+				let rightNavTop = $(window).scrollTop();
+				let viewHeight = $(window).height();
+				let rightheight = $('.right-nav').height();
+				let footertop = $('.footer').offset().top;
+				let contenttop = $('#content').offset().top;
+				//.right-nav 的高度 rightheight
+				let rightNavTopWhite = (viewHeight - rightheight)/2;		
+				if($(window).scrollTop()<=670){									//.all-box1顶部  到  html顶部的距离  634px   两行行业的话是670
+					rightNavTop = 526;														//.all-box1顶部  到 .containe顶部的距离   490px
+				}else{																																	
+					rightNavTop = $(window).scrollTop() - 144 + rightNavTopWhite;			//.containe顶部  到  html顶部的距离  144px
+					if(rightNavTop<=526){
+						rightNavTop = 526;
+					}else if(rightNavTop>=(footertop-rightheight-contenttop)){
+						rightNavTop = (footertop-rightheight-contenttop);
+					}
+				}
+				$('.right-nav').stop().animate({top: rightNavTop},400,'easeInOutQuad');
+			},
+            //搜索功能
+            search:function (id) {
+                var self=this;
+                var search=$('input[name="search"]').val();
+                var id=id;
+                if(!search){
+                    return;
+                }
+                $.ajax({
+                    type: "post",
+                    url: "{:url('Review/Search')}",
+                    data: {search:search,id:id},
+                    success: function(data){
+                        if(data.code==500){
+                            alert('没有找到您想要找的内容');return;
+						}
+                        self.allprofession = data;
+                    }
+                })
+            },
+			//右侧导航栏点击事件
+			rightClick: function(i,e){
+				let selectId;
+				if(this.allprofession[i]){
+					selectId = this.allprofession[i].id;
+				}else{
+					selectId = $(e.currentTarget).attr('value');
+				}
+				$('body,html').animate({scrollTop: $('#'+selectId).offset().top},800,'easeInOutQuad');
+			},
+		},
+	})
+	
+</script>
+<script>
+
+	//头部导航选择
+	$('.nav ul li').siblings().removeClass('active');
+	$('.jmdp').addClass('active');
+	
+	//顶部轮播
+	var bannerSwiper = new Swiper ('.swiper-banner', {
+    loop: true, // 循环模式选项
+		autoplay: {
+			disableOnInteraction: false,
+			delay: 3000,
+		},
+  });
+  
+  //底部轮播
+  var bottomSwiper = new Swiper ('.swiper-bottom', {
+    loop: true, // 循环模式选项
+		autoplay: {
+			disableOnInteraction: false,
+			delay: 3000,
+		},
+  });
+	
+</script>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>登录</title>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/radio.css"/>
+		<link rel="Shortcut Icon" type="image/x-icon" href="__STATIC__/Home/img/fanxiang.ico" />
+		<style>
+			[v-cloak]{ visibility: hidden; }
+			/*全样式*/
+			.login-header{ width: 100%; height: 88px; background: rgba(18,193,115,.5); position: fixed; top: 0; z-index: 1; }
+			.login-header .container a{ float: left; margin-top: 16px; }
+			.login-header .container p{ float: right; margin-top: 30px; font-size: 28px; line-height: 28px; color: #fff; font-family: 'CTLaoSongSJ'; }
+			.login-header .container p img{ float: left; margin: 2px 10px 0 0; }
+			
+			
+			
+			.big-bg{ width: 1920px; height: 876px; position: relative; left: 50%; margin-left: -960px; background: url(__STATIC__/Home/img/log-reg/log-bg.png)no-repeat; }
+			.big-bg .login-box{ position: absolute; width: 406px; padding: 0 26px; box-sizing: border-box; height: 495px; text-align: center; right: 80px; top: 220px; background: url(__STATIC__/Home/img/log-reg/login-box-bg.png)no-repeat; border-radius: 10px; }
+			.big-bg .login-box .show-error{ display: none; position: absolute; left: 40px; bottom: -40px; font-size: 14px; color: #12C173; }
+			.big-bg .login-box .show-error img{ float: left; margin: 1px 6px; }
+			.big-bg .login-box p{ font-size: 14px; color: #cecece; margin-top: 40px; }
+			.big-bg .login-box h5{ font-size: 24px; color: #666; line-height: 54px; margin-bottom: 20px; background: url(__STATIC__/Home/img/log-reg/list-line.png)no-repeat; }
+			.big-bg .login-box .errorinfor{ position: absolute; top: 113px; left: 50%; margin-left: -60px; font-weight: bold; font-size: 12px; color: #fe9700; }
+			.doudong{ animation: doudong .3s; }
+			.codedoudong{ animation: codedoudong .3s; }
+			@keyframes doudong{
+				0{ margin-left: -60px; }
+				12.5%{ margin-left: -65px; }
+				37.5%{ margin-left: -55px; }
+				62.5%{ margin-left: -65px; }
+				87.5%{ margin-left: -55px; }
+				100%{ margin-left: -60px; }
+			}
+			@keyframes codedoudong{
+				0{ margin-left: 0px; }
+				12.5%{ margin-left: -5px; }
+				37.5%{ margin-left: 5px; }
+				62.5%{ margin-left: -5px; }
+				87.5%{ margin-left: 5px; }
+				100%{ margin-left: 0px; }
+			}
+			.big-bg .login-box>div{ width: 100%; height: 46px; padding: 0 4px; box-sizing: border-box; position: relative; margin-bottom: 20px; }
+			.big-bg .login-box>div>input{ width: 100%; height: 46px; font-size: 14px; border: 2px solid #f9faf9; border-radius: 6px; box-sizing: border-box; padding-left: 54px; }
+			/*.big-bg .login-box>div>input::-webkit-input-placeholder{ color: #8c8c8c; }
+			.big-bg .login-box>div>input::-ms-input-placeholder{ color: #8c8c8c; }
+			.big-bg .login-box>div>input::-moz-placeholder{ color: #8c8c8c; }*/
+			.big-bg .login-box>div input:focus{ outline: none; }
+			.big-bg .login-box>div img{ position: absolute; top: 13px; left: 20px; }
+			.big-bg .login-box>div:not(.user-box) img{ top: 10px; }
+			.big-bg .login-box .code-box{ margin-bottom: 15px; position: relative; }
+			.big-bg .login-box .code-box .code-img{ width: 86px; height: 38px; position: absolute; right: 8px; left: auto; top: 4px; }
+			.big-bg .login-box .code-box .code-img img{ top: 0; left: 0; }
+			.code-error{ position: absolute; font-size: 12px; color: #fe9700; top: 17px; line-height: 12px; }
+			.big-bg .login-box .forget-box{ height: 20px; margin-bottom: 15px; }
+			.big-bg .login-box .forget-box label{ float: left; font-size: 14px; color: #8c8c8c; margin-left: 10px; }
+			.big-bg .login-box .forget-box a{ float: right; font-size: 14px; color: #8c8c8c; margin-right: 10px; }
+			.big-bg .login-box .forget-box label input{ float: left; margin: 0 6px 0 0; }
+			.big-bg .login-box .login-btn{ background: #ff9800; border-radius: 6px; color: #fff; cursor: pointer; font-size: 20px; line-height: 46px; }
+			.big-bg .login-box .go-reg{ line-height: 46px; text-align: right; font-size: 14px; color: #b0afaf; }
+			.big-bg .login-box .go-reg a{ color: #12C173; }
+			
+		</style>
+	</head>
+	<body>
+		<!--顶部-->
+		<div class="login-header">
+			<div class="container">
+				<a href="{:url('/')}"><img src="__STATIC__/Home/img/log-reg/logo.png"/></a>
+				<p><img src="__STATIC__/Home/img/log-reg/tel-icon.png"/>400-888-2487</p>
+			</div>
+		</div>
+
+		<!--内容-->
+		<div class="big-bg" id="vm" v-cloak>
+			<div class="container">
+				
+				<div class="login-box">
+					<h3 class="show-error"><img src="__STATIC__/Home/img/log-reg/error-icon.png" />用户名不存在或验证码错误</h3>
+					<p>UESR LOGIN</p>
+					<h5>用户登录</h5>
+					<span class="errorinfor" v-show="error">用户名或密码不正确！</span>
+					{:token()}
+					<!--用户框-->
+					<div :class="item.className" v-for="(item, index) of inputGroup">
+						<img :src="item.icon" />
+						<input :type="item.inputType" :id="item.inputId" :placeholder="item.placeholder" @focus="initInput(index)" @blur="testval(index)" v-model="item.value" />
+					</div>
+
+					<!--验证码框-->
+					<div class="code-box">
+						<img src="__STATIC__/Home/img/log-reg/code-icon.png" />
+						<input type="text" id="code" placeholder="请输入验证码" @focus="codefocus" v-model="code" />
+						<span class="code-error" v-show="codeError">验证码错误！</span>
+						<a class="code-img" href="javascript:;"><img src="{:captcha_src()}" onclick="this.src='{:captcha_src()}?'+Math.random()"/></a>
+					</div>
+					<!--记住。。。-->
+					<div class="forget-box">
+						<label><input type="checkbox" v-model="rememberUser" />记住用户名</label>
+						<a href="javascript:;">忘记密码？</a>
+					</div>
+					
+					<div class="login-btn" @click="loginClick">登录</div>
+					<div class="go-reg">现在还不是返乡创业会员？ 现在 <a href="{:url('Login/register')}">免费注册</a>或<a href="{:url('Login/register')}">微信登陆</a></div>
+					
+				</div>
+			</div>
+		</div>
+		<!--底部-->
+
+{include file="public:footer" /}
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script>
+	var vm = new Vue({
+		el: '#vm',
+		data: {
+			error: 0,
+			codeError: 0,
+			rememberUser: false,
+			code: '',
+			inputGroup: [
+				//用户名
+				{
+					className: 'user-box',
+					icon: '__STATIC__/Home/img/log-reg/user-icon.png',
+					inputId: 'username',
+					inputType: 'text',
+					placeholder: '请输入手机号或者用户名',
+					value: '',
+				},
+				//密码
+				{
+					className: 'pas-box',
+					icon: '__STATIC__/Home/img/log-reg/pas-icon.png',
+					inputId: 'password',
+					inputType: 'password',
+					placeholder: '请输入密码',
+					value: '',
+				},
+			],
+		},
+		created: function(){
+			this.inputGroup[0].value = localStorage.getItem('user') || '';
+		},
+		methods: {
+			//获取焦点事件
+			initInput: function(i){
+				var self = this;
+				this.error = 0;
+			},
+			//失去焦点事件
+			testval: function(i){
+				
+			},
+			//验证码获取焦点
+			codefocus: function(){
+				this.codeError = 0;
+			},
+			//登录
+		 	loginClick: function(){
+		 		var self = this;
+		 		var __token__ = $('input[name=__token__]').val();
+				var username = this.inputGroup[0].value;
+				var password = this.inputGroup[1].value;
+				var code = this.code;
+		 		$('.errorinfor').removeClass('doudong');
+		 		$('.code-error').removeClass('codedoudong');
+				
+				$.ajax({
+					url:"{:url('Login/login')}",
+					data:{__token__:__token__,username:username,password:password,code:code},
+					type:"post",
+					dataType:"json",
+					success:function(data){
+						console.log(data);
+						if (data.status == 0) {
+//							alert(data.error);
+							if(data.error=='验证码错误！'){
+								self.codeError = 1;
+								$('.code-error').addClass('codedoudong');
+							}else{
+								self.error = 1;
+								$('.errorinfor').addClass('doudong');
+								self.code = '';
+							}
+							$('.code-img img').attr("src","{:captcha_src()}?"+Math.random());
+						}else{
+							if(self.rememberUser){
+								localStorage.setItem("user",username);
+							}else{
+								localStorage.setItem("user",'');
+							}
+//							alert(data.msg);
+							window.location.href = "{:url('/')}";
+						}
+					}
+				})
+		 	},
+		},
+		 
+	});
+
+</script>

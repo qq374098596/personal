@@ -1,0 +1,258 @@
+{include file="public:head" /}
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/radio.css"/>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/review.css"/>
+	</head>
+	<body>
+		<!--顶部-->
+		
+		{include file="public:header" /}
+		
+		<!--内容-->
+		<div class="container" id="content" v-cloak>
+			<!--title-->
+			<img class="dianping-title" src="__STATIC__/Home/img/yxxm/dianping-title-bg.png" />
+			
+			<!--表单组-->
+				<form name="all" onsubmit="return vm.submit(this)" >
+					<div class="content-box">
+						<div class="title">品牌信息</div>
+						<div class="input-group">
+							<ul>
+								<li>
+									<p>品牌名称：</p>
+									<input type="text" id="reviewname" v-if="'{$id}'" v-model="ppname" readonly required style="background: #eee;"/>
+									<input type="text" id="reviewname" v-else placeholder="请输入品牌名称"  class="222"  v-model="ppname" required/>
+									<span>*</span>
+								</li>
+								<li>
+									<p>所属行业：</p>
+									<input type="text" v-if="'{$id}'" v-model="profession" readonly required style="background: #eee;"/>
+									<select name="profession" id="trade" v-else required="required" v-model="profession">
+										<option value=""></option>
+										<option value="1">1</option>
+										<option value="2">餐饮美食</option>
+										<option value="3">3</option>
+									</select>
+									<span>*</span>
+								</li>
+								<li v-if="'{$id}'">
+									<p>品牌logo：</p>
+									<div class="file-box1 file-box">
+										<div class="file-img file">
+											<img id="logo" :src="logoimg?logoimg:'__STATIC__/Home/img/loading.gif'" />
+										</div>
+									</div>
+								</li>
+								<li v-else>
+									<p>品牌logo：</p>
+									<div class="file-box1 file-box">
+										<div class="file-img file">
+											<img id="logo" :src="logoimg?logoimg:'__STATIC__/Home/img/loading.gif'" />
+											<input type="file" id="file" accept="image/*" @change="selectImg($event,'logo')" />
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				
+					<!--表单组-->
+					<div class="content-box">
+						<div class="title">加盟信息</div>
+						<div class="input-group">
+							<div class="radio-box">
+								<label><input type="radio" required="required" name="radio" value="0" v-model="state">未开店</label>
+			          			<label><input type="radio" required="required" name="radio" value="1" v-model="state">已开店</label>
+			          			<label><input type="radio" required="required" name="radio" value="2" v-model="state">已关店</label>
+							</div>
+							
+							<ul>
+								<li>
+									<p>加盟费：</p>
+									<input type="number" id="number" placeholder="请输入您品牌的加盟费（数字，单位：万）" v-model="joinmoney" required/>
+									<span>*</span>
+								</li>
+								<li>
+									<p>公司：</p>
+									<input type="text" id="company" placeholder="请输入品牌所属公司名称" v-model="company" required/>
+									<span>*</span>
+								</li>
+								<li>
+									<p>总成本：</p>
+									<input type="number" id="cost" placeholder="请输入前期开店总成本，包含加盟费（数字，单位：万）" v-model="allmoney" required/>
+									<span>*</span>
+								</li>
+								<li>
+									<p>加盟时间：</p>
+									<input type="date" id="date" placeholder="请选择您加盟的时间" v-model="time" required />
+									<span>*</span>
+								</li>
+								<li>
+									<p>开店城市：</p>
+									<input type="text" id="target" placeholder="请输入加盟城市" v-model="city" required/>
+									<span>*</span>
+								</li>
+								<li v-if="state == 1">
+									<p>月营收：</p>
+									<input type="number" id="revenue" placeholder="请输入平均月营业额（数字，单位：万）" v-model="mounthin" required/>
+									<span>*</span>
+								</li>
+								<li v-else>
+									<p>月营收：</p>
+									<input type="number" id="revenue" placeholder="请输入平均月营业额（数字，单位：万）" v-model="mounthin"/>
+									<span></span>
+								</li>
+							</ul>
+							
+							<div class="star-box">
+								<p>评分：</p>
+								<div class="noactive"></div>
+								<div class="active" :style="{width:starlevel*22+'px'}" ref="star"></div>
+								<ul class="click-block">
+									<li @click="selectstar(index)" v-for="(item,index) in 7"></li>
+								</ul>
+								<input type="radio" v-for="(item,index) in 7" :value="index" name="star" v-model="starlevel" required="required" style="position: absolute;top: 0; left: 154px; z-index: -1;"/>
+							</div>
+							
+							<textarea placeholder="请输入您的加盟评价" name="content" required="required" v-model="content"></textarea>
+							
+							<div class="file-box" id="file-box">
+								<div class="uploaded-img" v-for="(item, index) of uploaded">
+									<div>
+										<img id="material" :src="item" />
+										<p @click="deleteImg(index)"><img src="__STATIC__/Home/img/close-icon.png" /></p>
+									</div>
+								</div>
+								<div class="file-img file">
+									<img src="__STATIC__/Home/img/yxxm/file-img.png" />
+									<input type="file" accept="image/*" @change="selectImg($event,'data')" />
+								</div>
+							</div>
+							<p class="file-text">点击上传品牌LOGO 加盟合同 加盟授权书等材料~</p>
+							
+							<div class="submit-box">
+								<label><input type="checkbox" required="required" />本人已阅读并同意 <a>《隐私条约》</a></label>
+								<input class="submit-btn" type="submit" @click="but()" value=" 确 认 发 表" />
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			
+		</div>
+	
+		<!--底部-->
+		
+	{include file="public:footer" /}
+
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script>
+	var vm = new Vue({
+		el: '#content',
+		data: {
+			logoimg: '',
+			state: '',
+			joinmoney: '',
+			company: '',
+			allmoney: '',
+			time: '',
+			city: '',
+			mounthin: '',
+			starlevel: '',
+			content: '',
+			ppname: '正新鸡排',
+			profession: '餐饮美食',
+			uploaded: [],
+		},
+		created:function(){
+			var self = this;
+			$.get("{:url('review/detailJson',['id'=>$id])}",function(data){
+				var data = JSON.parse(data);
+				console.log(data);
+				self.ppname = data.detail.name;
+				self.profession = data.detail.hyname;
+				self.logoimg = data.detail.imgsrc;
+			})
+		},
+		mounted: function(){
+			$('.nav .jmdp').addClass('active');
+		},
+		
+		methods: {
+			submit: function(form){
+				console.log(form);
+				return false;
+			},
+			selectstar: function(i){
+				this.starlevel = i+1;
+			},
+			selectImg: function(e,t){
+				var file = e.target.files[0];
+				var reader = new FileReader();
+				var formData = new FormData();
+				var self = this;
+				//console.log(file);
+				formData.append('file',file);
+				$.ajax({
+					url:"{:url('Upload/uploads')}",
+					data:formData,
+					type:'post',
+					dataType:'json',
+					processData:false,
+					contentType:false,
+					success:function(data){
+						//var data = eval("("+data+")");
+						console.log(data);
+						if (data.errno == 0) {
+							reader.readAsDataURL(file);
+							if (t == 'data') {
+								reader.onloadend = function(e){
+									self.uploaded.push(data.data[0]);
+								};
+							}else if (t == 'logo') {
+								reader.onloadend = function(e){
+									self.logoimg = data.data[0];
+								};
+							}
+						}
+					}
+				});
+			},
+			deleteImg: function(i){
+				if(confirm('确认删除吗?')){
+					this.uploaded.splice(i,1);
+				}else{ return }
+			},
+
+			but:function(){
+				
+					var reviewname = $('#reviewname').val();
+					var trade = $('#trade').val();
+					var logo = $('#logo').attr('src');
+				
+				var radio = ""+this.state+"";
+				var number = $('#number').val();
+				var company = $('#company').val();
+				var cost = $('#cost').val();
+				var date = $('#date').val();
+				var target = $('#target').val();
+				var revenue = $('#revenue').val();
+				var content = $('textarea[name=content]').val();
+				var starlevel = this.starlevel;
+				var material = ""+this.uploaded+"";
+				var uid = "{$Think.session.user.id}";
+				$.ajax({
+					url:"{:url('review/addreview')}",
+					data:{reviewname:reviewname,trade:trade,logo:logo,radio:radio,number:number,company:company,cost:cost,date:date,target:target,revenue:revenue,content:content,starlevel:starlevel,material:material,uid:uid,id:"{$id}"},
+					type:"post",
+					dataType:"json",
+					success:function(data){
+						console.log(data)
+					}
+				})
+			},
+		},
+	});
+	
+	
+</script>

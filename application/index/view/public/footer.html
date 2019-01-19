@@ -1,0 +1,48 @@
+<div class="footer">
+	<div class="footer-t">
+		<div class="container">
+			<ul>
+				<li><a href="{:url('about/index')}">关于我们</a></li>
+				<li><a href="{:url('card/index')}">创业圈 &nbsp;</a></li>
+				<li><a href="{:url('diagnosis/index')}">加盟诊断</a></li>
+				<li><a href="{:url('review/index')}">加盟点评</a></li>
+				<li><a href="{:url('strict/index')}">严选品牌</a></li>
+				<li><a href="{:url('tutor/index')}">创业导师</a></li>
+				<li><a href="{:url('story/index')}">创业故事</a></li>
+			</ul>
+			<div class="footer-l">
+				<p class="telphone">400-888-2487</p>
+				<p>fanxiangchuangye@fanxiang.top</p>
+				<p>service@fanxiang.top</p>
+				<p>上海市浦江镇茸锦科技园</p>
+			</div>
+			<div class="footer-r">
+				<img src="__STATIC__/Home/img/gzh-erwei.png" />
+				<img src="__STATIC__/Home/img/xcx-erwei.png" />
+			</div>
+		</div>
+	</div>
+	<div class="footer-b">
+		<div class="container">
+			<p>沪ICP18030623号 400882487</p>
+			<p><a href="javascript:;">服务条款</a>&nbsp; | &nbsp;<a href="javascript:;">隐私政策</a></p>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+<script src="__STATIC__/Home/js/jquery-3.3.1.js"></script>
+<script>
+	$('#onfind').on('click',function(){
+		var find = $('#find').val();
+		$.ajax({
+			url:"{:url('index/find')}",
+			data:{find:find},
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				console.log(data);
+			}
+		})
+	})
+</script>

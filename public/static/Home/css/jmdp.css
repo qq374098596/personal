@@ -1,0 +1,94 @@
+[v-cloak]{ visibility: hidden; }
+/*body{ overflow-y: hidden; }*/
+/*侧边栏样式*/
+.right-nav{ position: absolute; top: 526px; right: -60px; width: 50px; }
+.right-nav li{ width: 50px; height: 50px; border-radius: 5px; margin-bottom: 5px; }
+.right-nav li a{ float: left; width: 50px; height: 50px; padding: 8px 10px 0; font-size: 14px; line-height: 17px; color: #fff; box-sizing: border-box; }
+.right-nav li.gotop a{ padding-top: 0; }
+.right-nav li a img{ float: left; }
+
+.right-nav li:last-child{ background: #79797a; }
+
+
+
+/*banner部分样式*/
+.banner-box{ overflow: hidden; margin-top: 20px; }
+.banner-box .swiper-banner{ width: 897px; height: 400px; float: left; overflow: hidden; background: #ccc; border-radius: 5px; text-align: center; }
+.banner-box .swiper-banner .swiper-slide{ line-height: 400px; }
+.swiper-slide img{ width: 100%; height: 100%; }
+/*登陆前*/
+.banner-box .login-box, .banner-box .xcx-box{ width: 283px; height: 190px; background: #fff; text-align: center; float: right; margin-bottom: 20px; border-radius: 5px; }
+.banner-box .login-box .header-box{ width: 100%; height: 60px; text-align: center; padding-top: 20px; }
+.banner-box .login-box .header-box img{ width: 59px; height: 59px; border-radius: 50%; }
+.banner-box .login-box .btn-box{ width: 100%; height: 20px; float: left; box-sizing: border-box; margin: 5px 0; }
+.banner-box .login-box .btn-box a{ display: inline-block; margin: 0 5px; width: 50px; height: 20px; border-radius: 4px; background: #ff4800; text-align: center; line-height: 20px; font-size: 12px; color: #fff; }
+.banner-box .login-box p{ float: left; width: 100%; font-size: 12px; margin-bottom: 8px; color: #898888; text-align: center; line-height: 28px; }
+.banner-box .login-box .dianping-btn{ font-size: 18px; padding: 3px 20px; border: 1px solid #ff4800; color: #ff4800; border-radius: 15px; }
+.banner-box .login-box .dianping-btn img{ margin-right: 10px; }
+/*登陆后*/
+.banner-box .login-box>p{ text-align: center; font-size: 12px; color: #898888; margin: 0; line-height: 24px; }
+.banner-box .login-box>p.p-bottom{ margin-bottom: 10px; }
+.banner-box .login-box>p a{ color: #ff4800; }
+.banner-box .xcx-box{ box-sizing: border-box; padding-top: 16px; }
+.banner-box .xcx-box img{ width: 110px; height: 110px;}
+.banner-box .xcx-box p{ font-size: 15px; color: #333; letter-spacing: 1px; }
+
+
+/*选择导航样式*/
+.nav-box{ width: 100%; border-radius: 5px; background: #fff; margin-bottom: 20px; overflow: hidden; }
+.nav-box span{ line-height: 50px; float: left; margin: 0 20px; }
+.nav-box ul{ float: left; width: 820px; padding: 11px 0 0; box-sizing: border-box; }
+.nav-box ul li{ float: left; margin: 0 5px 10px; box-sizing: border-box; border: 1px solid #fff; letter-spacing: 1px; border-radius: 13px; }
+.nav-box ul li a{ display: block; text-align: center; color: #747474; transition: .3s; font-size: 14px; line-height: 14px; padding: 6px 11px; }
+.nav-box ul li.active, .nav-box ul li:hover{ border: 1px solid #12c173; }
+.nav-box ul li.active a, .nav-box ul li:hover a{ color: #12c173; }
+{ border: 1px solid #12c173; color: #12c173; }
+.nav-box .input-box{ float: right; width: 252px; height: 50px; padding: 8px 0; box-sizing: border-box; position: relative; right: 20px; }
+.nav-box .input-box input{ width: 230px; height: 32px; font-size: 12px; border: 1px solid #dcdcdc; border-radius: 16px; padding-left: 22px; transition: .3s; }
+.nav-box .input-box input::-webkit-input-placeholder{ color: #b5b5b5; }
+.nav-box .input-box input::-ms-input-placeholder{ color: #b5b5b5; }
+.nav-box .input-box input::-moz-placeholder{ color: #b5b5b5; }
+.nav-box .input-box a{ width: 20px; height: 20px; position: absolute; right: 10px; top: 15px; background: url(../img/index/search-btn.png)no-repeat;  }
+.nav-box .input-box input:focus{ outline: none; border-color: #12bd61; }
+
+
+
+
+/*所有分类样式*/
+.all-box>div{ width: 100%; border-radius: 5px; background: #fff; overflow: hidden; margin-bottom: 20px; }
+.all-box>div .title{ width: 100%; height: 50px; }
+.all-box>div .title p{ float: left; font-size: 20px; color: #fff; line-height: 50px; margin-left: 20px; }
+.all-box>div .title a{ float: right; line-height: 50px; color: #fff; font-size: 14px; margin-right: 20px; }
+.all-box>div ul.pinpais{ width: 100%; padding: 34px 24px; overflow: hidden; }
+.all-box>div ul li{ width: 250px; height: 359px; margin: 0 49px 33px 0; border-radius: 5px; float: left; transition: .3s; }
+.all-box>div ul li:hover{ box-shadow: 0 0 10px 0 #ccc; }
+.all-box>div ul li a{ color: #333; }
+.all-box>div ul li img{ width: 250px; height: 167px; }
+.all-box>div .pinpai-text{ width: 100%; box-sizing: border-box; padding: 25px 0 0 14px; }
+.all-box>div h5{ font-size: 18px; margin-bottom: 14px; font-weight: normal; }
+.all-box>div .star-box{ width: 154px; height: 19px; position: relative; margin-bottom: 5px; }
+.all-box>div .noactive, .all-box>div .active{ position: absolute; top: 0; left: 0; }
+.all-box>div .noactive{ width: 154px; height: 19px; background: url(../img/star1.png); }
+.all-box>div .active{ width: 154px; height: 19px; background: url(../img/star2.png); }
+.all-box>div p{ color: #848484; font-size: 14px; line-height: 28px; }
+.all-box>div p span{ color: #333; }
+
+.all-box .kcms .title{ background: #fe9700; }
+.all-box .fzfs .title{ background: #efef27; }
+.all-box .jypx .title{ background: #a4ef27; }
+.all-box .mrjs .title{ background: #27ef40; }
+.all-box .csbl .title{ background: #27ef8b; }
+.all-box .myye .title{ background: #27efd6; }
+.all-box .jjjf .title{ background: #27bdef; }
+.all-box .snyz .title{ background: #2772ef; }
+.all-box .rmpp .title{ background: #f11934; }
+.all-box .cnxh .title{ background: #12c173; }
+
+
+/*中间轮播样式*/
+.swiper-middle{ width: 1200px; height: 380px; border-radius: 5px; overflow: hidden; margin: 20px 0; text-align: center; line-height: 380px; }
+.swiper-middle .swiper-slide{ background: #fff; }
+
+/*底部轮播样式*/
+.swiper-bottom{ width: 1200px; height: 380px; border-radius: 5px; overflow: hidden; margin: 20px 0; text-align: center; line-height: 380px; }
+.swiper-bottom .swiper-slide{ background: #fff; }

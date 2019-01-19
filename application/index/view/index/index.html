@@ -1,0 +1,297 @@
+{include file="public:head" /}
+	<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/index.css"/>
+</head>
+<body>
+	<!--顶部-->
+	{include file="public:header" /}		
+	<div id="vm">
+		<!--banner-->
+		<div class="banner-box">
+			<div class="container">
+				<img src="__STATIC__/Home/img/index/banner-xcx.png" />
+				<div class="input-group-box">
+					<form>
+						<div class="input-group">
+							{:token()}
+							<div class="pinpai">
+								<p>意向品牌：</p>
+								<input type="text" id="brand" placeholder="请输入要查询的品牌" v-model="wantBrand" />
+							</div>
+							<div class="dizhi">
+								<p>开店地址：</p>
+						      	<div id="target">
+						        	<div id="eprovinceName" class="form-group"><select v-model="eprovinceName"></select></div>
+						        	<div id="ecityName" class="form-group"><select v-model="ecityName"></select></div>
+						        	<div id="edistrictName" class="form-group"><select v-model="edistrictName"></select></div>
+						      	</div>
+						      	<input id="specific" placeholder="请输入要开店具体地址" v-model="detailAddress" />
+							</div>
+							<div class="lianxi">
+								<p>联系方式：</p>
+								<input id="contact" onblur="blur(this)" type="text" placeholder="请输入手机号" v-model="contact" />
+							</div>
+						</div>	
+						<div class="zhenduan">
+							<label><input type="button" id="but" value="开始诊断" @click="beginDiagnosis"></label>
+							<p>已有<span>{{diagnosisAll}}</span>位用户成功诊断</p>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--一站式返乡创业平台-->
+		<div class="pingtai">
+			<div class="container">
+				<div class="text-box">
+					<img src="__STATIC__/Home/img/index/pingtai-title.png"/>
+					<a class="more" href="{:url('story/index')}"><img src="__STATIC__/Home/img/index/more.png" /></a>
+					<p>返乡创业集<span>· 导师指导 · 加盟点评 · 加盟诊断 · 严选品牌</span>  于一体打造全新模式，不仅有优秀创业文章供你查看还有众多优秀导师指导。</p>
+					<h6>ONE STOP HOME BUSINESS PLATFORM</h6>
+				</div>
+					
+				<div class="content-box">
+					<div class="content">
+						<h3>上海创扬信息技术有限公司</h3>
+						<p>上海创扬信息技术有限公司致力于成为中国最新锐的媒体运营。及文化产品整合机构，自成立以来，凭借良好的项目运营能力，一直服务于大众人群以及各种品牌。</p>
+						<img src="__STATIC__/Home/img/index/pingtai.png" />
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		<!--加盟点评-->
+		<div class="dianping">
+			<div class="container">
+				<div class="text-box">
+					<img src="__STATIC__/Home/img/index/dianping-title.png" />
+					<a class="more" href="{:url('review/index')}"><img src="__STATIC__/Home/img/index/more.png" /></a>
+					<p>真实加盟者点评，还原品牌真实面目！</p>
+					<h6>COMMENT ON JOINING</h6>
+				</div>
+						
+				<div class="content">
+					<div class="swiper-container">
+		        <div class="swiper-button-prev"></div>
+		        <div class="swiper-button-next"></div>
+		        <div class="swiper-wrapper">
+		        	<!--第一个点评-->
+		        	{foreach $_review as $v}
+	            	<div class="swiper-slide">
+	            		<div class="dianping-detail">
+	            			<div class="dianping-people">
+	            				<div class="people-header">
+	            					<img style="width:71px;height:71px" src="{$v.headimg}" />
+	            				</div>
+	            				<p class="people-name">{$v.name}</p>
+	            				<div class="dianpinged">
+	            					<p class="dianping-pinpai">{$v.nickname}</p>
+	            					<div class="star-box">
+	            						<div class="noactive"></div>
+	            						<div class="active" style="width:calc({$v.roundscore}*22px)"></div>
+	            					</div>
+	            				</div>
+	            			</div>
+	            			<div class="dianping-text">
+	            				<p><a href="javascript:;">{$v.content|htmlspecialchars_decode|strip_tags|mb_substr=0,20,'utf-8'}</a></p>
+	            			</div>
+	            		</div>
+	            		<div class="dianping-img"><img style="width:593px;height:254px; -webkit-clip-path: polygon(90% 0, 100% 20%, 100% 100%, 10% 100%, 0 80%, 0 0);" src="{$v.scoreimg}" /></div>
+	            	</div>
+	            	{/foreach}
+	            </div> 
+		        <div class="swiper-pagination"></div>
+			    </div>
+				</div>
+			</div>
+		</div>
+		<!--创业导师-->
+		<div class="daoshi">
+			<div class="container">
+				<div class="text-box">
+					<img src="__STATIC__/Home/img/index/daoshi-title.png"/>
+					<a class="more" href="{:url('tutor/index')}"><img src="__STATIC__/Home/img/index/more.png" /></a>
+					<p>授人以鱼不如授人以渔，大量创业导师提供专业创业指导</p>
+					<h6>ENTERPRISE TUTOR</h6>
+				</div>
+				<div class="content-box">
+					<div class="swiper-daoshi-prev"></div>
+			        <div class="swiper-daoshi-next"></div>
+					<div class="swiper-daoshi">
+						<div class="swiper-wrapper">
+							{foreach $_tutor as $v}
+						    <div class="swiper-slide">
+					      	<div class="daoshi-di"></div>
+					      	<div class="daoshi-hover" style="background: url({$v.imglist})no-repeat; background-size: 100% 100%;">
+					      		<div class="black-bg">
+					      			<div class="daoshi-box">
+							      		<div class="daoshi-header">
+							      			<a style="width:202px;height:202px;float: left;" href="{:url('Tutor/detail',['id'=>$v['id']])}"><img style="width:202px;height:202px" src="{$v.headimg}" /><p>创业导师{$v.name}</p></a>
+							      		</div>
+							      		<div class="daoshi-describe">
+							      			<a href="{:url('Tutor/detail',['id'=>$v['id']])}"><p>{$v.xiangmuxiangqing|htmlspecialchars_decode|strip_tags|mb_substr=0,20,'utf-8'}</p></a>
+							      		</div>
+							      		<div class="daoshi-detail">
+							      			<div>
+							      				<p class="nl">年龄：{$v.old}岁</p>
+							      				<p class="zl">资历：{$v.zizhi}年</p>
+							      			</div>
+							      			<div>
+							      				<p class="xm">项目：{$v.xiangmu}</p>
+							      				<p class="dz">地址：{$v.are}</p>
+							      			</div>
+							      		</div>
+							      	</div>
+					      		</div>
+							    </div>
+							</div>
+							{/foreach}
+						</div>
+					</div>
+				</div>		    
+			</div>
+		</div>
+		<!--创业圈-->
+		<div class="quan">
+			<div class="container">
+				<div class="text-box">
+					<img src="__STATIC__/Home/img/index/quan-title.png"/>
+					<a class="more" href="{:url('card/index')}"><img src="__STATIC__/Home/img/index/more.png" /></a>
+					<h6>BUSINESS CIRCLE</h6>
+					<p>全民参与-创业交流社区</p>
+				</div>
+				<div class="content-box">
+					<ul class="container">
+						{foreach $_card as $v}
+						<li>
+							<div class="quan-imgbox">
+								<img style="width:100px;height:100px" src="{$v.headimg}" />
+							</div>
+							<a href="{:url('Card/detail',['id'=>$v['id']])}">{$v.title}</a>
+							<p><img src="__STATIC__/Home/img/index/quan-plicon.png" /><span>发帖人：{$v.nickname}</span>{$v.time}</p>
+							<span>{$v.content|htmlspecialchars_decode|strip_tags|mb_substr=0,20,'utf-8'}...</span>
+						</li>
+						{/foreach}
+					</ul>
+					<a href="{:url('card/index')}" class="quan-click" title="点击跳转创业圈"></a>
+				</div>
+			</div>
+		</div>
+		<!--vue内容-->
+		<div id="content" v-cloak>
+			<!--严选项目-->
+			<div class="yanxuan">
+				<div class="container">
+					<div class="text-box">
+						<img src="__STATIC__/Home/img/index/yanxuan-title.png"/>
+						<a class="more" href="{:url('strict/index')}"><img src="__STATIC__/Home/img/index/more.png" /></a>
+						<p>筛选优质项目，让好的品牌脱颖而出</p>
+						<h6>STRICT SELECTION OF PROJECTS</h6>
+					</div>
+					<div class="content-box">
+						<ul class="container">
+							<li v-for="item,index in brand" v-if='index<=9'><a :href="'{:url('strict/detail')}/id/'+item.id+''"><img v-lazy="item.imgsrc" onerror="this.src='__STATIC__/Home/img/loading.gif'" :style="{backgroundColor: 'rgba('+Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+',.2)'}" /></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--底部-->
+	{include file="public:footer"}
+<script src="__STATIC__/Home/js/distpicker.data.js"></script>
+<script src="__STATIC__/Home/js/swiper.js"></script>
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script src="__STATIC__/Home/js/vue-lazyload.js"></script>
+<script>
+	Vue.use(VueLazyload,{
+	  preLoad: 1.3,
+	  loading: '__STATIC__/Home/img/loading.gif',
+	  attempt: 1
+	})
+	var vm = new Vue({
+		el: '#vm',
+		data: {
+			diagnosisAll:'',
+			brand: [],
+			wantBrand: '',
+			eprovinceName: '',
+			ecityName: '',
+			edistrictName: '',
+			detailAddress: '',
+			contact: '',
+		},
+		created: function(){
+			var self = this;
+			$('.nav .index').addClass('active');
+			
+			//严选项目数据
+			$.get("{:url('index/strict')}",function(data){
+				var data = eval("("+data+")");
+				console.log(data);
+				self.brand = data.brand;
+				self.diagnosisAll = data.diagnosisAll;	
+			})
+		},
+		mounted: function(){
+			//地址插件
+			$('#target').distpicker({
+				autoSelect: false
+			});
+		},
+		methods: {
+			beginDiagnosis: function(){
+				//console.log($('#target option:selected').val());
+				var __token__ = $('input[name=__token__]').val();
+				var eprovinceName = this.eprovinceName;
+				var ecityName = this.ecityName;
+				var edistrictName = this.edistrictName;
+				var address = eprovinceName + ecityName + edistrictName + this.detailAddress;
+				var brand = this.wantBrand;
+				var contact = this.contact;
+				var uid = "{$Think.session.user.id}";
+				$.ajax({
+					url:"{:url('index/diagnosis')}",
+					data:{__token__:__token__,brand:brand,contact:contact,address:address,uid:uid},
+					type:"post",
+					dataType:"json",
+					success:function(data){
+						console.log(data)
+						if (data.status == 0) {
+						  alert(data.error);
+						}else if(data.valid == 1){
+							alert('诊断中');
+						}else if(data.valid == 0){
+							alert(data.msg)
+						}
+					}
+				});
+			},
+		},
+	});
+</script>
+<script>
+	//点评轮播
+	var mySwiper = new Swiper ('.swiper-container', {
+    loop: true, // 循环模式选项
+    pagination: {
+      el: '.swiper-pagination',
+      clickable :true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+  //导师轮播
+  var swiperDaoshi = new Swiper('.swiper-daoshi', {
+  	loop: true, // 循环模式选项
+    slidesPerView: 3,
+    spaceBetween: 5,
+    navigation: {
+      nextEl: '.swiper-daoshi-next',
+      prevEl: '.swiper-daoshi-prev',
+    },
+  });
+	console.warn('SyntaxError: Please look in coods!') 
+	//请访问       genwohuijia.top/hhhhh   然后稍微运用下开发者工具    一定要一个人悄咪咪的看啊！！！！！！
+</script>

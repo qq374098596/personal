@@ -1,0 +1,61 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	{include file="meta" /}
+</head>
+<body>
+<div class="page-container">
+	<form action="{:url('Member/merchartset')}" method="post" class="form form-horizontal" id="form-article-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>账号：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" name="name">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>密码：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" name="password">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属品牌：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select class="select" name="op">
+					{volist name="pinpai" id="vo"}
+					<option value="{$vo.id}">{$vo.name}</option>
+					{/volist}
+				</select>
+				</span> </div>
+		</div>
+
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">账号状态：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select class="select" name="or">
+					<option value="1" selected>启用</option>
+					<option value="0">禁用</option>
+				</select>
+				</span> </div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>过期时间：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="date" name="expire_time" class="input-text">
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 提交</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+            {include file="script" /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+</script>
+</body>
+</html>

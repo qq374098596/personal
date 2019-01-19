@@ -1,0 +1,281 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	{include file="meta" /}
+	<style>
+		/* 去除数字输入框后面加减 */
+		/* 谷歌 */
+		input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			appearance: none;
+			margin: 0;
+		}
+		/* 火狐 */
+		input{
+			-moz-appearance:textfield;
+		}
+	</style>
+</head>
+<body>
+<div class="page-container">
+	{volist name="product" id="v"}
+	<form action="{:url('Product/edit_strict')}?id={$v.id}"  role="form" enctype="multipart/form-data" method="post" class="form form-horizontal" id="form-article-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>品牌名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$v.name}" name="name">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">所属行业：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select class="select" name="op">
+					<option value="{$v.hangyeid}">{$v.hyname}</option>
+					{volist name="hangye" id="vo"}
+					<option value="{$vo.id}">{$vo.hyname}</option>
+					{/volist}
+				</select>
+				</span> </div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">公司：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$v.company}" name="company">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">加盟费 (万)：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="number" name="money" value="{$v.jiamengfei}" class="input-text" style="width: 100%">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">电话：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="number" name="tel" value="{$v.tel}" class="input-text" style="width: 100%">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">加盟门店：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="jiamengshop" value="{$v.jiamengshop}" class="input-text">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">直营门店：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="zhiyingshop" value="{$v.zhiyingshop}" class="input-text">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">月营收 (万)：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="number" name="yueyingshou" value="{$v.yueyingshou}" class="input-text" style="width: 100%">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">总投入 (万)：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="number" name="investment" value="{$v.investment}" class="input-text" style="width: 100%">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">热门品牌：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select class="select" name="or">
+					{if condition="$v.order_id eq 1"}
+					<option value="1" selected>是</option>
+					<option value="0">否</option>
+					{/if}
+					{if condition="$v.order_id eq 0"}
+					<option value="1">是</option>
+					<option value="0" selected>否</option>
+					{/if}
+				</select>
+				</span> </div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">排序：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="number" name="sort" value="{$v.sort}" class="input-text" style="width: 100%">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">简介：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div id="we">
+					{$v.jianjie}
+				</div>
+				<textarea id="content" name="jianjie" style="width:100%; height:200px;display: none;"></textarea>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">实访：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div id="shifang">
+					{$v.shifang}
+				</div>
+				<textarea id="conten" name="shifang" style="width:100%; height:200px;display: none;"></textarea>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">投资预估：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<div id="prospect">
+					{$v.prospect}
+				</div>
+				<textarea id="conte" name="prospect" style="width:100%; height:200px;display: none;"></textarea>
+			</div>
+		</div>
+		<input type="hidden" id="hidden" name="hidden">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">LOGO：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<a style="display: inline-block;" class="btn btn-info">上传图片</a>
+				<input type="file" name="imgsrc" onchange="showPrevie(this)" style="width: 100px;border: 1px solid red;position: absolute;top:80px;left: 0px;height: 30px;opacity: 0;">
+				<img src="{$v.imgsrc}" style="width: 220px" id="portraitl">
+			</div>
+		</div>
+
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit" style="position: absolute;top:200px;"><i class="Hui-iconfont">&#xe632;</i> 提交修改</button>
+			</div>
+		</div>
+	</form>
+	<div class="row cl" style="margin-top: -50px">
+		<label class="form-label col-xs-4 col-sm-2" style="padding-left: 105px">图片列表：</label>
+		<form method="post" enctype="multipart/form-data">
+			<div style="margin-left:20%;margin-top: 100px;">
+				<span id="showlist" style="margin-left: 25px;">
+					{volist name="v.ppimglist" id="ii"}
+					<div style="position: relative;margin-right: 20px;margin-bottom: 15px;width: 132px;display: inline-block;border: 1px solid #CCC;background:#EEE;">
+						<span style="display: block;width: 120px;height: 100px;border: 1px solid #F2F1F0;margin: 5px;overflow: hidden;">
+                    	<img src="{$ii}" style="width: 100%;"/>'
+                    	</span>
+						<input type="hidden" class="img" value="{$ii}" />
+                    	<a onclick="delImg(this,event);" style="z-index: 10;display: block;top: -8px;cursor:pointer;right: -8px;position:absolute;width: 20px;height: 20px;background: #CCC;border-radius:100%;text-align:center;line-height: 20px;border: 1px solid #C1C1C1;color: #555;">X</a>
+                    </div>
+					{/volist}
+				</span>
+				<span style="display:inline-block;height: 90px;position: relative;top:0px;left:0px;">
+    <a style="display: inline-block;" class="btn btn-info">上传图片</a>
+    <input type="file" name="img_src" style="border: 1px solid red;position: absolute;top:0px;left: 0px;height: 30px;opacity: 0;" onchange="upload(this)">
+   </span>
+			</div>
+		</form>
+	</div>
+	{/volist}
+</div>
+
+            {include file="script" /}
+<script type="text/javascript" src="__STATIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__STATIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__STATIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="__STATIC__/Admin/lib/wangueditor/3.1.1/wangEditor.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+        $.wEditor({eid:'#we', cid:'#content',imgUrl: "{:url('tutor/tutorUpload')}",path:cdn,filename:'filedata'});
+        function cb(box, d) {
+            if (d.ret != 0) return alert(d.msg);
+            box.find('> .nup-img-img').attr('src', cdn + d.url);
+        }
+    });
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+        $.wEditor({eid:'#shifang', cid:'#conten',imgUrl: "{:url('tutor/tutorUpload')}",path:cdn,filename:'filedata'});
+        function cb(box, d) {
+            if (d.ret != 0) return alert(d.msg);
+            box.find('> .nup-img-img').attr('src', cdn + d.url);
+        }
+    });
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+        $.wEditor({eid:'#prospect', cid:'#conte',imgUrl: "{:url('tutor/tutorUpload')}",path:cdn,filename:'filedata'});
+        function cb(box, d) {
+            if (d.ret != 0) return alert(d.msg);
+            box.find('> .nup-img-img').attr('src', cdn + d.url);
+        }
+    });
+</script>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    function showPrevie(source) {
+        var file = source.files[0];
+        if(window.FileReader) {
+            var fr = new FileReader();
+
+            var portraitl = document.getElementById('portraitl');
+            fr.onloadend = function(e) {
+                portraitl.src = e.target.result;
+            };
+            fr.readAsDataURL(file);
+            portraitl.style.display = ' inline-block';
+        }
+    }
+
+</script>
+<script>
+    var imglist=[];
+	for(let i=0;i<$('.img').length;i++){
+        imglist.push($($('.img')[i]).val())
+	}
+    $('#hidden').val(imglist.join(','));
+    function upload(obj)
+    {
+        if( obj.value == "" ) {
+            alert('文件上传出错');
+            return;
+        }
+        // 实例化一个对象
+
+        var formdata = new FormData();
+        formdata.append("img" , $(obj)[0].files[0]);//获取文件
+        $.ajax({
+            type : 'post',
+            url :"{:url('Product/upimg')}", // 上传图片的接口地址
+            data : formdata,
+            cache : false,
+            processData : false, // 不处理发送的数据，因为data值是Formdata对象，不需要对数据做处理
+            contentType : false, // 不设置Content-type请求头
+            success : function(response){
+                var html = '<div style="position: relative;margin-right: 20px;margin-bottom: 15px;width: 132px;display: inline-block;border: 1px solid #CCC;background:#EEE;">'
+                    +'<span style="display: block;width: 120px;height: 100px;border: 1px solid #F2F1F0;margin: 5px;overflow: hidden;">'
+                    +'<img src="'+response+'" style="width: 100%;"/>'
+                    +'</span>'
+                    +'<input type="hidden" name="imgs[]" value="'+response+'" />'
+                    +'<a onclick="delImg(this,event);" style="z-index: 10;display: block;top: -8px;cursor:pointer;right: -8px;position:absolute;width: 20px;height: 20px;background: #CCC;border-radius:100%;text-align:center;line-height: 20px;border: 1px solid #C1C1C1;color: #555;">X</a>'
+                    +'</div>';
+
+                $('#showlist').append(html);
+                imglist.push(response);
+                $('#hidden').val(imglist.join(','));
+            },
+            error : function(){ }
+        });
+    }
+
+    function delImg(obj,e)
+    {
+        imglist.splice($(e.currentTarget).parent().index(),1)
+        $('#hidden').val(imglist.join(','));
+        // 向上找到父元素删除
+        $(obj).parent('div').remove();
+    }
+</script>
+</body>
+</html>

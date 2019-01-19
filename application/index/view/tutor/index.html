@@ -1,0 +1,177 @@
+{include file="public:head" /}
+<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/cyds.css"/>
+		
+	</head>
+	<body>
+		<!--顶部-->
+		
+		{include file="public:header" /}
+		
+		
+		<!--内容-->
+		<div id="content" v-cloak>
+			<!--banner-->
+			<div class="banner-box">
+				<div class="big-bg">
+					<h1>创业导师</h1>
+					<p>帮助你创业·并爱上返乡创业</p>
+				</div>
+				
+			</div>
+			
+			<!--CEO部分-->
+			<!--<div class="ceo-box">
+				<h3>CEO&amp;返乡创始人</h3>
+				<div class="ceo-header"><img src="__STATIC__/Home/img/cyds/ceo-header.png" /></div>
+				<div class="ceo-describe">
+					<h3>杨士乐</h3>
+					<h5>返乡创业网创始人</h5>
+					<p>返乡创业网创始人杨士乐,连续创业者,曾是上海支付宝口碑最早的服务商,中国首家共享图书联合创始人,也曾任职过饿了么,杨士乐看到了返乡创业的趋势以及二线以下城市甚至县镇的发展趋势,决心帮助更多人返乡创业,在创立平台之初走访了近百位返乡创业者,他们返乡回到自己的城市之后大部分选择了开店创业,而开店的创业者里绝大多数人选择了加盟这一方式。而返乡创业人返乡的理由大致相同,父母渐渐老去需要有人照顾,孩子已到了小学或初中也需要自己在身边教育。</p>
+					<div><img src="__STATIC__/Home/img/cyds/email.png" /><span>1008611@fanxiang.com</span></div>
+					<div><img src="__STATIC__/Home/img/cyds/tel.png" /><span>+ 12345671234</span></div>
+				</div>
+			</div>-->
+		
+		
+			<!--导师部分-->
+			<div class="daoshi-box">
+				<!--导师部分上部-->
+				<div class="daoshi-box-t">
+					<!--<div class="daoshi-title">创业导师</div>-->
+					<div class="daoshi-select-box">
+						<div class="select-profession">
+							<span>选择：</span>
+							<a class="select-all" href="javascript:;" @click="selectAll">全部</a>
+							<ul>
+								<li v-for="item in resule" @click="selectProfession"><a href="javascript:;">{{item}}</a></li>
+							</ul>
+							<div class="input-box">
+								<input type="text" name="search" placeholder="请输入你要查找的导师"  @keyup.enter="search" />
+								<a @click="search"></a>
+							</div>
+						</div>
+						<div class="select-sort">
+							<span>选择：</span>
+							<ul>
+								<li v-for="(item, index) in sorts" :data-index="index"><a href="javascript:;" @click="selectSort">{{item}}</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			
+				<!--导师部分下部-->
+				<ul class="daoshi-box-b">
+					<li class="daoshi-item" v-for="item in tutor" v-if="oneprofession == '' ? true : item.hyname ==  oneprofession"><a target="_blank" :href="'{:url('detail')}/id/'+item.id+''" append>
+						<div class="daoshi-header">
+							<img style="width:220px;height:230px" :src="item.headimg" />
+							<div class="daoshi-describe">
+								<p v-html="item.jieshao"></p>
+							</div>
+							<span class="jianjian"></span>
+						</div>
+						
+						<div class="daoshi-detail">
+							<h1>{{item.name}}</h1>
+							<h3>{{item.hyname}}</h3>
+							<p class="age">年龄：<span>{{item.old}}</span></p>
+							<p class="zili">资历：<span>{{item.zizhi}}</span></p>
+							<p class="obj">项目：<span>{{item.xiangmu}}</span></p>
+							<p class="address">地址：<span>{{item.are}}</span></p>
+						</div>
+					</a></li>
+				</ul>
+			
+			</div>
+		
+		
+		</div>
+
+		<!--底部-->
+		
+		{include file="public:footer" /}
+
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script>	
+	//头部导航选择
+	$('.nav ul li').siblings().removeClass('active');
+	$('.cyds').addClass('active');
+	// $('.nav ul li').click(function(){
+	// 	$(this).siblings().removeClass('active');
+	// 	$(this).addClass('active');
+	// });
+	
+	var vm = new Vue({
+		el: '#content',
+		data: {
+			oneprofession: '',
+			daoshiUrl: '',
+			resule: [],
+			sorts:[
+				'默认排序', '咨询最多',
+			],
+			tutor:[],
+		},
+		
+		created:function(){
+			var self = this;
+			var data = {$data};
+			console.log(data)
+			self.tutor = data.tutor;
+			self.resule = data.resule;
+		},
+
+		mounted: function(){
+
+		},
+		
+		methods: {
+			selectProfession: function(e){
+				$(e.target).parent().siblings().children('a').removeClass('active');
+				$(e.target).addClass('active');
+				this.oneprofession = $(e.target).html();
+			},
+            //搜索功能
+            search:function () {
+                var self=this;
+                var search=$('input[name="search"]').val();
+                if(!search){
+                    return;
+                }
+                $.ajax({
+                    type: "post",
+                    url: "{:url('Tutor/Search')}",
+                    data: {search:search},
+                    success: function(data){
+                        if(data==''){
+                            alert('没有找到您想要找的导师');return;
+						}
+                        self.tutor = data;
+                    }
+                })
+            },
+
+			selectAll: function(){
+				$('.select-profession li a').removeClass('active');
+				this.oneprofession = '';
+			},
+			
+			selectSort: function(e){
+				if($(e.target).parent().data('index') == 0){
+					this.tutor = this.tutor;
+				}else if($(e.target).parent().data('index') == 1){
+					this.tutor.sort(this.paixu('consultnum'));
+				}
+				
+			},
+			
+			paixu: function(pro){
+				return function(a,b){
+					var val1 = a[pro];
+					var val2 = b[pro];
+					return val2 - val1;
+				}
+			},
+		}
+	})
+	
+</script>

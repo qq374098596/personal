@@ -1,0 +1,160 @@
+{include file="public:head" /}
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/jmzd.css"/>
+	</head>
+	<body>
+		<!--顶部-->
+		{include file="public:header" /}		
+		<div id="big-box">
+			<!--弹框-->
+			<div id="succModel">
+				<h5>提交成功</h5>
+				<img src="__STATIC__/Home/img/gzh-erwei.png" />
+				<p>扫码添加客服微信，免费获取诊断结果</p>
+				<span @click="closeModel">关闭</span>
+			</div>
+			
+			<div class="big-bg"></div>
+			<div class="container">
+				<div class="titletitle">
+					<div class="title-text">
+						<h5><span>{{diagnosisAll}}</span> 位用户已经成功诊断      </h5>
+						<p>昨日已有 <span>{{yestdayNum}} </span>位用户提交了项目诊断！</p>
+					</div>
+				</div>
+				
+				<!--表单组-->
+				<div class="input-group">
+					{:token()}
+					<div class="input-box">
+						<span>意向品牌：</span>
+						<input type="text" placeholder="请输入要诊断的品牌" v-model="wantBrand" />
+					</div>
+					<div class="input-box">
+						<span>开店地址：</span>
+						<input type="text" placeholder="请输入要开店的地址" v-model="address" />
+					</div>
+					<div class="input-box">
+						<span>接收方式：</span>
+						<input type="text" placeholder="手机号/微信号" v-model="contact" />
+					</div>
+					<div class="kszd-btn" @click="beginDiagnosis()">开始诊断</div>
+				</div>
+				
+				<!--诊断须知-->
+				<div class="zdxz"><img src="__STATIC__/Home/img/jmzd/imporent.png" /></div>
+				
+				<!--诊断结果-->
+				<div class="bottom-swiper">
+					<div class="swiper-banner">
+				    <div class="swiper-wrapper">
+				      <div class="swiper-slide" v-for="item in bannerimg"><a :href="item.jump"><img v-if="item.src" :src="item.src"/><img v-else src="__STATIC__/Home/img/cyq/banner1.png"/></a></div>
+				    </div>
+				    <div class="swiper-pagination"></div>
+				  </div>
+				</div>
+				
+				
+			</div>
+		</div>
+		<!--底部-->
+		{include file="public:footer" /}
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script src="__STATIC__/Home/js/swiper.js"></script>
+<script>
+	var vm = new Vue({
+		el: '#big-box',
+		data: {
+			bannerimg:[
+				{ jump: 'javascript:', src: '__STATIC__/Home/img/jmzd/lunbo1.png' },
+				{ jump: 'javascript:', src: '__STATIC__/Home/img/jmzd/lunbo1.png' }
+			],
+			diagnosisAll: '',
+			yestdayNum: '',
+			wantBrand: '',
+			address: '',
+			contact: '',
+		},
+		created:function(){
+			$('.nav .jmzd').addClass('active');
+			var self = this;
+			$.get("{:url('diagnosis/index')}",function(){
+				var data = {$data};
+				console.log(data);
+				self.diagnosisAll = data.diagnosisAll;
+				self.yestdayNum = data.yestdayNum;
+			})
+		},
+		methods: {
+			beginDiagnosis: function(){
+				//console.log($('#target option:selected').val());
+				var token = $('input[name=__token__]').val();
+				var address = this.address;
+				var brand = this.wantBrand;
+				var contact = this.contact;
+				var uid = "{$Think.session.user.id}";
+				//验证是否含有字母
+				if(/^[a-zA-Z]*$/.test(contact)){
+					alert('这是微信号')
+					$.ajax({
+						url:"{:url('index/diagnosis')}",
+						data:{token:token,brand:brand,contact:contact,address:address,uid:uid},
+						type:"post",
+						dataType:"json",
+						success:function(data){
+							console.log(data)
+							if (data.status == 0) {
+							  alert(data.error);
+							}else if(data.valid == 1){
+								$('#succModel').fadeIn(100);
+							}else if(data.valid == 0){
+								$('#succModel').fadeIn(100);
+								alert(data.msg)
+							}
+						}
+					});
+				}else{
+					if(/^((13[0-9])|(14[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\d{8}$/.test(contact)){
+						$.ajax({
+							url:"{:url('index/diagnosis')}",
+							data:{token:token,brand:brand,contact:contact,address:address,uid:uid},
+							type:"post",
+							dataType:"json",
+							success:function(data){
+								console.log(data)
+								if (data.status == 0) {
+								  alert(data.error);
+								}else if(data.valid == 1){
+									$('#succModel').fadeIn(100);
+								}else if(data.valid == 0){
+									$('#succModel').fadeIn(100);
+									alert(data.msg)
+								}
+							}
+						});
+					}else{
+						alert('手机号格式不正确')
+					}
+				}
+			},
+			closeModel: function(){
+				$('#succModel').fadeOut(100);
+			},
+		},
+		
+	})
+	
+	//底部轮播
+	var bannerSwiper = new Swiper ('.swiper-banner', {
+    loop: true, // 循环模式选项
+		pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+  
+  //头部导航选择
+	$('.nav ul li').click(function(){
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+	});
+</script>

@@ -1,0 +1,21 @@
+<aside class="Hui-aside">
+    <div class="menu_dropdown bk_2">
+        {if $menu}
+        {foreach name="menu" item="item" key="k"}
+        <dl id="menu-{$k}">
+            <dt><i class="Hui-iconfont">&#xe616;</i> {$item.title}<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+            <?php if(array_key_exists('children',$item)): ?>
+            <dd>
+                <ul>
+                    {foreach name="item.children" item="it"}
+                    <li><a data-href="{:url($it.data)}" data-title="{$it.title}" href="javascript:void(0)">{$it.title}</a></li>
+                    {/foreach}
+                </ul>
+            </dd>
+            <?php endif ?>
+        </dl>
+        {/foreach}
+        {/if}
+    </div>
+</aside>
+<div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>

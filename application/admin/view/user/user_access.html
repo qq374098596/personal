@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {include file="meta" /}
+    <link rel='stylesheet' type='text/css' href='__STATIC__/Admin/lib/treetable/css/jquery.treeTable.css' />
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span> 管理员管理
+    <span class="c-gray en">&gt;</span> {$title}
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a class="btn btn-primary radius" href="javascript:void(0);">权限设置</a>
+        </span>
+    </div>
+    <form class="form form-horizontal" id="form-admin-set" method="post" action="{:url('user/user_access_post?role_id='.$role_id)}">
+    <table id="tree" width="100%" border="0" cellpadding="4" cellspacing="1" class="table">
+        <tbody>
+        {$html_tree}
+        <tr class="tr lt">
+            <td>
+                <input class="bginput" type="submit" name="dosubmit" value="提 交" ></td>
+        </tr>
+        </tbody>
+    </table>
+    </form>
+</div>
+{include file="script" /}
+<script type="text/javascript" src="__STATIC__/Admin/lib/treetable/jquery.treetable.js"></script>
+<script>
+    $(document).ready(function() {
+        //树配置
+        $("#tree").treeTable({
+            expandable: true,
+        });
+
+    });
+    function checknode(obj)
+    {
+        var chk = $("input[type='checkbox']");
+        var count = chk.length;
+        var num = chk.index(obj);
+        var level_top = level_bottom =  chk.eq(num).attr('level')
+        for (var i=num; i>=0; i--)
+        {
+            var le = chk.eq(i).attr('level');
+            if(eval(le) < eval(level_top))
+            {
+                chk.eq(i).attr("checked",'checked');
+                var level_top = level_top-1;
+            }
+        }
+        for (var j=num+1; j<count; j++)
+        {
+            var le = chk.eq(j).attr('level');
+            if(chk.eq(num).attr("checked")=='checked') {
+                if(eval(le) > eval(level_bottom)) chk.eq(j).attr("checked",'checked');
+                else if(eval(le) == eval(level_bottom)) break;
+            }
+            else {
+                if(eval(le) > eval(level_bottom)) chk.eq(j).attr("checked",false);
+                else if(eval(le) == eval(level_bottom)) break;
+            }
+        }
+    }
+</script>
+</body>
+</html>

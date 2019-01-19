@@ -1,0 +1,77 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	{include file="meta" /}
+</head>
+<body>
+<div class="page-container">
+	{volist name="message" id="v"}
+	<form action="{:url('Member/message_edits')}?id={$v.id}" method="post" class="form form-horizontal" id="form-article-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>状态：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<select class="select" name="status">
+					{if condition="$v.status eq 1"}
+					<option value="1" selected>推送中</option>
+					<option value="2">暂停推送</option>
+					{/if}
+					{if condition="$v.status eq 2"}
+					<option value="1">推送中</option>
+					<option value="2" selected>暂停推送</option>
+					{/if}
+
+				</select>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">最新入住品牌ID：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$v.mid}" name="mid">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">消息类型：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box">
+				<select class="select" name="kind">
+                    {if condition="$v.kind eq 1"}
+					<option value="1" selected>系统通知</option>
+					<option value="2">最新入住</option>
+					{/if}
+					{if condition="$v.kind eq 2"}
+					<option value="1">系统通知</option>
+					<option value="2" selected>最新入住</option>
+					{/if}
+
+				</select>
+				</span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">最新入住品牌名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" name="name" class="input-text" value="{$v.name}">
+				 </div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">消息内容：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" name="content" value="{$v.content}">
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 提交修改</button>
+			</div>
+		</div>
+	</form>
+	{/volist}
+</div>
+
+            {include file="script" /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+</script>
+</body>
+</html>

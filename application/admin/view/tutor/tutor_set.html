@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {include file="meta"}
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span> 文章管理
+    <span class="c-gray en">&gt;</span> {$title}
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<article class="page-container">
+    <form class="form form-horizontal" id="form-admin-set" method="post" action="{:url('tutor/tutor_post?id='.$id)}">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>导师姓名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{if $info} {$info.name} {/if}" placeholder="" id="name" name="name">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>导师头像：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{if $info} {$info.headimg} {/if}" placeholder="" id="headimg" name="headimg">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>行业名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="hangyeid" size="1">
+                        {foreach $hangye as $k=>$hy }
+                        <option value="{$k}" {if $info && $info.hangyeid == $k} selected {/if}>{$hy}</option>
+                        {/foreach}
+                    </select>
+			    </span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">导师所在地：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{if $info} {$info.are} {/if}" placeholder="" id="are" name="are">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">导师电话：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{if $info} {$info.tel} {/if}" placeholder="" id="tel" name="tel">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">电子邮件：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="mail" class="input-text" value="{if $info} {$info.mail} {/if}" placeholder="" id="mail" name="mail">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">导师年龄：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{if $info} {$info.old} {/if}" placeholder="" id="old" name="old">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">导师资质：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{if $info} {$info.zizhi} {/if}" placeholder="" id="zizhi" name="zizhi">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>创业项目：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{if $info} {$info.xiangmu} {/if}" placeholder="" id="xiangmu" name="xiangmu">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">项目详情：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <!--<textarea name="xiangmuxiangqing" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,200)">{if $info} {$info.xiangmuxiangqing} {/if}</textarea>-->
+                <!--<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>-->
+                <div id="we">
+                    {$info.xiangmuxiangqing}
+                </div>
+                <textarea id="content" name="xiangmuxiangqing" style="width:100%; height:200px;display: none;"></textarea>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">图片列表：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea class="input-text hide" id="imglist" name="imglist">{if $info} {$info.imglist} {/if}</textarea>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>创业历程：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea name="licheng" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,200)">{if $info} {$info.licheng} {/if}</textarea>
+                <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">个人介绍：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea name="jieshao" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,200)">{if $info} {$info.jieshao} {/if}</textarea>
+                <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">二维码地址：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{if $info} {$info.qrcodeurl} {/if}" placeholder="" id="qrcodeurl" name="qrcodeurl">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">首页推荐：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="select-box" style="width:150px;">
+                    <select class="select" name="tuijian" size="1">
+                        <option value="0" {if $info && $info.tuijian == 0} selected {/if}>不推荐</option>
+                        <option value="1" {if $info && $info.tuijian == 1} selected {/if}>推荐</option>
+                    </select>
+			    </span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">小程序首页图片：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea class="input-text hide" id="wxIndexImg" name="wxIndexImg">{if $info} {$info.wx_index_img} {/if}</textarea>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">排序：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{if $info} {$info.sort} {else/} 0 {/if}" placeholder="" id="sort" name="sort">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">显示状态：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="status" type="radio" id="sex-1" value="1" {if $info && $info.status ==1 } checked {/if}>
+                    <label for="sex-1">启用</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="sex-2" value="0" {if $info && $info.status ==0 } checked {/if} name="status">
+                    <label for="sex-2">关闭</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <input class="btn btn-primary radius" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" type="submit">
+                <button onClick="window.history.go(-1);" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </form>
+</article>
+{include file="script" /}
+<script type="text/javascript" src="__STATIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__STATIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__STATIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="__STATIC__/Admin/lib/wangueditor/3.1.1/wangEditor.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+        $.wEditor({eid:'#we', cid:'#content',imgUrl: "{:url('tutor/tutorUpload')}",path:cdn,filename:'filedata'});
+        function cb(box, d) {
+            if (d.ret != 0) return alert(d.msg);
+            box.find('> .nup-img-img').attr('src', cdn + d.url);
+        }
+        $('#imglist').upload({ path: cdn, url: root+ '/tutor/tutorUpload', width:120, height:100,length:3 }, cb);
+        $('#wxIndexImg').upload({ path: cdn, url: root+ '/tutor/tutorUpload', width:120, height:100,length:1 }, cb);
+    });
+</script>
+</body>
+</html>

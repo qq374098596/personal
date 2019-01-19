@@ -1,0 +1,345 @@
+{include file="public:head" /}
+	<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/cyq.css"/>
+</head>
+<body>
+	<!--顶部-->
+		
+	{include file="public:header" /}
+
+	<!--弹窗-->
+	<div id="tanchuang"></div>
+
+	<!--内容-->
+	<div class="container" id="content" v-cloak>
+		<!--banner-->
+		<div class="banner-box">
+			<div class="swiper-banner">
+		    <div class="swiper-wrapper">
+	      	<div class="swiper-slide" v-for="item in bannr"><a href="javascript:;"><img :src="item.src"/></a></div>
+		    </div>
+		    <div class="swiper-pagination"></div>
+			</div>
+			  
+			<div class="btn-box">
+				{if condition="$Think.session.user eq ''"}
+			  		<a class="sign-ined" href="{:url('Login/login')}"><img src="__STATIC__/Home/img/cyq/qiandao-icon2.png" />请登录</a>
+			  	{else/}
+			  		<a href="javascript:;" class="sign-in" @click="qiandao" v-if="sign == 0"><img src="__STATIC__/Home/img/cyq/qiandao-icon1.png" />签到 +1</a>
+			  		<a class="sign-ined" v-else><img src="__STATIC__/Home/img/cyq/qiandao-icon2.png" />已签到</a>
+			  		<p id="qiandao-fade"><img src="__STATIC__/Home/img/cyq/qiandao-icon1.png" />积分 +10</p>
+			  	{/if}
+			  	{if condition="$Think.session.user eq ''"}
+			  		<a  href="#" @click="dianping">
+			  	{else/}
+					<a href="{:url('Card/editing')}">
+			  	{/if}
+			  		<img src="__STATIC__/Home/img/cyq/new-icon2.png" />发布新贴
+			  	</a>
+			</div>
+			<div class="hot-box">
+			  	<div class="title"><img src="__STATIC__/Home/img/cyq/hot-icon.png"/>热门话题</div>
+			  	<ul class="huati-box">
+			  		<li v-for="item in topicall"><a :href="'{:url('topic')}/id/'+item.id+''">{{item.name}}</a></li>
+			  	</ul>
+			  	<a href="javascript:;" @click="chage" ><img src="__STATIC__/Home/img/cyq/replace-btn.png" />换一批</a>
+			</div>
+		</div>
+			
+		<!--创圈推荐-->
+		<div class="recommend">
+			<div class="title">
+				<div class="tiezi-infor">
+					<div class="today">今日发帖：<span>{{nowNum}}</span></div>
+					<div class="today">昨日发帖：<span>{{yestdayNum}}</span></div>
+					<div class="today">帖子总数：<span>{{allNum}}</span></div>
+				</div>
+			</div>
+				
+			<ul>
+				<li v-for="item in recard">
+					<img :src="item.headimg" :style="{backgroundColor: 'rgba('+Math.floor(Math.random() * 256)+','+Math.floor(Math.random() * 256)+','+Math.floor(Math.random() * 256)+', .2)'}"/>
+					<h5><a :href="'{:url('detail')}/id/'+item.id+''">{{item.title}}</a></h5>
+					<p><a :href="item.authorsrc">{{item.nickname}}</a><span>发布于 {{item.time}}</span></p>
+					<a :href="'{:url('detail')}/id/'+item.id+''">查看详情</a>
+				</li>
+			</ul>
+				
+			<div class="long-list"><img src="__STATIC__/Home/img/cyq/long-list.png" /></div>
+		</div>
+			
+		<!--帖子部分-->
+		<div class="tiezi-box">
+			<!--帖子左侧部分-->
+			<div class="tiezi-box-l">
+				<div class="btn-box">
+					<a href="javascript:;" @click="tieziall(1)">全部</a>
+					<a href="javascript:;" @click="tieziall(2)">热帖</a>
+					<a href="javascript:;" @click="tieziall(3)">加精</a>
+				</div>
+				
+				<ul>
+					<li v-for="item in cardall" class="zhiding">
+						<img :src="item.headimg"/>
+						<div class="tiezi-describe">
+							<h5><a :href="'{:url('detail')}/id/'+item.id+''">{{item.title}}</a></h5>
+							<span class="user-name"><a :href="item.authorsrc">{{item.nickname}}</a></span>
+							<span class="time">发布于 {{dateFormat(item.time * 1000)}}</span>
+							<span class="look">查看：<a>{{item.read_num}}</a></span>
+							<span>|</span>
+							<span class="reply">回复：<a>{{item.count}}</a></span>
+						</div>
+						<a href="javascript:;" class="tiezi-more"><img src="__STATIC__/Home/img/cyq/tiezi-list-btn.png" /></a>
+					</li>
+				</ul>
+				
+				<div class="page-box">
+					<div class="page">
+
+					</div>
+				</div>
+
+			</div>
+			
+			<!--帖子右侧部分-->
+			<div class="tiezi-box-r">
+				<!--热帖排行-->
+				<div class="hot-sort">
+					<div class="title"><img src="__STATIC__/Home/img/cyq/hot-icon.png" />热帖排行</div>
+					<ul>
+						<li v-for="(item, index) in oldCard">
+							<p>{{index+1}}.</p>
+							<a :href="'{:url('detail')}/id/'+item.id+''">
+								<h5>{{item.title}}</h5>
+								<span>查看：</span>
+								<span>{{item.read_num}}</span>
+								<span>回复：</span>
+								<span>{{item.comment}}</span>
+								<span>赞：</span>
+								<span>{{item.laud}}</span>
+							</a>
+						</li>
+					</ul>
+					<div class="short-list"><img src="__STATIC__/Home/img/cyq/short-list.png" /></div>
+				</div>
+			
+				<!--创圈之星-->
+				<div class="cq-star">
+					<div class="title"><img src="__STATIC__/Home/img/cyq/star-icon.png" />创圈之星</div>
+					<ul>
+						<li v-for="item in userall">
+							<div class="header-box"><img :src="item.headimg" onerror="this.src='__STATIC__/Home/img/loading.gif'" /><div class="product"></div></div>
+							<a :href="item.usersrc">{{item.nickname}}</a>
+							<p>发帖数量：<span>{{item.commentNum}}</span></p>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+			
+	<!--底部-->
+		
+	{include file="public:footer" /}
+
+<script src="__STATIC__/Home/js/swiper.js"></script>
+<script src="__STATIC__/Home/js/jquery.pagination.js"></script>
+<script src="__STATIC__/Home/js/vue.js" ></script>
+<script>
+	var vm = new Vue({
+  	el: '#content',
+  	data:{
+  		sign: '',
+  		nowNum: 155,
+  		yestdayNum: 564,
+  		allNum: 45124513,
+  		//轮播图
+  		bannr:[
+  			{ src:'__STATIC__/Home/img/cyq/banner1.png' },
+  			{ src:'__STATIC__/Home/img/cyq/banner2.png' }
+  		],
+  		//热门话题
+  		topicall:[],
+  		//创圈推荐
+  		recard:[],
+  		//帖子列表
+  		cardall:[],
+		//分页
+		list:[],
+  		//热帖排行
+  		oldCard:[],
+  		//创圈之星
+  		userall:[],
+        per_page:  '',
+  	},
+  	
+  	created: function(){
+  		var self = this;
+  		$('.nav .cyq').addClass('active');
+  		$.get("{:url('Card/jsonAll')}",function(data){
+  			var data = eval("(" + data + ")");
+  			console.log(data);
+//			self.bannr = data.bannr;
+  			self.sign = data.sign;
+  			self.topicall = data.topicAll;
+  			self.recard = data.recard;
+  			self.userall = data.userAll;
+  			self.oldCard = data.oldCard;
+			self.cardall=data.list.data;
+            self.current_page = data.list.current_page;
+            self.last_page = data.list.last_page;
+            self.per_page = data.list.per_page;
+            self.total = data.list.total;
+  			self.nowNum = data.cardNum.nowNum;
+  			self.yestdayNum = data.cardNum.yestdayNum;
+  			self.allNum = data.cardNum.countNum;
+  			var bannerSwiper = new Swiper('.swiper-banner', {
+			    loop: true, // 循环模式选项
+					autoplay: {
+						disableOnInteraction: false,
+						delay: 3000,
+					},
+					pagination: {
+			      el: '.swiper-pagination',
+			      clickable: true,
+			    },
+			  });
+			   //分页插件
+				$('.page').pagination({
+					totalData: self.total,				//总数据条数
+					showDate: self.per_page,
+					pageCount : self.last_page,
+					current: self.current_page,						//当前页
+					prevContent:'&lang;',
+					nextContent:'&rang;',
+					keepShowPN:true,			
+					mode:'fixed',
+					count: 8,
+					coping:true,
+					homePage:'首页',
+					endPage:'末页',
+					isHide:true,
+					jump:false,
+					callback:function(apis){
+						//跳转要做的事件
+                            $.get("{:url('Card/page')}/page/"+apis.getCurrent()+"",function (data) {
+                                self.cardall=data.data;
+                            })
+					}
+				});
+				var width = $('.page').width();
+	  		console.log(width)
+	  		$('.page').css('marginLeft',(-width/2));
+  		});
+
+  		
+  	},
+  	mounted: function(){
+
+  	},
+  	
+  	methods:{
+  		qiandao: function(){
+				var self = this;
+				$.post("{:url('Card/sign')}",{uid:"{$Think.session.user.id}"},function(data){
+					console.log(data);
+					if (data.status != 0) {
+						self.sign = 1;
+						$('#qiandao-fade').fadeIn(0).animate({top:'-20px',opacity:0},800).fadeOut(0);
+					}
+				});
+  		},
+		//换一批
+		chage:function () {
+            var self = this;
+            $.get("{:url('Card/chage')}",function (data) {
+                self.topicall=data;
+            })
+        },
+        //点评
+        dianping:function () {
+            $.ajax({
+                type: "post",
+                url: "{:url('Card/editing')}",
+                success: function(data){
+                    if(data.code==500){
+                        if(window.confirm('您还未登陆确认去登陆吗？')){
+                            window.location.href="{:url('login/login')}";
+                        }else{
+                            return false;
+                        }
+                    }
+                }
+            })
+        },
+        tieziall:function (num) {
+  		    var self=this;
+			$.ajax({
+                url:"{:url('Card/tieziall')}",
+                data:{num:num},
+                type:"post",
+                success:function(data) {
+                    self.cardall=data.data;
+                    self.current_page = data.current_page;
+                    self.last_page = data.last_page;
+                    self.per_page = data.per_page;
+                    self.total = data.total;
+                    //分页插件
+                    $('.page').pagination({
+                        totalData: self.total,				//总数据条数
+                        showDate: self.per_page,
+                        pageCount : self.last_page,
+                        current: self.current_page,						//当前页
+                        prevContent:'&lang;',
+                        nextContent:'&rang;',
+                        keepShowPN:true,
+                        mode:'fixed',
+                        count: 8,
+                        coping:true,
+                        homePage:'首页',
+                        endPage:'末页',
+                        isHide:true,
+                        jump:false,
+                        callback:function(apis){
+                            //跳转要做的事件
+							var param={num:num,page:apis.getCurrent()}
+                            $.get("{:url('Card/page')}",param,function (data) {
+                                self.cardall=data.data;
+                            })
+                        }
+                    });
+                }
+            })
+        },
+  		tanchuang: function(content){
+  			$('#tanchuang').html(content).fadeIn(1000).fadeOut(1000);
+  		},
+        dateFormat:function(time) {
+            var date=new Date(time);
+            var year=date.getFullYear();
+			/* 在日期格式中，月份是从0开始的，因此要加0
+			 * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+			 * */
+            var month= date.getMonth()+1<10 ? "0"+(date.getMonth()+1) : date.getMonth()+1;
+            var day=date.getDate()<10 ? "0"+date.getDate() : date.getDate();
+            var hours=date.getHours()<10 ? "0"+date.getHours() : date.getHours();
+            var minutes=date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes();
+            var seconds=date.getSeconds()<10 ? "0"+date.getSeconds() : date.getSeconds();
+            // 拼接
+            return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+        }
+  	}
+  });
+	
+</script>
+<script>
+
+	
+
+	
+	
+	
+	
+	
+	
+	
+</script>

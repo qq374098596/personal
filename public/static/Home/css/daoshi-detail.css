@@ -1,0 +1,69 @@
+[v-cloak]{ visibility: hidden; }
+			
+/*banner样式*/
+#content{ width: 1200px; margin: 20px auto; position: relative; overflow: hidden; }
+.banner-box{ width: 1200px; margin: 20px auto 0; height: 400px; position: relative; }
+.banner-box .big-bg{ width: 1920px; height: 100%; padding-top: 120px; box-sizing: border-box; text-align: center; background: url(../img/cyds/banner.png); position: absolute; top: 0; left: -360px; z-index: -1; }
+.banner-box h1{ font-size: 56px; font-weight: normal; color: #323232; }
+.banner-box p{ font-size: 28px; color: #12c173; margin-top: 15px; }
+
+/*导师左侧样式*/
+.daoshi-l{ width: 920px; height: auto; float: left; margin-right: 20px; }
+
+.daoshi-l .daoshi-detail{ width: 100%; height: 440px; background: #fff; margin: 0 0 20px; border-radius: 5px; padding: 20px; box-sizing: border-box; }
+.daoshi-l .daoshi-detail>img{ float: left; }
+.daoshi-l .daoshi-detail .daoshi-describe{ float: left; width: 580px; padding-left: 50px; box-sizing: border-box; text-align: justify; line-height: 32px; }
+.daoshi-l .daoshi-detail .daoshi-describe h3{ font-size: 20px; color: #323232; line-height: 35px; }
+.daoshi-l .daoshi-detail .daoshi-describe h5{ font-size: 20px; color: #12C173; line-height: 35px; }
+.daoshi-l .daoshi-detail .daoshi-describe>p{ color: #848484; font-size: 14px; line-height: 30px; }
+.daoshi-l .daoshi-detail .daoshi-describe div{ width: auto; height: 24px; color: #323232; margin-top: 20px; line-height: 24px; }
+.daoshi-l .daoshi-detail .daoshi-describe div img{ float: left; margin: 5px; }
+.daoshi-l .daoshi-detail .daoshi-describe div span{ display: inline-block; line-height: 24px; }
+
+/*创业经历*/
+.experience-box{ width: 100%; height: 360px; background: #fff; border-radius: 5px; }
+.experience-box .title{ width: 100%; height: 60px; border-bottom: 1px solid #e7e7e7; font-size: 22px; line-height: 60px; padding-left: 20px; box-sizing: border-box; }
+.experience{ width: 400px; height: 300px; float: left; margin-left: 20px; }
+.experience:last-child{ float: right; margin-right: 20px; }
+.experience .experience-time{ width: 100%; height: 25px; padding-left: 10px; box-sizing: border-box; margin-top: 30px; border-left: 5px solid #12C173; line-height: 25px; font-size: 18px; color: #636363; }
+.experience p{ font-size: 14px; line-height: 30px; margin-top: 20px; color: #636363; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical; }
+
+/*项目详情*/
+.xiangmu-box{ width: 100%; height: 500px; background: #fff; border-radius: 5px; margin-top: 20px; overflow: hidden; }
+.xiangmu-box .title{ width: 100%; height: 60px; border-bottom: 1px solid #e7e7e7; font-size: 22px; line-height: 60px; padding-left: 20px; box-sizing: border-box; }
+.xiangmu-box>p{ padding: 15px 20px; font-size: 14px; line-height: 30px; color: #636363; }
+.xiangmu-box img{ float: left; margin-left: 20px; }
+.xiangmu-box .btn-box{ float: left; width: 100%; text-align: center; margin-top: 70px; }
+.xiangmu-box .btn-box a{ font-size: 18px; color: #e1e1e1; padding: 14px 96px; border: 1px solid #e1e1e1; border-radius: 5px; transition: .3s; }
+.xiangmu-box .btn-box a:hover{ color: #12C173; border-color: #12C173; }
+
+
+
+/*导师右侧样式*/
+.daoshi-r{ width: 260px; height: auto; float: right; }
+
+.daoshi-erwei{ width: 100%; height: 440px; padding: 20px; box-sizing: border-box; background: #fff; border-radius: 5px; }
+.daoshi-erwei h3{ font-size: 18px; font-weight: normal; line-height: 25px; padding-left: 10px; border-left: 5px solid #12C173; }
+.daoshi-erwei>img{ width: 100%; margin: 35px 0 15px 0; }
+.daoshi-erwei p{ font-size: 14px; color: #848484; text-align: center; }
+.daoshi-erwei a{ display: block; width: 160px; height: 40px; border: 1px solid #12C173; line-height: 38px;  border-radius: 20px; box-sizing: border-box; margin: 40px auto 0; }
+.daoshi-erwei a.yishoucang span{ margin-right: 32px;  }
+.daoshi-erwei a span{ float: right; font-size: 18px; margin-right: 25px; color: #12C173; }
+.daoshi-erwei a img{ width: 24px; height: 22px; margin: 8px 10px 8px 26px; } 
+
+.simple-daoshi{ margin-top: 20px; background: #fff; border-radius: 5px; }
+.simple-daoshi .title{ width: 240px; height: 60px; font-size: 18px; color: #636363; line-height: 60px; padding-left: 20px; }
+
+.daoshi-box-b{ box-sizing: border-box; overflow: hidden; }
+.daoshi-box-b li{ width: 220px; height: 340px; border-radius: 5px; text-align: center; margin: 0 auto 20px; border: 1px solid #f2f2f2; transition: .2s; }
+.daoshi-box-b li:hover{ box-shadow: 0 0 10px #f2f2f2; }
+.daoshi-item .daoshi-header{ width: 220px; height: 230px; overflow: hidden; position: relative; }
+.daoshi-item .daoshi-header span.jianjian{ position: absolute; bottom: 0; left: 50%; margin-left: -8px; width: 0; height: 0; border-width: 0 8px 6px 8px; border-style: solid; border-color: #fff transparent; }
+.daoshi-item h1{ font-size: 18px; color: #323232; margin-top: 3px; }
+.daoshi-item h3{ font-size: 14px; color: #12C173; }
+.daoshi-item .daoshi-detail p{ float: left; font-size: 12px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 50%; padding-left: 29px; box-sizing: border-box; color: #323232; text-align: left; margin: 6px 0; }
+.daoshi-item p.zili, .daoshi-item p.address{ padding-left: 38px; }
+.daoshi-item p.age{ background: url(../img/cyds/daoshi-nl.png)no-repeat 12px 0; }
+.daoshi-item p.zili{ background: url(../img/cyds/daoshi-zl.png)no-repeat 21px 0; }
+.daoshi-item p.obj{ background: url(../img/cyds/daoshi-xm.png)no-repeat 12px 0; }
+.daoshi-item p.address{ background: url(../img/cyds/daoshi-dz.png)no-repeat 21px 0; }

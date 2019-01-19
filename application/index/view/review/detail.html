@@ -1,0 +1,739 @@
+{include file="public:head" /}
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/jmdp-detail.css"/>
+	</head>
+	<body>
+		<!--顶部-->
+		
+		{include file="public:header" /}
+
+	  <!--内容部分-->
+	  <div id="content" v-cloak>
+	  	<div class="describe">
+	  		<!--头部-->
+	  		<div class="title">
+					<h5>{{thisone.name}}</h5>
+					<div>当前位置：加盟点评 - {{thisone.hyname}} - <span>{{thisone.name}}</span></div>
+				</div>
+				<!--图文部份-->
+				<div class="img-text">
+					<!--图片展示-->
+					<div class="zhanshiimg">
+						<div class="swiper-container bigimgbox">
+							<!--<div class="header-box"><img src="__STATIC__/Home/img/yxxm/yxxm1.png" /></div>-->
+							<div class="swiper-wrapper">
+					      <div class="swiper-slide" v-for="item in thisone.ppimglist"><img :src="item" /></div>
+					    </div>
+						</div>
+						<div class="smallimgbox swiper-container">
+							<div class="swiper-wrapper">
+					      <div class="swiper-slide" v-for="item in thisone.ppimglist"><img :src="item" /></div>
+					    </div>
+						</div>
+					</div>
+					<!--文字展示-->
+					<div class="zhanshitext">
+						<div class="title">{{thisone.name}}<span>-{{thisone.hyname}}-</span></div>
+						<div class="comment">
+							<div class="star-box">
+      					<div class="noactive"></div>
+      					<div class="active" :style="{width:Math.floor(thisone.score/thisone.reviewCount)*22+'px'}"></div>
+      				</div>
+      				
+      				<span>好评率：<a>{{Math.floor(100/7*Math.floor(thisone.score/thisone.reviewCount))?Math.floor(100/7*Math.floor(thisone.score/thisone.reviewCount))+'%':'暂无数据'}}</a></span>
+						</div>
+						<p class="joinmoney">
+							<span>加盟费：<a>{{thisone.jiamengfei?'￥'+thisone.jiamengfei+'W':'暂无数据'}}</a></span>
+						</p>
+						<!--<p><a>{{thisone.comnum}}</a>人点评</p>-->
+						<p class="com-num">
+							<span>用户评论：<a>{{thisone.replyCount}}</a></span>
+							<span>加盟者评论：<a>{{thisone.reviewCount}}</a></span>
+						</p>
+						<p class="shoucangnum"><img src="__STATIC__/Home/img/yxxm/like2.png" />{{shoucangnum|| 0}}人收藏</p>
+						<div class="btn-group">
+							{if condition="$Think.session.user eq ''"}
+							<p class="shoucang"><img src="__STATIC__/Home/img/jmdp-detail/like1.png">收藏</p>
+							{else/}
+							<p class="shoucang" @click="getshoucan(thisone.id)" v-if="getshoucang==null"><img src="__STATIC__/Home/img/jmdp-detail/like1.png" />收藏</p>
+							<p class="shoucang" @click="getshoucan(thisone.id)" v-else><img src="__STATIC__/Home/img/jmdp-detail/like2.png" />已收藏</p>
+							{/if}
+							<a href="https://api.addthis.com/oexchange/0.8/forward/wechat/offer?url=fanxiang.top/&title=返乡创业网">
+							<p class="fenxiang"><img src="__STATIC__/Home/img/jmdp-detail/share-icon.png" />
+								分享</p></a>
+							{if condition="$Think.session.user eq ''"}
+							<p class="jubao" ><img src="__STATIC__/Home/img/jmdp-detail/report-icon.png">举报</p>
+							{else/}
+							<p class="jubao" v-if="reportStatus==null" @click="report"><img src="__STATIC__/Home/img/jmdp-detail/report-icon.png" />举报</p>
+							<p class="jubao" v-else @click="report"><img src="__STATIC__/Home/img/jmdp-detail/report-icon.png" />已举报</p>
+							{/if}
+							{if condition="$Think.session.user eq ''"}
+							<a href="javascript:;" class="dianping"><img src="__STATIC__/Home/img/yxxm/yxdp-icon.png" />写点评</a>
+							{else/}
+							<a :href="'{:url('review/addreview')}/id/'+thisone.id+''" target="_blank" class="dianping"><img src="__STATIC__/Home/img/yxxm/yxdp-icon.png" />写点评</a>
+							{/if}
+						</div>
+					</div>
+				</div>
+	  	</div>
+	  	
+	  	<!--项目下部分-->
+	  	<div class="bottom-content">
+	  		<!--下边左侧-->
+	  		<div class="out-title">最新点评</div>
+	  		<div class="bottom-content-l">
+	  			<!--最新点评-->
+	  			<ul class="new-dianping">
+	  				<li v-for="(item,index) in newReview">
+	  					<a :href="'{:url('review/detail')}/id/'+item.id+''">
+	  						<img :src="item.imgsrc" :style="{backgroundColor: 'rgba('+Math.floor(Math.random() * 256)+','+Math.floor(	Math.random() * 256)+','+Math.floor(Math.random() * 256)+', .2)'}" />
+	  						<div>
+	  							<h5>{{item.name}}</h5>
+		  						<div class="star-box">
+	      						<div class="noactive"></div>
+	      						<div class="active" :style="{ width:item.pingfen*22+'px' }"></div>
+	      					</div>
+	    						<div class="money-box">
+	    							<p>加盟费: <span>{{parseInt(item.jiamengfei)?parseInt(item.jiamengfei)+'W':'暂无数据'}}</span></p>
+	    							<p>总成本: <span>{{parseInt(item.zongchengben)?parseInt(item.zongchengben)+'W':'暂无数据'}}</span></p>
+	    						</div>
+	    						<p>加盟时间: {{item.date}}</p>
+	    						<p>月盈利: <span>{{parseInt(item.yueyingshou)?parseInt(item.yueyingshou)+'W':'暂无数据'}}</span></p>
+	  						</div>
+	  					</a>
+	  				</li>
+	  			</ul>
+	  			<!--盟友点评-->
+	  			<div class="out-title">盟友点评 ({{dianpingnum}})</div>
+	  			<div class="dianping-page">
+	  				<div class="reviews-btn">
+	  					<p @click="selectpingjia" data-val="全部">全部</p>
+	  					<p @click="selectpingjia" data-val="图片">图片（{{isImg}}）</p>
+	  					<p @click="selectpingjia" data-val="好评">好评（{{good}}）</p>
+	  					<p @click="selectpingjia" data-val="中评">中评（{{average}}）</p>
+	  					<p @click="selectpingjia" data-val="差评">差评（{{bad}}）</p>
+	  				</div>
+	  				<ul class="reviews-content reviews-content-pingjia">
+	  					<li v-for="(item,index) in review" :key="item.id">
+	  						<div class="header-box"><img :src="item.headimg" onerror="this.src='__STATIC__/Home/img/loading.gif'" :style="{background:randomColor}" /></div>
+	  						<div class="content-right">
+	  							<h5>{{item.nickname}}<span>{{item.state}}</span></h5>
+	  							<div class="star-box">
+		      					<div class="noactive"></div>
+		      					<div class="active" :style="{width:item.pingfen*22+'px'}"></div>
+		      				</div>
+		      				<!--严选信息-->
+		      				<div class="join-infor">
+		      					<p>加盟费：<span>{{'￥'+item.jiamengfei+'万'}}</span></p>
+		      					<p>总成本：<span>￥{{item.zongchengben}}万</span></p>
+		      					<p>加盟时间：<span>{{item.date}}</span></p>
+		      					<p>月营收：<span>{{item.yueyingshou}}万</span></p>
+		      					<p>开店城市：<span>{{item.city}}</span></p>
+		      					<span><img src="__STATIC__/Home/img/yxxm/company-icon.png" />{{item.company}}</span>
+		      				</div>
+		      				<!--评论内容-->
+		      				<div class="comment-content">
+		      					<p>{{item.content}}</p>
+		      				</div>
+		      				
+		      				<div class="comment-btn">
+		      					<p>{{item.time}}</p>
+		      					<p class="btn"><span>展开评论</span><a></a></p>
+		      				</div>
+		      				<!--图片部分-->
+		      				<div class="comment-img" v-if="item.imglist">
+		      					<div class="small-img" :data-index="index" ref="smallimg">
+								      <img :src="img" onerror="this.src='__STATIC__/Home/img/loading.gif'" v-for="(img,index2) in item.imglist.slice(0,5)" :style="{background:randomColor}" @click="showbigimg($event,index,index2)" class="smallimg"  />
+										</div>
+										<div class="big-img" v-if="item.bigimg">
+								      <img :src="item.bigimg" onerror="this.src='__STATIC__/Home/img/loading.gif'" :data-index="index" @click="hidebigimg(index,$event)" />
+								      <div @click="previmg($event)" class="prev-btn btn"><p>&lt;</p></div>
+								      <div @click="nextimg($event)" class="next-btn btn"><p>&gt;</p></div>
+										</div>
+		      				</div>
+		      				
+		      				<div class="comment-reply">
+								<span class="write-btn" @click="writeClick(index,$event)">回应</span>
+								{if condition="$Think.session.user eq ''"}
+								<span class="good"><img src="__STATIC__/Home/img/cygs/good-icon1.png"> {{item.cou ||0}} &nbsp;&nbsp;</span>
+								{else/}
+								<span class="good" @click="pdianzan(id,item.id)" v-if="item.status==1" ><img src="__STATIC__/Home/img/cygs/good-icon2.png" /> {{item.cou||0}} &nbsp;&nbsp;</span>
+								<span class="good" @click="pdianzan(id,item.id)" v-else><img src="__STATIC__/Home/img/cygs/good-icon1.png" /> {{item.cou ||0}} &nbsp;&nbsp;</span>
+								{/if}
+								<div class="write-comment">
+		      						<textarea></textarea>
+		      						<p @click="fabiao(item.id,index,$event)">发表</p>
+		      					</div>
+		      				</div>
+		      				<!--网友回应-->
+		      				<div class="reply-box" v-if="item.reply!=''">
+		      					<div class="title">网友回应</div>
+		      					<ul>
+		      						<li v-for="(reply,index2) in item.reply">
+		      							<div class="header">
+		      								<img :src="reply.headimg" onerror="this.src='__STATIC__/Home/img/loading.gif'" :style="{background:randomColor}" />
+		      							</div>
+		      							<div class="reply-right">
+		      								<h5>{{reply.nickname}}</h5>
+			      							<p>{{reply.content}}</p>
+			      							<div class="reply-bottom">
+			      								<p>{{reply.time}}</p>
+			      								<span @click="tworeply($event)">回应</span>
+			      							</div>
+		      							</div>
+		      							<div class="replaycom-box">
+													<textarea style="max-height: 80px;"></textarea>
+													<p @click="replytwo(item.id,index,index2,$event)">回应</p>
+												</div>
+												<ul>
+													<li v-for="(replyreply,index3) of reply.replyreply">
+														<a>{{replyreply.uid1name}}</a>
+														<span>回应</span>
+														<a>{{replyreply.uid2name}}</a>
+														<span>:</span>
+														<b @click="threereply($event)">{{replyreply.content}}</b>
+														<div class="replyreply-box">
+															<textarea style="max-height: 80px;"></textarea>
+															<p @click="replythree(item.id,index,index2,index3,$event)">回应</p>
+														</div>
+													</li>
+												</ul>
+		      						</li>
+		      					</ul>
+		      				</div>
+	  						</div>
+	  					</li>
+	  				</ul>
+	  				
+	  				<div class="dianping-pagination"></div>
+	  			</div>
+	  		</div>
+	  		<!--下边右侧-->
+	  		<div class="bottom-content-r">
+	  			<div class="title">推荐品牌</div>
+	  			<ul>
+	  				<li v-for="(item,index) in recReview"><a :href="'{:url('review/detail')}/id/'+item.id+''">
+	  					<img :src="item.imgsrc?item.imgsrc:'__STATIC__/Home/img/loading.gif'" :style="{background:randomColor}" />
+	  					<div>
+	  						<h5>{{item.name}}</h5>
+		  					<div class="star-box">
+	      					<div class="noactive"></div>
+	      					<div class="active" :style="{ width:Math.floor(item.score/item.reviewCount)*22+'px' }"></div>
+	      				</div>
+	    					<p>好评率：<span>{{Math.floor(100/7*Math.floor(item.score/item.reviewCount))?Math.floor(100/7*Math.floor(item.score/item.reviewCount)):0}}%</span></p>
+	    					<p>评论人数：<span>{{item.replyCount?item.replyCount:0}}人</span></p>
+	    					<p>加盟者评论：<span>{{item.reviewCount?item.reviewCount:0}}人</span></p>
+	  					</div>
+	  				</a></li>
+	  			</ul>
+	  		</div>
+			</div>
+			
+		</div>
+		<!--底部-->
+		
+	{include file="public:footer" /}
+
+<script src="__STATIC__/Home/js/jquery.pagination.js"></script>
+<script src="__STATIC__/Home/js/swiper.js"></script>
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script>
+	var vm = new Vue({
+		el: '#content',
+		data: {
+		  ishaoping: '',
+			thisone: {
+				"id":'',
+				"name":"",
+				"imgsrc":"",
+				"ppimglist":[],
+				"hangyeid":'',
+				"jiamengfei":"",
+				"hyname":"",
+				"score":"",
+				"count": ''
+			},
+			//最新点评
+			newReview: [],
+			average:"",
+			bad:"",
+			good:"",
+			isImg:"",
+			//盟友点评
+			review: [],
+			//推荐品牌
+			recReview: [],
+			//收藏
+			getshoucang:'',
+			//举报
+			reportStatus:'',
+			//收藏数
+			shoucangnum:'',
+			//点评总数
+            dianpingnum:'',
+			goo:[]
+		},
+
+		created:function(){
+			var self = this;
+            $.get("{:url('Review/detail')}",function(data) {
+                var data = {$data};
+                console.log(data);
+                self.thisone = data.detail;
+                self.id = data.detail.id;
+                self.newReview = data.newReview;
+                self.recReview = data.recReview;
+                self.review = data.review;
+                self.average = data.reviewStatus.average;
+                self.bad = data.reviewStatus.bad;
+                self.good = data.reviewStatus.good;
+                self.isImg = data.reviewStatus.isImg;
+                self.getshoucang = data.getshoucang;
+                self.reportStatus = data.getReport;
+                self.shoucangnum = data.shoucangnum;
+                self.dianpingnum = data.dianpingnum;
+                self.current_page = data.page.current_page;
+                self.last_page = data.page.last_page;
+                self.per_page = data.page.per_page;
+                self.total = data.page.total;
+
+                //分页插件
+                $('.dianping-pagination').pagination({
+                    totalData: data.page.total,				//总数据条数
+                    showDate: data.page.per_page,
+                    pageCount: data.page.last_page, 			//总页数
+                    current: data.page.current_page,						//当前页
+                    prevContent: '&lang;',
+                    nextContent: '&rang;',
+                    keepShowPN: true,
+                    mode: 'fixed',
+                    count: 8,
+                    coping: true,
+                    homePage: '首',
+                    endPage: '末',
+                    isHide: true,
+                    jump: false,
+                    callback: function (apis) {
+                        //跳转要做的事件
+                        var id = self.id
+                        var dj = apis.getCurrent()
+                        $.ajax({
+                            type: "post",
+                            url: "{:url('Review/page')}",
+                            data: {id: id, dj: dj},
+                            success: function (data) {
+                                self.review = data.review;
+                                self.current_page = data.page.current_page;
+                            }
+                        })
+                    }
+                })
+            })
+		},
+		mounted: function(){
+			var self = this;
+			setTimeout(function(){
+				self.swiper();
+			},100)
+			
+		},
+
+		computed: {
+			randomColor: function(i){
+				let bgcolor = 'rgba('+Math.floor(Math.random() * 256)+','+Math.floor(Math.random() * 256)+','+Math.floor(Math.random() * 256)+', .2)'
+				return bgcolor;
+			},
+			maxSmallImg: function(){
+				return this.thisone.ppimglist.length>=5? 5:this.thisone.ppimglist.length
+			},
+		},
+		
+		methods:{	
+			
+			swiper: function(){
+				var galleryThumbs = new Swiper('.smallimgbox', {
+					loop:true,
+			    spaceBetween: 12,
+			    slidesPerView: this.maxSmallImg,
+			    watchSlidesVisibility: true,
+			    watchSlidesProgress: true,
+			  });
+			  console.log(this.thisone.ppimglist.length)
+			  var galleryTop = new Swiper('.bigimgbox', {
+			  	loop:true,
+			    spaceBetween: 10,
+			    thumbs: {
+			      swiper: galleryThumbs,
+			    },
+			  });
+			},
+
+            dateFormat:function(time) {
+                var date=new Date(time);
+                var year=date.getFullYear();
+				/* 在日期格式中，月份是从0开始的，因此要加0
+				 * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+				 * */
+                var month= date.getMonth()+1<10 ? "0"+(date.getMonth()+1) : date.getMonth()+1;
+                var day=date.getDate()<10 ? "0"+date.getDate() : date.getDate();
+                // 拼接
+                return year+"-"+month+"-"+day;
+            },
+			//根据评价进行选择
+			selectpingjia: function(e){
+                var self = this;
+				var val = $(e.target).data('val');
+				if(val == '好评'){
+				    self.goo=1;
+                    var id = this.id;
+				}else if(val == '中评'){
+                    self.goo=2;
+                    var id = this.id;
+				}else if(val == '差评'){
+                    self.goo=3;
+                    var id = this.id;
+				}else if(val == '全部'){
+                    self.goo=4;
+                    var id = this.id;
+				}else if(val == '图片'){
+                    self.goo=5;
+                    var id = this.id;
+				}
+                $.ajax({
+                    url:"{:url('Review/fen')}",
+                    data:{good:self.goo,id:id},
+                    type:"post",
+                    success:function(data) {
+                        self.review = data.review
+
+                        $('.dianping-pagination').pagination({
+                            totalData: data.page.total,				//总数据条数
+                            showDate: data.page.per_page,
+                            pageCount: data.page.last_page, 			//总页数
+                            current: data.page.current_page,						//当前页
+                            prevContent: '&lang;',
+                            nextContent: '&rang;',
+                            keepShowPN: true,
+                            mode: 'fixed',
+                            count: 8,
+                            coping: true,
+                            homePage: '首',
+                            endPage: '末',
+                            isHide: true,
+                            jump: false,
+                            callback: function (apis) {
+                                //跳转要做的事件
+                                var id = self.id
+                                var dj = apis.getCurrent()
+                                $.ajax({
+                                    type: "post",
+                                    url: "{:url('Review/page')}",
+                                    data: {good:self.goo,id: id, dj: dj},
+                                    success: function (data) {
+                                        self.review = data.review;
+                                        self.current_page = data.page.current_page;
+                                    }
+                                })
+                            }
+                        })
+
+                    }
+                })
+				this.review.forEach(function(obj,index){
+
+					vm.$delete(obj,'bigimg')
+				});
+				$('.smallimg').removeClass('active')
+			},
+            //评论点赞/取消点赞
+            pdianzan: function (mid,pid) {
+                var self = this;
+                var good=self.goo;
+                var mid = mid;
+                var pid = pid;
+                var page=this.current_page;
+                $.ajax({
+                    url:"{:url('Review/pdianzan')}",
+                    data:{good:good,mid:mid,pid:pid,page:page},
+                    type:"post",
+                    success:function(data) {
+                        self.review = data.review;
+                    }
+                })
+            },
+			//点击小图显示大图
+			showbigimg: function(e,i,i2){
+			  var i = $(e.target).parent().data('index');
+			  var self = this;
+			  if($(e.target).hasClass('active')){
+			  	$(e.target).removeClass('active');
+			  	self.review[i].bigimg = '';
+			  }else{
+			  	$(e.target).siblings().removeClass('active');
+				  $(e.target).addClass('active');
+				 	self.$set(self.review[i],'bigimg',self.review[i].imglist[i2])
+				 	console.log(typeof(self.review[i]));
+			  }
+			},
+			//切换放大图
+			previmg: function(e){
+				let index = $(e.currentTarget).parent().siblings('.small-img').children('.active').index();
+				let length = $(e.currentTarget).parent().siblings('.small-img').children('img').length;
+				if(length==1){
+					return false;
+				}else{
+					index--;
+					if(index == -1 ){
+						index = length -1;
+					}
+					$(e.currentTarget).parent().siblings('.small-img').children('img').eq(index).click();
+				}
+			},
+			nextimg: function(e){
+				let index = $(e.currentTarget).parent().siblings('.small-img').children('.active').index();
+				let length = $(e.currentTarget).parent().siblings('.small-img').children('img').length;
+				if(length==1){
+					return false;
+				}else{
+					index++;
+					console.log(index,length)
+					if(index == length ){
+						index = 0;
+					}
+					$(e.currentTarget).parent().siblings('.small-img').children('img').eq(index).click();
+				}
+			},
+			//举报
+			report:function(){
+				var self = this;
+				$.get("{:url('review/report')}/id/"+this.thisone.id,function(data){
+					self.reportStatus = data.getReport;
+				})
+			},
+            //收藏功能
+            getshoucan:function(id) {
+                var self = this;
+                $.get("{:url('Review/getShoucang')}/id/"+id,function (data) {
+                        self.getshoucang = data.getshoucang;
+                        self.shoucangnum = data.shoucangnum;
+                })
+            },
+			//点击大图隐藏
+			hidebigimg: function(i,e){
+				$(this.$refs.smallimg).children('img').removeClass('active');
+				this.review[i].bigimg = '';
+			},
+			
+			//打开二级评论框
+			writeClick: function(i,e){
+				if('{$Think.session.user.id}'){
+					$(e.target).siblings('.write-comment').fadeToggle(100);
+				}else{
+					if(confirm('还未登录，是否前往登录')){
+						console.log(111)
+						location.href="{:url('Login/login')}"
+					}
+				}
+			},
+			//发表二级评论
+			fabiao: function(id,i,e){
+				console.log('fabiao');
+				var content = $(e.target).siblings('textarea').val();
+				var uid = "{$Think.session.user.id}";
+				var uid1 = this.review[i].reply
+				var mid = id;
+				var self = this;
+				var myDate = new Date();
+				$.ajax({
+					url:"{:url('review/comment')}",
+					data:{uid1:uid,uid2:0,mid:mid,gid:0,content:content},
+					type:"post",
+					dataType:"json",
+					success:function(data){
+						console.log(data)
+						if (data.status == 0) {
+							alert(data.error)
+						}else{
+							self.review[i].reply.push({
+								uid1: "{$Think.session.user.id}",
+								content: content,
+								nickname: "{$Think.session.user.nickname}",
+								time: myDate.toLocaleString('chinese', { hour12: false }).slice(0,-3),
+								headimg: data.headimg,
+								replyreply:[],
+							});
+						}
+					}
+				})
+				// this.review[i].reply.push({
+				// 	header: '__STATIC__/Home/img/cyq/user1.png',
+				// 	nickname: '你妈喊你回家吃饭',
+				// 	content: content,
+				// 	time: '2018-11-09',
+				// });
+				$(e.target).siblings('textarea').val('');
+				$(e.target).parent().fadeOut(100);
+			},
+			
+			//打开回复二级评论框
+			tworeply:function(e){
+				if('{$Think.session.user.id}'){
+					$(e.target).parent().parent().siblings('.replaycom-box').fadeToggle(100);
+				}else{
+					if(confirm('还未登录，是否前往登录')){
+						console.log(111)
+						location.href="{:url('Login/login')}"
+					}
+				}
+			},
+			//回复二级评论
+			replytwo: function(id,i1,i2,e){
+				console.log('replytwo');
+				var self = this;
+				var content = $(e.target).siblings('textarea').val();
+				var myDate = new Date();
+				if(content != ''){
+					var uid1 = "{$Think.session.user.id}";
+					var uid2name = this.review[i1].reply[i2].nickname;
+					var uid1name = '{$Think.session.user.nickname}';
+					var uid2 = this.review[i1].reply[i2].uid1;
+					var mid = id;
+					console.log(uid2)
+					$.ajax({
+						url:"{:url('review/comment')}",
+						data:{uid1:uid1,uid2:uid2,mid:mid,gid:this.review[i1].reply[i2].id,content:content},
+						type:"post",
+						dataType:"json",
+						success:function(data){
+							console.log(data)
+							if(data.status == 0){
+								alert(data.error);
+							}else{
+								self.review[i1].reply[i2].replyreply.push({
+									id: data.mid,
+									uid1: data.uid1,
+									uid2: data.uid2,
+									gid: self.review[i1].reply[i2].id,
+									content: data.content,
+                                    time: myDate.toLocaleString('chinese', { hour12: false }).slice(0,-3),
+									uid1name: uid1name,
+									uid2name: uid2name
+								});
+							}
+						}
+					})
+					
+					$(e.target).siblings('textarea').val('');
+					$(e.target).parent().fadeOut(100);
+				}else{
+					alert('请不要回复空内容')
+				}
+			},
+			//打开回复三级评论框
+			threereply: function(e){
+				console.log('threereply');
+				if('{$Think.session.user.id}'){
+					$(e.target).siblings('.replyreply-box').fadeToggle(100);
+				}else{
+					if(confirm('还未登录，是否前往登录')){
+						console.log(111)
+						location.href="{:url('Login/login')}"
+					}
+				}
+			},
+
+			//回复三级评论
+			replythree: function(id,i1,i2,i3,e){
+				console.log('replythree');
+				var self = this;
+				var content = $(e.target).siblings('textarea').val();
+				if(content != ''){
+					var uid2name = this.review[i1].reply[i2].replyreply[i3].uid1name;
+					var uid1name = '{$Think.session.user.nickname}';
+					var uid1 = "{$Think.session.user.id}";
+					var uid2 = this.review[i1].reply[i2].replyreply[i3].uid1;
+					var mid = id;
+					
+					$.ajax({
+						url:"{:url('review/comment')}",
+						data:{uid1:uid1,uid2:uid2,mid:mid,gid:this.review[i1].reply[i2].replyreply[i3].gid,content:content},
+						type:"post",
+						dataType:"json",
+						success:function(data){
+							if(data.status == 0){
+								alert(data.error);
+							}else{
+								self.review[i1].reply[i2].replyreply.push({
+									id: mid,
+									uid1: uid1,
+									uid2: uid2,
+									gid: self.review[i1].reply[i2].id,
+									content: content,
+									uid1name: uid1name,
+									uid2name: uid2name
+								});
+							}
+						}
+					})
+					// this.review[i1].reply[i2].replyreply.push({
+					// 	uid1name:uid1name,
+					// 	uid2name:uid2name,
+					// 	content:content,
+					// });
+					$(e.target).siblings('textarea').val('');
+					$(e.target).parent().fadeOut(100);
+				}else{
+					alert('请不要回复空内容');
+				}
+			}
+		}
+	});
+	
+	
+	//项目评论中的功能
+	$(function(){
+		//评论是否需要展开
+		$('.comment-content').each(function(i){
+			if($(this).height()>=80){
+				$(this).height(80);
+				$(this).siblings('.comment-btn').children('.btn').show();
+			}else{
+				$(this).height('auto');
+				$(this).siblings('.comment-btn').children('.btn').hide();
+			}
+		});
+		
+		//展开收起评论文本内容
+		$('.comment-btn .btn').click(function(){
+			if($(this).hasClass('develop')){
+				$(this).children('span').html('展开评论');
+				$(this).parent().siblings('.comment-content').height(80);
+				$(this).removeClass('develop');
+			}else{
+				$(this).children('span').html('收起评论');
+				$(this).parent().siblings('.comment-content').height('auto');
+				$(this).addClass('develop');
+			}
+		});
+		
+	});   //评论功能 end
+	
+
+	
+	//切换好评差评
+	$('.reviews-btn p').click(function(){
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+	});
+
+	//头部导航选择
+	// $('.nav ul li').click(function(){
+	// 	$(this).siblings().removeClass('active');
+	// 	$(this).addClass('active');
+	// });
+	$('.nav ul li').siblings().removeClass('active');
+	$('.jmdp').addClass('active');
+	
+	//详情图轮播
+	
+	
+</script>

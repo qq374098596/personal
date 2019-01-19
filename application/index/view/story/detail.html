@@ -1,0 +1,512 @@
+{include file="public:head" /}
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/cygs-detail.css"/>
+	</head>
+	<body>
+		<!--顶部-->
+		
+		{include file="public:header" /}
+
+		<!--视口-->
+		<div id="app" v-cloak>
+			<!--轮播图-->
+			<div class="swiper-banner">
+		    <div class="swiper-wrapper">
+		    	<div class="swiper-slide" v-for="item in banner"><a :href="item.jump"><img :src="item.img"/></a></div>
+		    </div>
+		    <div class="swiper-pagination"></div>
+		  </div>
+		  
+		  <!--内容-->
+		  <div class="content-box">
+		  	<div class="title"><img src="__STATIC__/Home/img/cygs/detail-titel-bg.png" /></div>
+		  	<div class="story-box">
+		  		<h5>{{thisone.title}}</h5>
+		  		<div class="story-infor">
+		  			<p class="user">{{thisone.author}}</p>
+		  			<span class="time">{{thisone.time}}</span>
+		  			<div class="icon-box">
+		  				<p class="look-icon"><img src="__STATIC__/Home/img/cygs/look-icon.png" />{{thisone.read_num}}</p>
+		  				<p class="replay-icon"><img src="__STATIC__/Home/img/cygs/replay-icon.png" />{{pinglun}}</p>
+		  				<p v-if="mydianzan==0" @click="dianzan"><img src="__STATIC__/Home/img/cygs/good-icon1.png" />{{getdianzan}}</p>
+		  				<p v-else @click="dianzan"><img src="__STATIC__/Home/img/cygs/good-icon2.png" />{{getdianzan}}</p>
+		  				<p v-if="myshoucang==0" @click="shoucang"><img src="__STATIC__/Home/img/cygs/like-icon1.png" />{{getshoucang}}</p>
+		  				<p v-else @click="shoucang"><img src="__STATIC__/Home/img/cygs/like-icon2.png" />{{getshoucang}}</p>
+		  				<p><img src="__STATIC__/Home/img/cygs/share-icon.png" /></p>
+		  				<!--<p><img src="__STATIC__/Home/img/cygs/report-icon.png" /></p>-->
+		  			</div>
+		  		</div>
+		  		<div class="story-content">
+			  		<p v-html="thisone.gushi"></p>
+		  	</div>
+		  	</div>
+		  	
+		  </div>
+		  
+		  <!--发表观点-->
+		  <div class="comment-box">
+		  	<div class="title"><img src="__STATIC__/Home/img/cygs/comment-title.png" /></div>
+		  	<div class="input-box">
+		  		<textarea id="textarea"></textarea>
+		  		<p @click="reportClick($event)">发 表</p>
+		  	</div>
+		  </div>
+		  
+		  
+		  
+		  
+			<!--热门评论-->
+			<div class="hot-box">
+				<div class="title"><img src="__STATIC__/Home/img/cygs/hot-title.png" /></div>
+				<ul>
+					<li v-for="(item,index) of comment">
+						<div class="header">
+							<img :src="item.headimg" />
+						</div>
+						<div class="replay-right">
+							<h5>{{item.nickname}}<span v-if="item.state">{{item.state}}</span></h5>
+							<p>{{item.content}}</p>
+							<div class="replay-bottom">
+								<p>{{dateFormat(item.time*1000)}}</p>
+
+								<span @click="onereply($event)"> &nbsp;回应</span>
+								<span class="good" @click="pdianzan(id,item.id)" v-if="item.status==1" ><img src="__STATIC__/Home/img/cygs/good-icon2.png" /> {{item.cou||0}} &nbsp;&nbsp;</span>
+								<span class="good" @click="pdianzan(id,item.id)" v-else><img src="__STATIC__/Home/img/cygs/good-icon1.png" /> {{item.cou ||0}} &nbsp;&nbsp;</span></span>
+							</div>
+							<div class="reply-box">
+								<textarea style="max-height: 80px;"></textarea>
+								<p @click="replyone(index,$event)">回应</p>
+							</div>
+							<div class="replyreply" v-for="(replyreply,index2) of item.reply">
+								<a>{{replyreply.uid1name}}</a>
+								<span>回应</span>
+								<a>{{replyreply.uid2name}}</a>
+								<span>:</span>
+								<b @click="tworeply($event)">{{replyreply.content}}</b>
+								<div class="replyreply-box">
+									<textarea style="max-height: 80px;"></textarea>
+									<p @click="replytwo(index,index2,$event)">回应</p>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<div class="page"></div>
+			</div>
+		
+		</div>
+		<!--底部-->
+		
+		{include file="public:footer" /}
+
+<script src="__STATIC__/Home/js/swiper.js"></script>
+<script src="__STATIC__/Home/js/jquery.pagination.js"></script>
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script>
+	var vm = new Vue({
+		el: '#app',
+		data: {
+			banner: [
+				{ jump: 'javascript:;', img: '__STATIC__/Home/img/cygs/detail-banner1.png' },
+			],
+			thisone: {
+				title: '十个创业九个死，年轻人还该不该创业？网友：创业13年，屡战屡败',
+				author: '返乡创业',
+				time: '2018-11-13 11:30:59',
+				read_num: 5468,
+				replaynum: 488,
+				goodnum: 8588,
+				isgood: false,
+				islike: false,
+				content: '过去创业条件有利，成功的人很多，现如今创业，是失败的比较多。有些人不愿意一辈子打工，然后辞职创业，对自己的生活充满希望，结果现实太残酷，有很多人一败再败。十个创业九个死，年轻人还该不该创业？有网友说自己的经历：16年大学毕业，15年上半年在学校教室开超市打印店，顺便摆摊，下半年在学校外面开了一个零食店，开店赔了2万。2016年上半年重整士气，做小吃，2016年下半年又开了一个店，2016年底回老家，2017年开了一家韩料店，2018现在两家店，慢慢进入正轨。今年年底前大概会有4家店，今年本命年，很累但是创业很快乐，去年赚了十几，今年应该在二三十，做事一定不要盲目扩张，一定要稳，加油。创业是创业者对自己拥有的资源或通过努力对能够拥有的资源进行优化整合，从而创造出更大经济或社会价值的过程。创业是一种劳动方式，是一种需要创业者运营、组织、运用服务、技术、器物作业的思考、推理和判断的行为。根据杰夫里·提蒙斯（Jeffry A.Timmons）所著的创业教育领域的经典教科书《创业创造》（New Venture Creation）的定义：创业是一种思考、推理结合运气的行为方式，它为运气带来的机会所驱动，需要在方法上全盘考虑并拥有和谐的领导能力。创业作为一个商业领域，创业以点滴成就点滴喜悦致力于理解创造新事物（新产品，新市场，新生产过程或原材料，组织现有技术的新方法）的机会，如何出现并被特定个体发现或创造，这些人如何运用各种方法去利用和开发它们，然后产生各种结果。创业是一个人发现了一个商机并加以实际行动转化为具体的社会形态，获得利益，实现价值。科尔（Cole）提出，把创业定义为:发起、维持和发展以利润为导向的企业的有目的性的行为。今年年底前大概会有4家店，今年本命年，很累但是创业很快乐，去年赚了十几，今年应该在二三十，做事一定不要盲目扩张，一定要稳，加油。过去创业条件有利，成功的人很多，现如今创业，是失败的比较多。有些人不愿意一辈子打工，然后辞职创业，对自己的生活充满希望，结果现实太残酷，有很多人一败再败。十个创业九个死，年轻人还该不该创业？有网友说自己的经历：16年大学毕业，15年上半年在学校教室开超市打印店，顺便摆摊，下半年在学校外面开了一个零食店，开店赔了2万。2016年上半年重整士气，做小吃，2016年下半年又开了一个店，2016年底回老家，2017年开了一家韩料店，2018现在两家店，慢慢进入正轨。今年年底前大概会有4家店，今年本命年，很累但是创业很快乐，去年赚了十几，今年应该在二三十，做事一定不要盲目扩张，一定要稳，加油。随着经济的发展,投创业的人越来越多，《科学投资》调查研究表明,国内创业者基本可以分成以下类型：（一）生存型创业者生存型创业者大多为下岗工人，失去土地或因为种种原因不愿困守乡村的农民，以及刚刚毕业找不到工作的大学生。这是中国数量最大的创业人群。清华大学的调查报告说，这一类型的创业者占中国创业者总数的90%。其中许多人是被逼上梁山,为了谋生混口饭吃。一般创业范围均局限于商业贸易,少量从事实业，也基本是小型的加工业.当然也有因为机遇成长为大中型企业的，但数量极少，因为国内市场已经不像20多年前，如刘永好兄弟,鲁冠球，南存辉他们那个创业时代，经济短缺，机制混乱,，机遇遍地。如今这个时代，用句俗话来说就是狼多肉少，仅想依靠机遇成就大业,早已是不切实际的幻想了。（二）主动型创业者主动型创业者又可以分为两种，一种是盲动型创业者，一种是冷静型创业者。前一种创业者大多极为自信，做事冲动。这种类型的创业者，大多是博彩爱好者，喜欢买彩票，喜欢赌，而不太喜欢检讨成功概率。这样的创业者很容易失败，但一旦成功，往往就是一番大事业。冷静型创业者是创业者中的精华，其特点是谋定而后动，不打无准备之仗，或是掌握资源，或是拥有技术，一旦行动，成功概率通常很高。',
+			},
+			comment: [
+				{
+					header: '__STATIC__/Homeimg/cygs/gushi1.png',
+					name: '卖女孩的小火柴',
+					state: '已加盟',
+					content: '签合同前你是大爷什么都为你着想。签完合同之后交了钱哈哈你自己看着办吧 承诺你7万开店那是在做梦，反正签完......',
+					time: '2018-11-09',
+					replaynum: 7,
+					goodnum: 128,
+					reply:[{
+						uid1name: 'aaa',
+  						uid2name: 'bbb',
+						content: 'fasfsafasfasfsafsaf',
+					}],
+				},
+				{
+					header: '__STATIC__/Homeimg/cygs/gushi2.png',
+					name: '卖女孩的小火柴',
+					state: '',
+					content: '签合同前你是大爷什么都为你着想。签完合同之后交了钱哈哈你自己看着办吧 承诺你7万开店那是在做梦，反正签完......',
+					time: '2018-11-09',
+					replaynum: 7,
+					goodnum: 128,
+				},
+				{
+					header: '__STATIC__/Homeimg/cygs/gushi3.png',
+					name: '卖女孩的小火柴',
+					state: '',
+					content: '签合同前你是大爷什么都为你着想。签完合同之后交了钱哈哈你自己看着办吧 承诺你7万开店那是在做梦，反正签完......',
+					time: '2018-11-09',
+					replaynum: 7,
+					goodnum: 128,
+				},
+				{
+					header: '__STATIC__/Homeimg/cygs/gushi4.png',
+					name: '卖女孩的小火柴',
+					state: '已开店',
+					content: '签合同前你是大爷什么都为你着想。签完合同之后交了钱哈哈你自己看着办吧 承诺你7万开店那是在做梦，反正签完......',
+					time: '2018-11-09',
+					replaynum: 7,
+					goodnum: 128,
+				},
+			],
+			getshoucang:'',
+			getdianzan:'',
+            myshoucang:'',
+            mydianzan:'',
+			pinglun:''
+			
+		},
+		created:function(){
+			$('.nav .cygs').addClass('active');
+			var self = this;
+            $.get("{:url('Story/detail')}",function(data) {
+                var data = {$data};
+                self.thisone = data.thisone.detail;
+                self.id = data.thisone.detail.id;
+                self.comment = data.thisone.comment.data;
+                self.current_page = data.thisone.comment.current_page;
+                self.last_page = data.thisone.comment.last_page;
+                self.per_page = data.thisone.comment.per_page;
+                self.total = data.thisone.comment.total;
+                self.thisone.replaynum = data.thisone.comment.data.length;
+                self.getshoucang = data.getshoucang;
+                self.getdianzan = data.getdianzan;
+                self.pinglun = data.pinglun;
+                self.myshoucang = data.myshoucang;
+                self.mydianzan = data.mydianzan;
+
+                //分页插件
+                $('.page').pagination({
+                    totalData: data.thisone.comment.total,				//总数据条数
+                    showDate: data.thisone.comment.per_page,
+                    pageCount: data.thisone.comment.last_page, 			//总页数
+                    current: data.thisone.comment.current_page,						//当前页
+                    prevContent: '&lang;',
+                    nextContent: '&rang;',
+                    keepShowPN: true,
+                    mode: 'fixed',
+                    count: 8,
+                    coping: true,
+                    homePage: '首',
+                    endPage: '末',
+                    isHide: true,
+                    jump: false,
+                    callback: function (apis) {
+                        //跳转要做的事件
+                        var id = self.id
+                        var dj = apis.getCurrent()
+                        $.ajax({
+                            type: "post",
+                            url: "{:url('Story/page')}",
+                            data: {id: id, dj: dj},
+                            success: function (data) {
+                                self.comment = data.data;
+                                self.current_page = data.current_page;
+                            }
+                        })
+                    }
+                })
+            })
+        },
+
+		methods: {
+		    //文章点赞/取消点赞
+			dianzan: function () {
+                var self = this;
+                var id = this.thisone.id;
+                $.get("{:url('Story/changedianzan')}/id/"+id,function (data) {
+                    if(!data){
+                        return;
+					}
+                    self.mydianzan = data.mydianzan;
+                    self.getdianzan = data.getdianzan;
+                })
+            },
+
+			//文章收藏/取消收藏
+			shoucang:function () {
+                var self = this;
+                var id = this.thisone.id;
+                $.get("{:url('Story/changeshoucang')}/id/"+id,function (data) {
+                    if(!data){
+                        return;
+                    }
+                    self.myshoucang = data.myshoucang;
+                    self.getshoucang = data.getshoucang;
+                })
+            },
+			//评论点赞/取消点赞
+            pdianzan: function (pid,mid) {
+                var self = this;
+                var mid = mid;
+                var pid = pid;
+                var page=this.current_page;
+                $.ajax({
+                    url:"{:url('Story/pdianzan')}",
+                    data:{mid:mid,pid:pid,page:page},
+                    type:"post",
+                    success:function(data) {
+                        if(!data){
+                            return;
+						}
+                        self.comment=data.data;
+                    }
+                })
+            },
+            dateFormat:function(time) {
+                var date=new Date(time);
+                var year=date.getFullYear();
+				/* 在日期格式中，月份是从0开始的，因此要加0
+				 * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+				 * */
+                var month= date.getMonth()+1<10 ? "0"+(date.getMonth()+1) : date.getMonth()+1;
+                var day=date.getDate()<10 ? "0"+date.getDate() : date.getDate();
+                var hours=date.getHours()<10 ? "0"+date.getHours() : date.getHours();
+                var minutes=date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes();
+                var seconds=date.getSeconds()<10 ? "0"+date.getSeconds() : date.getSeconds();
+                // 拼接
+                return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+            },
+			//发表评论
+			reportClick: function(e) {
+				if ("{$Think.session.user.id}") {
+					var self = this;
+					console.log(this.thisone.id)
+					var content = $(e.target).siblings().val();
+					if(content == ''){
+						alert('请输入内容')
+					}else{
+						$(e.target).siblings().val('');
+						var myDate = new Date();
+						var uid1 = "{$Think.session.user.id}";
+						var mid = this.thisone.id;
+						$.ajax({
+							url: "{:url('story/comment')}",
+							data:{uid1:uid1,uid2:0,mid:mid,gid:0,content:content},
+							
+							type: "post",
+							dataType: "json",
+							success: function(data) {
+								console.log(data);
+								self.comment.unshift({
+									headimg: data.headimg,
+									nickname: "{$Think.session.user.nickname}",
+									//state: '已开店',
+									content: content,
+									time: data.time,
+									replaynum: 0,
+									goodnum: 0,
+									reply:[]
+								});
+							}
+						})
+					}
+				}else{
+					if(confirm('还未登录，是否前往登录')){
+						console.log(111)
+						location.href="{:url('Login/login')}"
+					}
+				}
+			},
+			//打开一级回复框
+			onereply: function(e){
+				if('{$Think.session.user.id}'){
+					$(e.target).parent().siblings('.reply-box').fadeToggle(100);
+				}else{
+					if(confirm('还未登录，是否前往登录')){
+						console.log(111)
+						location.href="{:url('Login/login')}"
+					}
+				}
+			},
+			//回复一级回复
+			replyone: function(i,e){
+				var self = this;
+				console.log(this.comment[i].uid1);
+				var content = $(e.target).siblings('textarea').val();
+				if(content!=''){
+					var uid2name = this.comment[i].name;
+					var myDate = new Date();
+					var uid1 = "{$Think.session.user.id}";
+					var uid2 = this.comment[i].uid1;
+					var mid = this.thisone.id;
+					var gid = this.comment[i].id;
+					$.ajax({
+						url: "{:url('story/comment')}",
+						data:{uid1:uid1,uid2:uid2,mid:mid,gid:gid,content:content},
+						type: "post",
+						dataType: "json",
+						success: function(data) {
+							console.log(data)
+							if (data.status == 0) {
+  								alert(data.error);
+  							}else{
+								self.comment[i].reply.push({
+									//name: "{$Think.session.user.nickname}",
+									uid1name: '{$Think.session.user.nickname}',
+									//uid2name: this.comment[i],
+									//uid1: '{$Think.session.user.id}',
+//									uid2: this.comment[i].reply[i2].uid1,
+									content: content,
+									time: myDate.toLocaleString('chinese', { hour12: false }).slice(0,-3),
+								});
+							}
+						}
+					})
+					$(e.target).parent().fadeOut(100);
+					$(e.target).siblings('textarea').val('');
+				}else{
+					alert('请不要回复空')
+				}
+			},
+			//打开二级回复框
+			tworeply: function(e){
+				if('{$Think.session.user.id}'){
+					$(e.target).siblings('.replyreply-box').fadeToggle(100);
+				}else{
+					if(confirm('还未登录，是否前往登录')){
+						console.log(111)
+						location.href="{:url('Login/login')}"
+					}
+				}
+			},
+			//回复二级回复
+			replytwo: function(i,i2,e){
+				console.log('replytwo');
+				var self = this;
+				var content = $(e.target).siblings('textarea').val();
+				var myDate = new Date();
+				if(content!=''){
+					//var uid2name = this.comment[i].reply[i2].uid1name;
+					var uid1 = "{$Think.session.user.id}";
+					var uid2 = this.comment[i].reply[i2].uid1;
+					var mid = this.thisone.id;
+					var gid = this.comment[i].id;
+					$.ajax({
+						url: "{:url('story/comment')}",
+						data:{uid1:uid1,uid2:uid2,mid:mid,gid:gid,content:content},
+						type: "post",
+						dataType: "json",
+						success: function(data) {
+							console.log(data);
+							if (data.status == 0) {
+  								alert(data.error);
+  							}else{
+ 								self.comment[i].reply.push({
+ 									name: "{$Think.session.user.nickname}",
+ 									uid1name: '{$Think.session.user.nickname}',
+// 									uid2name: uid2name,
+ 									uid1: '{$Think.session.user.id}',
+ //									uid2: this.comment[i].reply[i2].uid1,
+ 									content: content,
+ 									time: myDate.toLocaleString('chinese', { hour12: false }).slice(0,-3),
+ 								});
+							}
+						}
+					})
+					$(e.target).parent().fadeOut(100);
+					$(e.target).siblings('textarea').val('');
+				}else{
+					alert('请不要回复空');
+				}
+			},
+		}
+	});
+</script>
+<script>
+	
+	//轮播图
+	var bannerSwiper = new Swiper ('.swiper-banner', {
+    loop: true, // 循环模式选项
+		autoplay: {
+			disableOnInteraction: false,
+			delay: 3000,
+		},
+		pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+  
+
+	
+	//textarea高度自适应
+  $(function() {
+  	var autoTextarea = function(elem, extra, maxHeight) {
+  		extra = extra || 0;
+  		var isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,
+  			isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera'),
+  			addEvent = function(type, callback) {
+  				elem.addEventListener ?
+  					elem.addEventListener(type, callback, false) :
+  					elem.attachEvent('on' + type, callback);
+  			},
+  			getStyle = elem.currentStyle ? function(name) {
+  				var val = elem.currentStyle[name];
+
+  				if(name === 'height' && val.search(/px/i) !== 1) {
+  					var rect = elem.getBoundingClientRect();
+  					return rect.bottom - rect.top -
+  						parseFloat(getStyle('paddingTop')) -
+  						parseFloat(getStyle('paddingBottom')) + 'px';
+  				}
+
+  				return val;
+  			} : function(name) {
+  				return getComputedStyle(elem, null)[name];
+  			},
+  			minHeight = parseFloat(getStyle('height'));
+
+  		elem.style.resize = 'none';
+
+  		var change = function() {
+  			var scrollTop, height,
+  				padding = 0,
+  				style = elem.style;
+
+  			if(elem._length === elem.value.length) return;
+  			elem._length = elem.value.length;
+
+  			if(!isFirefox && !isOpera) {
+  				padding = parseInt(getStyle('paddingTop')) + parseInt(getStyle('paddingBottom'));
+  			}
+  			scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+
+  			elem.style.height = minHeight + 'px';
+  			if(elem.scrollHeight > minHeight) {
+  				if(maxHeight && elem.scrollHeight > maxHeight) {
+  					height = maxHeight - padding;
+  					style.overflowY = 'auto';
+  				} else {
+  					height = elem.scrollHeight - padding;
+  					style.overflowY = 'hidden';
+  				};
+  				style.height = height + extra + 'px';
+  				scrollTop += parseInt(style.height) - elem.currHeight;
+  				document.body.scrollTop = scrollTop;
+  				document.documentElement.scrollTop = scrollTop;
+  				elem.currHeight = parseInt(style.height);
+  			}
+  		}
+  		addEvent('propertychange', change);
+  		addEvent('input', change);
+  		addEvent('focus', change);
+  		change();
+  	}
+  	var text = document.getElementById('textarea');
+  	autoTextarea(text);
+  });
+</script>

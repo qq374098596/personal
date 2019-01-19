@@ -1,0 +1,25 @@
+<!--上传时预览图片-->
+<div class="row cl">
+    <label class="form-label col-xs-4 col-sm-2">LOGO：</label>
+    <div class="formControls col-xs-8 col-sm-9">
+        <a style="display: inline-block;" class="btn btn-info">上传图片</a>
+        <input type="file" name="img" onchange="showPrevie(this)"  style="width: 100px;border: 1px solid red;position: absolute;top:0px;left: 0px;height: 30px;opacity: 0;">
+        <img src="" style="width: 150px" id="portraitl">
+    </div>
+</div>
+<script type="text/javascript">
+    function showPrevie(source) {
+        var file = source.files[0];
+        if(window.FileReader) {
+            var fr = new FileReader();
+
+            var portraitl = document.getElementById('portraitl');
+            fr.onloadend = function(e) {
+                portraitl.src = e.target.result;
+            };
+            fr.readAsDataURL(file);
+            portraitl.style.display = 'block';
+        }
+    }
+
+</script>

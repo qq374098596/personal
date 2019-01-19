@@ -1,0 +1,54 @@
+[v-cloak]{ visibility: hidden; }
+.container{ padding-bottom: 30px; }
+.dianping-title{ width: 1200px; height: auto; margin: 20px auto; }
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+} /* 火狐 */
+input{ -moz-appearance:textfield;}
+.content-box{ width: 100%; height: auto; background: #fff; margin-bottom: 20px; border-radius: 10px; box-shadow: 0 3px 3px 0 rgba(166,166,166,.11); }
+.content-box .title{ line-height: 58px; font-size: 18px; color: #FE9B12; padding-left: 40px; box-sizing: border-box; border-bottom: 1px solid #f2f2f2; }
+.input-group{ width: 100%; height: auto; padding: 20px 40px; box-sizing: border-box; overflow: hidden; }
+.input-group .radio-box{ overflow: hidden; }
+.input-group .radio-box label{ float: left; color: #474747; line-height: 40px; margin-right: 40px; }
+.input-group .radio-box label input{ float: left; margin: 10px 12px 10px 0; border-color: #e0e0e0; }
+.input-group>ul{ width: 100%; overflow: hidden; margin-top: 30px; }
+.input-group>ul li{ width: 50%; line-height: 40px; float: left; display: flex; margin-bottom: 10px; padding-right: 40px; box-sizing: border-box; }
+.input-group>ul li p{ flex: 5; color: #474747; }
+.input-group>ul li .file-box1{ flex: 20; }
+.input-group>ul li .file-box1 .file-img{ float: left; } 
+.input-group>ul li .file-box1 .file-img img{ float: left; max-width: 100%; }
+.input-group>ul li .file-box1 input{ padding: 0; border: none; width: 100%; height: 100%; }
+.input-group>ul li input, .input-group>ul li select{ flex: 19; outline: none; border: none; padding-left: 20px; border: 1px solid #f2f2f2; }
+.input-group>ul li select{ -webkit-appearance:none; }
+.input-group>ul li select::-ms-expand{ display: none; }
+.input-group>ul li input[type='date']::-webkit-inner-spin-button{ display: none; }
+.input-group>ul li input[type='number']::-webkit-inner-spin-button{ height: 40px; }
+.input-group>ul li input::-webkit-input-placeholder{ color: #bebebe; }
+.input-group>ul li span{ flex: 1; text-align: right; color: #ff0000; }
+
+.input-group .star-box{ float: left; width: 100%; height: 19px; position: relative; margin: 30px 0; }
+.input-group .noactive, .input-group .active, .input-group .click-block{ position: absolute; top: 1px; left: 88px; }
+.input-group .noactive{ width: 154px; height: 19px; background: url(../img/star1.png); }
+.input-group .active{ height: 19px; background: url(../img/star2.png); }
+.input-group .click-block li{ width: 19px; height: 19px; margin-right: 3px; float: left; cursor: pointer; }
+.input-group>textarea{ width: 100%; height: 140px; resize: none; padding: 20px; box-sizing: border-box; outline: none; border: none; border: 1px solid #f2f2f2; border-top-width: 2px; }
+.input-group>textarea::-webkit-input-placeholder{ color: #bebebe; }
+
+.input-group .file-box{ width: 100%; height: auto; overflow: hidden; margin-top: 10px; }
+.input-group .file-box .uploaded-img, .input-group .file-box .file, .input-group .file-box .file img{ position: relative; float: left; }
+.input-group .file-box .file{ margin-top: 12px; }
+.input-group .file-box .file input{ float: left; width: 100%; height: 100%; }
+.input-group .file-box .file input{ position: absolute; top: 0; left: 0; opacity: 0; }
+.input-group p.file-text{ font-size: 14px; color: #bebebe; margin: 20px 0; }
+
+.input-group .file-box .uploaded-img{ margin-right: 20px; position: relative; padding-top: 12px; width: 142px; height: 142px; }
+.input-group .file-box .uploaded-img>div{ position: relative; border: 1px solid #eee; width: 142px; height: 142px; display: table-cell; text-align: center; vertical-align: middle; box-sizing: border-box; }
+.input-group .file-box .uploaded-img>div>img{ max-width: 140px; max-height: 140px; vertical-align: middle; }
+.input-group .file-box .uploaded-img p{ position: absolute; cursor: pointer; border-radius: 50%; overflow: hidden; right: -12px; top: -12px; background: #eee; }
+.input-group .file-box .uploaded-img p img{ float: left; }
+
+.input-group .submit-box label{ float: left; font-size: 14px; color: #474747; line-height: 46px; }
+.input-group .submit-box label input{ border-color: #e0e0e0; float: left; margin: 13px; }
+.input-group .submit-box .submit-btn{ float: right; width: 268px; height: 46px; border: none; outline: none; background: #ff9600; border-radius: 10px; color: #fff; font-size: 22px; }

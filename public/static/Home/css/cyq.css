@@ -1,0 +1,125 @@
+[v-cloak]{ visibility: hidden; }
+/*弹窗样式*/
+#tanchuang{ display: none; position: fixed; z-index: 999; font-size: 28px; letter-spacing: 2px; line-height: 60px; text-align: center; top: 80px; left: 50%; margin-left: -100px; width: 200px; height: 60px; background: rgba(0,0,0,.2); color: #12C173; border-radius: 6px; padding: 0 10px; }
+
+
+/*banner部分样式*/
+.banner-box{ overflow: hidden; margin-top: 20px; }
+.banner-box .swiper-banner{ width: 897px; height: 400px; float: left; overflow: hidden; background: #ccc; border-radius: 5px; text-align: center; position: relative; }
+.banner-box .swiper-banner .swiper-slide{ line-height: 400px; }
+.swiper-slide img{ width: 100%; height: 100%; }
+.swiper-banner .swiper-pagination{ width: 100%; left: 0; bottom: 40px; }
+.swiper-banner .swiper-pagination span{ width: 12px; height: 12px; border-radius: 0; }
+.swiper-banner .swiper-pagination-bullet{ opacity: .2; }
+.swiper-banner .swiper-pagination-bullet-active{ opacity: 1; }
+
+.banner-box .btn-box{ float: right; position: relative; }
+.banner-box .btn-box a, .banner-box .btn-box>p{ display: block; position: relative; padding-left: 50px; text-align: center; width: 280px; height: 70px; font-size: 28px; margin-bottom: 20px; border: 2px solid #ff9800; border-radius: 10px; background: #ff9800; color: #fff; box-sizing: border-box; line-height: 68px; }
+.banner-box .btn-box a.sign-in, .banner-box .btn-box>p{ background: #fff; color: #12C173; border-color: #12C173; }
+.banner-box .btn-box>p{ position: absolute; top: 0; left: 0; background: transparent; border-color: transparent; display: none; }
+.banner-box .btn-box a.sign-ined{ background: #fff; color: #bcbbbb; border-color: #bcbbbb; cursor: default; }
+.banner-box .btn-box a img, .banner-box .btn-box p img{ position: absolute; top: 15px; left: 60px; }
+.banner-box .hot-box{ width: 280px; height: 220px; float: right; background: #fff; border-radius: 5px; }
+.banner-box .hot-box .title{ width: 100%; height: 55px; border-bottom: 1px solid #f2f2f2; font-size: 22px; color: #ff9800; line-height: 55px; }
+.banner-box .hot-box .title img{ float: left; margin: 13px 9px 0 20px; }
+.banner-box .hot-box .huati-box{ width: 100%; padding: 10px 5px 0 5px; box-sizing: border-box; overflow: hidden; }
+.banner-box .hot-box .huati-box li{ float: left; margin: 5px; }
+.banner-box .hot-box .huati-box li a{ float: left; padding: 6px 16px; color: #a3a3a3; transition: .1s; font-size: 14px; line-height: 14px; background: #f2f2f2; border-radius: 6px; }
+.banner-box .hot-box .huati-box li a:hover{ background: #ff9800; color: #fff; }
+.banner-box .hot-box>a{ display: block; width:70px; margin: 10px auto 0; color: #535353; font-size: 12px; line-height: 25px; }
+.banner-box .hot-box>a img{ float: left; margin: 5px; }
+
+/*创圈推荐样式*/
+.recommend{ width: 100%; background: #fff; border-radius: 10px; padding-bottom: 50px; position: relative; margin-top: 20px; padding-top: 60px; }
+.recommend .title{ width: 100%; height: 60px; position: relative; background: url(../img/cyq/cqtj-title.png); }
+.recommend .title .tiezi-infor{ width: auto; height: 40px; padding: 0 5px; background: #fff; border-radius: 20px; border: 1px solid #d0d0d0; box-sizing: border-box; position: absolute; top: 10px; right: 40px; }
+.recommend .title .tiezi-infor div{ float: left; line-height: 38px; font-size: 14px; color: #333; margin: 0 15px; }
+.recommend .title .tiezi-infor div span{ color: #ff0000; }
+
+.recommend ul{ width: 100%; box-sizing: border-box; padding: 20px 42px; overflow: hidden; }
+.recommend ul li{ float: left; width: 550px; padding: 20px 0; }
+.recommend ul li:first-child{ border-bottom: 1px dashed #b4b4b4; }
+.recommend ul li:nth-child(2){ border-bottom: 1px dashed #b4b4b4; }
+.recommend ul li:nth-child(even){ float: right; }
+.recommend ul li img{ float: left; margin-right: 20px; width: 180px; height: 120px; }
+.recommend ul li h5{ padding-left: 24px; width: 350px; box-sizing: border-box; float: left; margin-top: 10px; font-size: 18px; background: url(../img/cyq/zhiding-icon.png)no-repeat 0 2px; }
+.recommend ul li h5 a{ color: #009151; display: block; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.recommend ul li p{ padding-left: 20px; width: 330px; float: left; margin: 16px 0; background: url(../img/cyq/user-icon.png) no-repeat; font-size: 14px; }
+.recommend ul li p a{ color: #1a1a1a; }
+.recommend ul li p span{ margin-left: 20px; color: #989898; }
+.recommend ul li>a{ float: left; font-size: 14px; color: #ff9800; }
+.recommend .long-list{ width: 1200px; height: 120px; position: absolute; bottom: -63px; z-index: 6; }
+
+/*帖子部分样式*/
+.tiezi-box{ width: 100%; margin: 20px 0; overflow: hidden; }
+/*左侧部分样式*/
+.tiezi-box-l{ width: 900px; float: left; position: relative; height: auto; background: #fff; border-radius: 10px; padding: 70px 40px 30px; box-sizing: border-box; }
+.tiezi-box-l .btn-box{ width: 100%; overflow: hidden; }
+.tiezi-box-l .btn-box a{ float: left; font-size: 18px; padding: 6px 42px; margin-right: 30px; color: #989898; border-radius: 19px; border: 1px solid #989898; }
+.tiezi-box-l .btn-box a:hover, .tiezi-box-l .btn-box a.active{ border-color: #009151; color: #009151; }
+
+
+.tiezi-box-l ul{ margin-top: 40px; }
+.tiezi-box-l ul li{ width: 100%; padding: 30px 0; border-bottom: 1px dashed #dcdcdc; overflow: hidden; position: relative; }
+.tiezi-box-l ul li.zhiding{ background: url(../img/cyq/zhiding-icon.png)no-repeat 100px 42px; }
+.tiezi-box-l ul li.zhiding .tiezi-describe h5{ padding-left: 25px; }
+.tiezi-box-l ul li>img{ float: left; width: 80px; height: 80px; border-radius: 50%; margin-right: 20px; }
+.tiezi-box-l ul li .tiezi-describe{ float: left; }
+.tiezi-box-l ul li .tiezi-describe h5{ margin: 10px 0; max-width: 585px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.tiezi-box-l ul li .tiezi-describe h5 a{ font-size: 18px; color: #009151; }
+.tiezi-box-l ul li .tiezi-describe span{ font-size: 14px; color: #989898; margin-right: 15px; float: left; }
+.tiezi-box-l ul li .tiezi-describe span.user-name{ display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100px; padding-left: 20px; background: url(../img/cyq/user-icon.png)no-repeat 0 2px; }
+.tiezi-box-l ul li .tiezi-describe span.user-name a{ color: #1a1a1a; }
+.tiezi-box-l ul li .tiezi-describe span.look a, .tiezi-box-l ul li .tiezi-describe span.reply a{ color: #ff0000; }
+.tiezi-box-l ul li .tiezi-more{ position: absolute; right: 10px; top: 52px; width: 4px; height: 18px; background: #eee; }
+
+/*分页样式*/
+.page-box{ height: 100px; }
+.page{ position: absolute; left: 50%; overflow: hidden; margin-top: 45px; }
+.page a,.page span{ float:left; width: 40px; height: 40px; box-sizing: border-box; border-radius: 50%; text-align: center; line-height: 38px; margin:10px 5px; color:#bababa; transition: .2s; border:1px solid #bababa; }
+.page a.prev, .page a.next{ font-size: 18px; }
+.page a:not(.next):not(.prev):hover{ background: #12C173; color: #fff; border-color: #12C173; }
+.page input{ width: 30px; height: 40px; float: left; margin-top: 11px; box-sizing: border-box; }
+.page .active{ background:#12C173; color: white; border-color: #12C173; }
+
+
+
+/*右侧部分样式*/
+.tiezi-box-r{ width: 280px; float: right; }
+/*热帖排行样式*/
+.tiezi-box-r .hot-sort{ width: 100%; height: auto; background: #fff; border-radius: 10px; position: relative; }
+.tiezi-box-r .hot-sort .title{ width: 100%; height: 40px; padding-top: 60px; font-size: 22px; border-bottom: 1px solid #f2f2f2; color: #ff9800; }
+.tiezi-box-r .hot-sort .title img{ float: left; margin: 0 10px 0 20px; }
+.tiezi-box-r .hot-sort ul{ width: 100%; height: auto; padding: 24px 24px 40px; box-sizing: border-box; }
+.tiezi-box-r .hot-sort ul li{ overflow: hidden; margin-bottom: 15px; }
+.tiezi-box-r .hot-sort ul li p{ width: 20px; float: left; font-size: 26px; color: #dfdfdf; }
+.tiezi-box-r .hot-sort ul li:nth-child(1) p, .tiezi-box-r .hot-sort ul li:nth-child(2) p, .tiezi-box-r .hot-sort ul li:nth-child(3) p{ color: #ffa800; font-style: italic; }
+.tiezi-box-r .hot-sort ul li a{ width: 200px; float: right; }
+.tiezi-box-r .hot-sort ul li a:hover span{ display: block; } 
+.tiezi-box-r .hot-sort ul li a h5{ width: 100%; line-height: 36px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 14px; color: #313232; }
+.tiezi-box-r .hot-sort ul li a:hover h5{ color: #009151; } 
+.tiezi-box-r .hot-sort ul li a span{ float: left; font-size: 12px; color: #989898; display: none; }
+.tiezi-box-r .hot-sort ul li a span:nth-child(odd){ color: #ff0000; margin-right: 8px; }
+.tiezi-box-r .hot-sort ul li a span:last-child{ margin: 0; }
+
+.tiezi-box-r .hot-sort .short-list{ position: absolute; bottom: -65px; z-index: 6; }
+
+
+/*创圈之星样式*/
+.tiezi-box-r .cq-star{ width: 100%; height: auto; background: #fff; border-radius: 10px; margin-top: 20px; }
+.tiezi-box-r .cq-star .title{ width: 100%; height: 40px; padding-top: 60px; font-size: 22px; border-bottom: 1px solid #f2f2f2; color: #ff9800; }
+.tiezi-box-r .cq-star .title img{ float: left; margin: 0 10px 0 20px; }
+.tiezi-box-r .cq-star ul{ width: 100%; height: auto; padding: 15px; box-sizing: border-box; }
+.tiezi-box-r .cq-star ul li{ overflow: hidden; width: 100%; margin: 5px 0; }
+.tiezi-box-r .cq-star ul li .header-box{ float: left; width: 105px; margin-right: 10px; position: relative; }
+.tiezi-box-r .cq-star ul li .header-box img{ width: 80px; height: 80px; border-radius: 50%; border: 4px solid #fff; }
+.tiezi-box-r .cq-star ul li:first-child .header-box img{ border-color: #ffc600; }
+.tiezi-box-r .cq-star ul li:nth-child(2) .header-box img{ border-color: #d0d0d0; }
+.tiezi-box-r .cq-star ul li:nth-child(3) .header-box img{ border-color: #d6b970; }
+.tiezi-box-r .cq-star ul li .header-box .product{ width: 29px; height: 39px; position: absolute; right: 0; top: 30px; }
+.tiezi-box-r .cq-star ul li:first-child .header-box .product{ background: url(../img/cyq/first-icon.png); }
+.tiezi-box-r .cq-star ul li:nth-child(2) .header-box .product{ background: url(../img/cyq/second-icon.png); }
+.tiezi-box-r .cq-star ul li:nth-child(3) .header-box .product{ background: url(../img/cyq/third-icon.png); }
+.tiezi-box-r .cq-star ul li a{ float: left; width: 135px; margin-top: 20px; font-size: 14px; color: #ff9800; font-weight: bold; }
+.tiezi-box-r .cq-star ul li p{ float: left; width: 135px; font-size: 14px; color: #989898; line-height: 26px; }
+.tiezi-box-r .cq-star ul li p span{ color: #ff0000; }

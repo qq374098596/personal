@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {include file="meta"}
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span> 轮播图
+    <span class="c-gray en">&gt;</span> {$title}
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<article class="page-container">
+    <form class="form form-horizontal" id="form-admin-set" method="post" action="{:url('turnimg/turnimg_post?id='.$id)}">
+        
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>所属页面：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{if $turnimg} {$turnimg.page} {/if}" placeholder="" id="page" name="page">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">页面类型：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="pagecode" type="radio" id="code-1" value="1" {if $turnimg && $turnimg.pagecode ==1 } checked {/if}>
+                    <label for="code-1">首页</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="code-2" value="0" {if $turnimg && $turnimg.pagecode ==2 } checked {/if} name="pagecode">
+                    <label for="code-2">创业导师</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="code-3" value="0" {if $turnimg && $turnimg.pagecode ==3 } checked {/if} name="pagecode">
+                    <label for="code-2">诊断</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">显示状态：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="status" type="radio" id="sex-1" value="1" {if $turnimg && $turnimg.status ==1 } checked {/if}>
+                    <label for="sex-1">启用</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="sex-2" value="0" {if $turnimg && $turnimg.status ==0 } checked {/if} name="status">
+                    <label for="sex-2">关闭</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl" style="margin-top: -50px">
+            <label class="form-label col-xs-4 col-sm-2">图片列表：</label>
+            <div style="margin-left:20%;margin-top: 100px;">
+            <!-- 判断轮播图是否存在 -->
+            {if !$turnimg}
+                <span id="showlist" style="margin-left: 25px;"></span>
+            {else/}
+                <span id="showlist" style="margin-left: 25px;">
+                <!-- 判断轮播图是否为数组 -->
+                {if !is_array($turnimg.src)}
+                    <div style="position: relative;margin-right: 20px;margin-bottom: 15px;width: 132px;display: inline-block;border: 1px solid #CCC;background:#EEE;">
+                        <span style="display: block;width: 120px;height: 100px;border: 1px solid #F2F1F0;margin: 5px;overflow: hidden;">
+                            <img src="{$turnimg.src}" style="width: 100%;"/>'
+                        </span>
+                        <input type="hidden" class="img" name='imgs[]' value="{$turnimg.src}" />
+                        <a onclick="delImg(this,event);" style="z-index: 10;display: block;top: -8px;cursor:pointer;right: -8px;position:absolute;width: 20px;height: 20px;background: #CCC;border-radius:100%;text-align:center;line-height: 20px;border: 1px solid #C1C1C1;color: #555;">X</a>
+                    </div>
+                {else/}
+                <!-- 如果是数组 循环 -->
+                {foreach $turnimg.src as $key=>$item}
+                    <div style="position: relative;margin-right: 20px;margin-bottom: 15px;width: 132px;display: inline-block;border: 1px solid #CCC;background:#EEE;">
+                        <span style="display: block;width: 120px;height: 100px;border: 1px solid #F2F1F0;margin: 5px;overflow: hidden;">
+                            <img src="{$item}" style="width: 100%;"/>'
+                        </span>
+                        <input type="hidden" class="img" name='imgs[]' value="{$item}" />
+                        <a onclick="delImg(this,event);" style="z-index: 10;display: block;top: -8px;cursor:pointer;right: -8px;position:absolute;width: 20px;height: 20px;background: #CCC;border-radius:100%;text-align:center;line-height: 20px;border: 1px solid #C1C1C1;color: #555;">X</a>
+                    </div>
+                {/foreach}
+                {/if}
+                </span>
+            {/if}
+                <span style="display:inline-block;height: 90px;position: relative;top:0px;left:0px;">
+                    <a style="display: inline-block;" class="btn btn-info">上传图片</a>
+                    <input type="file" style="border: 1px solid red;position: absolute;top:0px;left: 0px;height: 30px;opacity: 0;" onchange="upload(this)">
+                </span>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <input class="btn btn-primary radius" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" type="submit">
+                <button onClick="window.history.go(-1);" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </form>
+</article>
+{include file="script" /}
+<script type="text/javascript" src="__STATIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__STATIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__STATIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<!-- <script type="text/javascript" src="__STATIC__/Admin/lib/wangueditor/3.1.1/wangEditor.min.js"></script> -->
+<!-- <script type="text/javascript" src="__STATIC__/Admin/lib/wangueditor/3.1.1/wangEditor.js"></script> -->
+
+<script type="text/javascript">
+    var imglist=[];
+    function upload(obj)
+    {
+        if( obj.value == "" ) {
+            alert('文件上传出错');
+            return;
+        }
+        // 实例化一个对象
+
+        var formdata = new FormData();
+        formdata.append("img" , $(obj)[0].files[0]);//获取文件
+        $.ajax({
+            type : 'post',
+            url :"{:url('Product/upimg')}", // 上传图片的接口地址
+            data : formdata,
+            cache : false,
+            processData : false, // 不处理发送的数据，因为data值是Formdata对象，不需要对数据做处理
+            contentType : false, // 不设置Content-type请求头
+            success : function(response){
+                var html = '<div style="position: relative;margin-right: 20px;margin-bottom: 15px;width: 132px;display: inline-block;border: 1px solid #CCC;background:#EEE;">'
+                    +'<span style="display: block;width: 120px;height: 100px;border: 1px solid #F2F1F0;margin: 5px;overflow: hidden;">'
+                    +'<img src="'+response+'" style="width: 100%;"/>'
+                    +'</span>'
+                    +'<input type="hidden" name="imgs[]" value="'+response+'" />'
+                    +'<a onclick="delImg(this,event);" style="z-index: 10;display: block;top: -8px;cursor:pointer;right: -8px;position:absolute;width: 20px;height: 20px;background: #CCC;border-radius:100%;text-align:center;line-height: 20px;border: 1px solid #C1C1C1;color: #555;">X</a>'
+                    +'</div>';
+
+                $('#showlist').append(html);
+                imglist.push(response);
+                $('#hidden').val(imglist.join(','));
+            },
+            error : function(){ }
+        });
+    }
+
+    function delImg(obj,e)
+    {
+        imglist.splice($(e.currentTarget).parent().index(),1)
+        $('#hidden').val(imglist.join(','));
+        // 向上找到父元素删除
+        $(obj).parent('div').remove();
+    }
+
+</script>
+</body>
+</html>

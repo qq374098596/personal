@@ -1,0 +1,68 @@
+{include file="public:head" /}		
+		<style>
+			
+			.big-box{ width: 1920px; height: 800px; margin: 20px 0 60px; background: url(__STATIC__/Home/img/gywm/big-bg.png); position: relative; left: 50%; margin-left: -960px; }
+			.big-box .big-bg{ width: 1200px; height: 800px; margin: 0 auto;  }
+			.big-box .numbox{ width: 600px; height: 370px; float: left; text-align: center; }
+			.big-box .numbox h1{ font-size: 100px; color: #12C173; margin-top: 120px; }
+			.big-box .numbox p{ font-size: 20px; color: #fff; }
+			
+			.big-box .company-box{ float: left; width: 100%; height: 365px; padding: 23px 21px; box-sizing: border-box; background: #fff; border-radius: 10px; }
+			.big-box .company-box img{ float: left; }
+			.big-box .company-box .company-text{ text-align: center; }
+			.big-box .company-box .company-text h3{ font-size: 24px; color: #12c173; line-height: 57px; margin-bottom: 10px; }
+			.big-box .company-box .company-text p,.big-box .company-box .company-text h5{ font-weight: normal; font-size: 18px; color: #333; line-height: 40px; }
+			.big-box .company-box .company-text h5{ margin-top: 40px; }
+			.big-box .company-box .company-text h5 span{ color: #12C173; }
+			
+			
+		</style>
+	</head>
+	<body>
+		<!--顶部-->
+		
+		{include file="public:header" /}
+
+
+		<!--内容-->
+		<div class="big-box">
+			<div class="big-bg">
+				<div class="year numbox">
+					<h1>5</h1>
+					<p>年技术沉淀</p>
+				</div>
+				<div class="hour numbox">
+					<h1>24</h1>
+					<p>小时为您服务</p>
+				</div>
+				<div class="company-box">
+					<img src="__STATIC__/Home/img/gywm/company-img.png" />
+					<div class="company-text">
+						<h3>我们是谁</h3>
+						<p>返乡创业网致力于打造“返乡”创业综合服务平台</p>
+						<p>提供开店加盟，品牌代理等创业项目诊断</p>
+						<p>还原品牌真实面目，建立行业中立第三方加盟点评平台</p>
+						<p>为返乡创业者最大限度降低风险！</p>
+						<h5>联系我们：<span>4008882487</span></h5>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		
+		
+		
+		<!--底部-->
+		
+	{include file="public:footer" /}
+
+<script>
+	//头部导航选择
+	$('.nav ul li').siblings().removeClass('active');
+	$('.gywm').addClass('active');
+	// $('.nav ul li').click(function(){
+	// 	$(this).siblings().removeClass('active');
+	// 	$(this).addClass('active');
+	// });
+</script>

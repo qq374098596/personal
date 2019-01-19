@@ -1,0 +1,582 @@
+{include file="public:head" /}
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/yxxm-detail.css"/>
+	</head>
+	<body>
+		<!--顶部-->
+		
+		{include file="public:header" /}
+
+	  <!--内容部分-->
+	  <div id="content" v-cloak>
+	  	<div class="describe">
+	  		<!--头部-->
+	  		<div class="title">
+					<h5>{{thisone.name}}<span>筛选优质项目，让好的品牌脱颖而出</span></h5>
+					<div>当前位置：严选项目 - {{thisone.hyname}} - <span>{{thisone.name}}</span></div>
+				</div>
+				<!--图文部份-->
+				<div class="img-text">
+					<!--图片展示-->
+					<div class="zhanshiimg">
+						<div class="swiper-container bigimgbox">
+							<div class="header-box"><img src="__STATIC__/Home/img/yxxm/yxxm1.png" /></div>
+							<div class="swiper-wrapper">
+					      <div class="swiper-slide" v-for="item in thisone.ppimglist"><img :src="item" /></div>
+					    </div>
+						</div>
+						<div class="smallimgbox swiper-container">
+							<div class="swiper-wrapper">
+					      <div class="swiper-slide" v-for="item in thisone.ppimglist"><img :src="item" /></div>
+					    </div>
+						</div>
+					</div>
+					<!--文字展示-->
+					<div class="zhanshitext">
+						<div class="title">{{thisone.name}}<span>-{{thisone.hyname}}-</span></div>
+						<div class="comment">
+							<div class="star-box">
+      					<div class="noactive"></div>
+      					<div class="active" :style="{width:thisone.star*22+'px'}"></div>
+      				</div>
+      				<span>{{thisone.comnum?thisone.comnum:0}}人点评</span>
+      				<span>好评率：{{thisone.count+'%' || '暂无资料'}}</span>
+						</div>
+						<p class="joinmoney">
+							<span>加盟费：<a>{{'￥'+thisone.jiamengfei}}万</a></span>
+							<span>{{thisone.dailiren?thisone.dailiren:0}}人代理</span>
+						</p>
+						<p class="joinstore">加盟门店：<a>{{thisone.jiamengshop}}</a></p>
+						<p class="zhiying">直营门店：<a>{{thisone.jiamengshop}}</a></p>
+						<p class="company">公司：<a>{{thisone.company}}</a></p>
+						<p class="tel">电话：<a>{{thisone.tel}}</a></p>
+						<p class="shoucangnum"><img src="__STATIC__/Home/img/yxxm/like2.png" />{{thisone.likenum? thisone.likenum: 0}}人收藏</p>
+						<div class="btn-group">
+							<p class="shoucang"><img src="__STATIC__/Home/img/yxxm/like1.png" />收藏</p>
+							<p class="zixun" @click="zixun">项目咨询</p>
+							<p class="kefu" @click="kefu">联系客服</p>
+							<a href="dianping.html" target="_blank" class="dianping"><img src="__STATIC__/Home/img/yxxm/yxdp-icon.png" />写点评</a>
+						</div>
+					</div>
+				</div>
+	  	</div>
+	  	
+	  	<!--项目下部分-->
+	  	<div class="bottom-content">
+	  		<img src="__STATIC__/Home/img/yxxm/select-list.png" class="select-list">
+	  		<ul class="selectpage-btn">
+	  			<li>品牌简介</li>
+	  			<li>品牌点评</li>
+	  			<li>品牌问答</li>
+	  			<li>线下实访</li>
+	  		</ul>
+	  		<div class="selectpages">
+	  			<!--简介页-->
+	  			<div class="page jianjie-page">简介页</div>
+	  			<!--点评页-->
+	  			<div class="page dianping-page">
+	  				<div class="reviews-btn">
+	  					<p @click="selectpingjia" data-val="">全部</p>
+	  					<p @click="selectimg">图片（2156）</p>
+	  					<p @click="selectpingjia" data-val="好评">好评（1985）</p>
+	  					<p @click="selectpingjia" data-val="中评">中评（138）</p>
+	  					<p @click="selectpingjia" data-val="差评">差评（138）</p>
+	  				</div>
+	  				<ul class="reviews-content reviews-content-pingjia">
+	  					<li v-for="(item,index) in dianping" v-if="pingjia == '' ? true : item.pingjia==pingjia" :key="index">
+	  						<div class="header-box"><img :src="item.header" onerror="this.src='__STATIC__/Home/img/loading.gif'" /></div>
+	  						<div class="content-right">
+	  							<h5>{{item.name}}<span>{{item.state}}</span></h5>
+	  							<div class="star-box">
+		      					<div class="noactive"></div>
+		      					<div class="active" :style="{width:item.star*22+'px'}"></div>
+		      				</div>
+		      				<!--严选信息-->
+		      				<div class="join-infor">
+		      					<p>加盟费：<span>{{'￥'+item.joinmoney+'万'}}</span></p>
+		      					<p>总成本：<span>￥{{item.allmoney}}万</span></p>
+		      					<p>加盟时间：<span>{{item.jointime}}</span></p>
+		      					<p>月营收：<span>{{item.mounthin}}万</span></p>
+		      					<p>开店城市：<span>{{item.city}}</span></p>
+		      					<span><img src="__STATIC__/Home/img/yxxm/company-icon.png" />{{item.company}}</span>
+		      				</div>
+		      				<!--评论内容-->
+		      				<div class="comment-content">
+		      					<p>{{item.content}}</p>
+		      				</div>
+		      				
+		      				<div class="comment-btn">
+		      					<p>{{item.time}}</p>
+		      					<p class="btn"><span>展开评论</span><a></a></p>
+		      				</div>
+		      				<!--图片部分-->
+		      				<div class="comment-img" v-if="item.img">
+		      					<div class="small-img" :data-index="index">
+								      <img v-for="(img,index) in item.img" onerror="this.src='__STATIC__/Home/img/loading.gif'" @click="showbigimg($event,index)" :class="{active:img.isactive}" :src="img.src"  />
+										</div>
+										<div class="big-img" v-if="item.bigimg">
+								      <img :src="item.bigimg" :data-index="index" onerror="this.src='__STATIC__/Home/img/loading.gif'" :data-index="index" @click="hidebigimg($event)" />
+								      <div @click="previmg($event)" class="prev-btn btn"><p>&lt;</p></div>
+								      <div @click="nextimg($event)" class="next-btn btn"><p>&gt;</p></div>
+										</div>
+		      				</div>
+		      				
+		      				<div class="comment-replay">
+		      					<span class="good-comment">赞（{{item.likenum}}）</span>
+		      					<span class="write-btn">回应（{{item.replaynum}}）</span>
+		      					<div class="write-comment">
+		      						<textarea></textarea>
+		      						<p>发表</p>
+		      					</div>
+		      				</div>
+		      				<!--网友回应-->
+		      				<div class="replay-box" v-if="item.children">
+		      					<div class="title">网友回应</div>
+		      					<ul>
+		      						<li v-for="replay in item.children">
+		      							<div class="header">
+		      								<img :src="replay.header" onerror="this.src='__STATIC__/Home/img/loading.gif'" />
+		      							</div>
+		      							<div class="replay-right">
+		      								<h5>{{replay.name}}</h5>
+			      							<p>{{replay.content}}</p>
+			      							<div class="replay-bottom">
+			      								<p>{{replay.time}}</p>
+			      								<span>回应</span>
+			      							</div>
+		      							</div>
+		      						</li>
+		      					</ul>
+		      				</div>
+		      				
+	  						</div>
+	  					</li>
+	  				</ul>
+	  			</div>
+	  			<!--问答页-->
+	  			<div class="page wenda-page">
+	  				<div class="wenda-btn">
+	  					<p @click="selectclass($event)" data-val="">全部</p>
+	  					<p @click="selectclass($event)" data-val="收益">收益（2156）</p>
+	  					<p @click="selectclass($event)" data-val="成本">成本（1985）</p>
+	  					<p @click="selectclass($event)" data-val="靠谱">靠谱（138）</p>
+	  					<p @click="selectclass($event)" data-val="指导">指导（138）</p>
+	  					<p @click="selectclass($event)" data-val="市场">市场（138）</p>
+	  				</div>
+	  				<ul>
+	  					<!--问答-->
+	  					<li v-for="(item,index) in wenda" v-if="wendaclass ? item.selectclass==wendaclass : true">
+	  						<!--问-->
+	  						<div class="question-box">
+	  							<img src="__STATIC__/Home/img/yxxm/wen-icon.png" />
+	  							<div class="question-right">
+	  								<h5>{{item.question}}</h5>
+	  								<p>{{item.user}}<span>提问于{{item.fromtime}}</span></p>
+	  							</div>
+	  						</div>
+	  						<!--答-->
+	  						<div class="answer-box">
+	  							<img src="__STATIC__/Home/img/yxxm/da-icon.png" />
+	  							<div class="answer-right">
+	  								<div class="answer" v-for="answer in item.showall? item.answer:item.answer.slice(0,1)">
+	  									<h5>{{answer.user}}<span>{{answer.state}}</span></h5>
+	  									<span>{{answer.time}}</span>
+	  									<p>{{answer.content}}</p>
+	  									<a>有用({{answer.goodnum}})</a>
+	  								</div>
+	  							</div>
+	  						</div>
+	  						<div :class="{showanswer:true, develop: item.showall}" @click="showallanswer(index)">全部{{item.answer.length}}个回答<span></span></div>
+	  					</li>
+	  				</ul>
+	  			</div>
+	  			<!--实访页-->
+	  			<div class="page jianjie-page">实访页</div>
+	  		</div>
+	  	</div>
+	  </div>
+	  
+	  <!--项目咨询-->
+		<div class="model-bg xmzx" style="display: none;">
+			<div class="model-box">
+				<span class="close"><img src="img/yxxm/close-icon.png" /></span>
+				<h5>项目咨询</h5>
+				<div class="textarea-box">
+					<span>留言内容：</span>
+					<textarea placeholder="请输入您要了解的内容"></textarea>
+				</div>
+				<div class="input-box">
+					<span>意向城市：</span>
+					<input type="text" placeholder="请输入您期望加盟的城市" />
+				</div>
+				<div class="input-box">
+					<span>投资预算：</span>
+					<input type="text" placeholder="请输入您的投资预算" />
+				</div>
+				<div class="input-box">
+					<span>姓名：</span>
+					<input type="text" placeholder="请问怎么称呼您" />
+				</div>
+				<div class="input-box">
+					<span>手机号：</span>
+					<input type="text" placeholder="请输入您的手机号码" />
+				</div>
+				<p>提交留言</p>
+			</div>
+		</div>
+		
+		<!--联系客服-->
+		<div class="model-bg lxkf" style="display: none;">
+			<div class="model-box">
+				<span class="close"></span>
+				<div class="zixun-btn"><img src="__STATIC__/Home/img/yxxm/qq-icon.png" />点击咨询</div>
+				<div class="kf-bottom">
+					<p><img src="__STATIC__/Home/img/yxxm/kf-tel-icon.png" />400-123-1234</p>
+					<p><img src="__STATIC__/Home/img/yxxm/kf-time-icon.png" />周一至周五 9:00-18:00</p>
+				</div>
+			</div>
+		</div>
+			
+		
+		<!--底部-->
+
+		{include file="public:footer" /}
+
+<script src="__STATIC__/Home/js/swiper.js"></script>
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script>
+	var vm = new Vue({
+		el: '#content',
+		data: {
+			thisone:"",
+			pingjia: '',
+			wendaclass: '',
+			review: [
+				// {
+				// 	pingjia: '中评',
+				// 	name: '西瓜你个萝卜头中',
+				// 	header: 'img/yxxm/user1.png',
+				// 	state: '开店中',
+				// 	star: 7,
+				// 	joinmoney: 1,
+				// 	allmoney: 7,
+				// 	jointime: '2018-11-07',
+				// 	mounthin: 10,
+				// 	city: '沈阳',
+				// 	company: '上海创杨信息技术有限公司',
+				// 	content: '跟抢没区别，之前承诺过得开店大力扶持，老师亲自上门合同之后交了钱哈哈你自己看着办吧 承诺你7万开店那是在做梦，反正签完合同你想让他们帮你干什么都是要钱跟抢没区别，之前承诺过得开店大力扶持，老师亲自上门!',
+				// 	time: '2018-11-09',
+				// 	img: [ 
+				// 		{ src: 'img/yxxm/elm-1.png', isactive: false },
+				// 		{ src: 'img/yxxm/elm-2.png', isactive: false },
+				// 		{ src: 'img/yxxm/elm-3.png', isactive: false },
+				// 		{ src: 'img/yxxm/elm-4.png', isactive: false },
+				// 		{ src: 'img/yxxm/elm-5.png', isactive: false },
+				// 	],
+				// 	bigimg: '',
+				// 	likenum: 18,
+				// 	replaynum: 2,
+				// 	children: [
+				// 		{
+				// 			header: 'img/cyq/user1.png',
+				// 			name: '你妈喊你回家吃饭',
+				// 			content: '反正签完合同你想让他们帮你干什么都是要钱跟抢没区别，之前承诺过得开店大力扶持，老师亲自上门......',
+				// 			time: '2018-11-09',
+				// 		},
+				// 		{
+				// 			header: 'img/cyq/user2.png',
+				// 			name: '回家吃饭哩',
+				// 			content: '反正签完合同你想让他们帮你干什么都是要钱跟抢没区别，之前承诺过得开店大力扶持，老师亲自上门......',
+				// 			time: '2018-11-09',
+				// 		}
+				// 	],
+				// },
+				// {
+				// 	pingjia:'好评',
+				// 	name: '西瓜你个萝卜头好',
+				// 	header: 'img/yxxm/user1.png',
+				// 	state: '开店中',
+				// 	star: 7,
+				// 	joinmoney: 1,
+				// 	allmoney: 7,
+				// 	jointime: '2018-11-07',
+				// 	mounthin: 10,
+				// 	city: '沈阳',
+				// 	company: '上海创杨信息技术有限公司',
+				// 	content: '跟抢没区别，之前承诺过得开店大力扶持，老师亲自上门合同之后交了钱哈哈你自己看着办吧 承诺你7万开店那是在做梦，反正签完合同你想让他们帮你干什么都是要钱跟抢没区别，之前承诺过得开店大力扶持，老师亲自上门!',
+				// 	time: '2018-11-09',
+				// 	img: [ 
+				// 		{ src: 'img/yxxm/elm-1.png', isactive: false },
+				// 		{ src: 'img/yxxm/elm-2.png', isactive: false },
+				// 		{ src: 'img/yxxm/elm-3.png', isactive: false },
+				// 		{ src: 'img/yxxm/elm-4.png', isactive: false },
+				// 		{ src: 'img/yxxm/elm-5.png', isactive: false },
+				// 	],
+				// 	bigimg: '',
+				// 	likenum: 18,
+				// 	replaynum: 2,
+				// },
+				// {
+				// 	pingjia: '差评',
+				// 	name: '西瓜你个萝卜头差',
+				// 	header: 'img/yxxm/user1.png',
+				// 	state: '开店中',
+				// 	star: 7,
+				// 	joinmoney: 1,
+				// 	allmoney: 7,
+				// 	jointime: '2018-11-07',
+				// 	mounthin: 10,
+				// 	city: '沈阳',
+				// 	company: '上海创杨信息技术有限公司',
+				// 	content: '跟抢没区别，之前承诺过得开店大力扶持，老师亲自上门合同之后交了钱哈哈你自己看着办吧 承诺你7万开店那是在做梦，反正签完合同你想让他们帮你干什么都是要钱跟抢没区别，之前承诺过得开店大力扶持，老师亲自上门!',
+				// 	time: '2018-11-09',
+				// 	likenum: 18,
+				// 	replaynum: 2,
+				// }
+			],
+			wenda: [
+				{
+					question: '饿了么城市代理商有多赚钱？',
+					selectclass: '收益', 
+					user: '辣出来的美食',
+					fromtime: '2018-11-10',
+					showall: false,
+					answer: [
+						{ 
+							user: '石......头', 
+							state: '开店中', 
+							time: '2018-11-10', 
+							content: '2015年，发现沈阳的写字楼里贴满了“饿了么”的广告，放眼望去一片蓝色。我告诉自己商机来了。', 
+							goodnum: 65,
+						},
+						{ 
+							user: '石......头', 
+							state: '开店中', 
+							time: '2018-11-10', 
+							content: '2015年，发现沈阳的写字楼里贴满了“饿了么”的广告，放眼望去一片蓝色。我告诉自己商机来了。', 
+							goodnum: 65,
+						},
+					],
+				},
+				{
+					question: '饿了么城市代理商有多赚钱？成本',
+					selectclass: '成本', 
+					user: '辣出来的美食',
+					fromtime: '2018-11-10',
+					showall: false,
+					answer: [
+						{ 
+							user: '石......头', 
+							state: '开店中', 
+							time: '2018-11-10', 
+							content: '2015年，发现沈阳的写字楼里贴满了“饿了么”的广告，放眼望去一片蓝色。我告诉自己商机来了。', 
+							goodnum: 65,
+						},
+						{ 
+							user: '石......头', 
+							state: '开店中', 
+							time: '2018-11-10', 
+							content: '2015年，发现沈阳的写字楼里贴满了“饿了么”的广告，放眼望去一片蓝色。我告诉自己商机来了。', 
+							goodnum: 65,
+						},
+					],
+				},
+				{
+					question: '饿了么城市代理商有多赚钱？靠谱不',
+					selectclass: '靠谱', 
+					user: '辣出来的美食',
+					fromtime: '2018-11-10',
+					showall: false,
+					answer: [
+						{ 
+							user: '石......头', 
+							state: '开店中', 
+							time: '2018-11-10', 
+							content: '2015年，发现沈阳的写字楼里贴满了“饿了么”的广告，放眼望去一片蓝色。我告诉自己商机来了。', 
+							goodnum: 65,
+						},
+						{ 
+							user: '石......头', 
+							state: '开店中', 
+							time: '2018-11-10', 
+							content: '2015年，发现沈阳的写字楼里贴满了“饿了么”的广告，放眼望去一片蓝色。我告诉自己商机来了。', 
+							goodnum: 65,
+						},
+					],
+				}
+			],
+		},
+
+		created:function(){
+			var self = this;
+			$.get("{:url('strict/detailJson',['id'=>$id])}",function(data){
+				var data = eval("("+data+")");
+				console.log(data)
+				self.thisone = data.detail;
+				self.review = data.review;
+			})
+		},
+
+		computed: {
+			
+		},
+		
+		methods:{
+			//项目咨询
+			zixun: function(){
+				$('.xmzx').fadeIn();
+			},
+			//联系客服
+			kefu: function(){
+				$('.lxkf').fadeIn();
+			},
+			
+			
+			//根据评价进行选择
+			selectpingjia: function(e){
+				var val = $(e.target).data('val');
+				this.pingjia = val;
+				$('.reviews-content-img').hide();
+				$('.reviews-content-pingjia').show();
+			},
+			selectimg: function(){
+				$('.reviews-content-pingjia').hide();
+				$('.reviews-content-img').show();
+			},
+			
+			//点击小图显示大图
+			showbigimg: function(e,i){
+			  let pinglunindex = $(e.target).parent().data('index');
+			  if(this.dianping[pinglunindex].img[i].isactive){
+			  	this.dianping[pinglunindex].img[i].isactive = false;
+			  	this.dianping[pinglunindex].bigimg = '';
+			  }else{
+			  	for(let index in this.dianping[pinglunindex].img){
+				  	this.dianping[pinglunindex].img[index].isactive = false;
+				  }
+				  this.dianping[pinglunindex].img[i].isactive = true;
+				  this.dianping[pinglunindex].bigimg = this.dianping[pinglunindex].img[i].src;
+			  }
+			},
+			//切换放大图
+			previmg: function(e){
+				let index = $(e.currentTarget).parent().siblings('.small-img').children('.active').index();
+				let length = $(e.currentTarget).parent().siblings('.small-img').children('img').length;
+				index--;
+				if(index == -1 ){
+					index = length -1;
+				}
+				$(e.currentTarget).parent().siblings('.small-img').children('img').eq(index).click();
+			},
+			nextimg: function(e){
+				let index = $(e.currentTarget).parent().siblings('.small-img').children('.active').index();
+				let length = $(e.currentTarget).parent().siblings('.small-img').children('img').length;
+				index++;
+				console.log(index,length)
+				if(index == length ){
+					index = 0;
+				}
+				$(e.currentTarget).parent().siblings('.small-img').children('img').eq(index).click();
+			},
+			//点击大图隐藏
+			hidebigimg: function(e){
+				let pinglunindex = $(e.target).data('index');
+				console.log(pinglunindex);
+				for(let index in this.dianping[pinglunindex].img){
+			  	this.dianping[pinglunindex].img[index].isactive = false;
+			  }
+				this.dianping[pinglunindex].bigimg = '';
+			},
+			
+			//选择问答类型
+			selectclass: function(e){
+				let val = $(e.target).data('val');
+				this.wendaclass = val;
+				$(e.target).siblings('p').removeClass('active');
+				$(e.target).addClass('active');
+			},
+			//问答页面显示所有回答
+			showallanswer: function(i){
+				this.wenda[i].showall = this.wenda[i].showall == true ? false : true;
+			},
+		}
+	});
+	
+	//项目评论中的功能
+	$(function(){
+		//评论是否需要展开
+		$('.comment-content').each(function(i){
+			if($(this).height()>=80){
+				$(this).height(80);
+				$(this).siblings('.comment-btn').children('.btn').show();
+			}else{
+				$(this).height('auto');
+				$(this).siblings('.comment-btn').children('.btn').hide();
+			}
+		});
+		
+		//展开收起评论文本内容
+		$('.comment-btn .btn').click(function(){
+			if($(this).hasClass('develop')){
+				$(this).children('span').html('展开评论');
+				$(this).parent().siblings('.comment-content').height(80);
+				$(this).removeClass('develop');
+			}else{
+				$(this).children('span').html('收起评论');
+				$(this).parent().siblings('.comment-content').height('auto');
+				$(this).addClass('develop');
+			}
+		});
+
+		//回应评论展开
+		$('.write-btn').click(function(){
+			$(this).siblings('.write-comment').stop().fadeToggle(10);
+		});
+		
+	});   //评论功能 end
+	
+	
+	//选择切换分页
+	$('.selectpages .page').hide().eq(1).show();
+	$('.selectpage-btn li').click(function(e){
+		let index = $(e.target).index();
+		$('.select-list').stop().animate({left:index*154+22});
+		$('.selectpages .page').hide().eq(index).show();
+	});
+	
+	//切换好评差评
+	$('.reviews-btn p').click(function(){
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+	});
+	
+	//关闭模态框
+	$('.close').click(function(){
+		let self = this;
+		$(this).parent().parent().fadeOut(function(){
+			$(self).siblings('div').children('input, textarea').val('');
+		});
+		
+	});
+	
+	
+	//头部导航选择
+	$('.nav ul li').click(function(){
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+	});
+	
+	//详情图轮播
+	var galleryThumbs = new Swiper('.smallimgbox', {
+    spaceBetween: 12,
+    slidesPerView: 5,
+    watchSlidesVisibility: true,
+    watchSlidesProgress: true,
+  });
+  var galleryTop = new Swiper('.bigimgbox', {
+    spaceBetween: 10,
+    thumbs: {
+      swiper: galleryThumbs,
+    },
+  });
+	
+</script>

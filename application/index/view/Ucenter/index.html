@@ -1,0 +1,834 @@
+	{include file="public:head" /}
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/myself.css"/>
+	</head>
+	<body>
+
+		{include file="public:header" /}
+
+		<!--banner-->
+		<div class="banner-box">
+			{if condition="$Think.session.user.headimg eq ''"}
+			<img src="__STATIC__/Home/img/cyq/user1.png" />
+			{else/}
+			<img src="{$Think.session.user.headimg}" />
+			{/if}
+			<h5>{$Think.session.user.nickname}</h5>
+			<span>总积分：</span>
+			<span>{if condition="$integral eq ''"}0{else/}{$integral}{/if}</span>
+			<span>可用积分：</span>
+			<span>{if condition="$integral eq ''"}0{else/}{$integral}{/if}</span>
+		</div>
+			
+			
+		<div class="content">
+			<!--侧边栏按钮-->
+			<div class="data-btns">
+				<!--基本资料-->
+				<div class="title long" id="jbzl-menu">基本资料</div>
+				<div class="sub-menubox" id="sub-jbzl-menu" style="display: block;">
+					<!--基本情况-->
+					<div class="jbqk"><p data-id="jbqk" class="jbqk menu-btn active">基本情况</p></div>
+					<!--我的收藏-->
+					<div class="wdsc"><p>我的收藏</p>
+						<ul>
+							<li><a class="xmsc menu-btn" data-id="wdsc" data-subid="xmsc" data-btn="sub-btn" >项目收藏</a></li>
+							<li><a class="dssc menu-btn" data-id="wdsc" data-subid="dssc" data-btn="sub-btn" >导师收藏</a></li>
+							<li><a class="tzsc menu-btn" data-id="wdsc" data-subid="tzsc" data-btn="sub-btn" >帖子收藏</a></li>
+							<li><a class="gssc menu-btn" data-id="wdsc" data-subid="gssc" data-btn="sub-btn" >故事收藏</a></li>
+						</ul>
+					</div>
+					<!--账号设置-->
+					<div class="zhsz"><p>账号设置</p>
+						<ul>
+							<li><a class="jbxx menu-btn" data-id="jbxx" data-btn="sub-btn" >基本信息</a></li>
+							<li><a class="dlmm menu-btn" data-id="dlmm" data-btn="sub-btn" >登录密码</a></li>
+							<!--<li><a class="sjyz menu-btn" data-id="sjyz" data-btn="sub-btn" >手机验证</a></li>-->
+						</ul>
+					</div>
+				</div>
+				
+				
+				<div class="line"></div>
+				
+				<!--我的诊断-->
+				<div class="title" id="wdzd-menu">我的诊断</div>
+				<div class="sub-menubox" id="sub-wdzd-menu">
+					<!--诊断记录-->
+					<div class="zdjl"><p class="zdjl menu-btn" data-id="zdjl">诊断记录</p></div>
+				</div>
+				
+				
+				<div class="line"></div>
+				
+				<!--加盟项目-->
+				<div class="title" id="jmxm-menu">项目咨询</div>
+				<div class="sub-menubox" id="sub-jmxm-menu">
+					<!--我的项目-->
+					<div class="wdxm"><p class="wdxm menu-btn" data-id="jmxm" data-subid="wdxm">我的咨询</p></div>
+					<!--严选项目-->
+					<div class="yxxm"><p class="yxxm menu-btn" data-id="jmxm" data-subid="yxxm">咨询回复</p></div>
+				</div>
+				
+				
+				<div class="line"></div>
+				
+				<!--我的点评-->
+				<div class="title" id="wddp-menu">我的点评</div>
+				<div class="sub-menubox" id="sub-wddp-menu">
+					<!--项目点评-->
+					<div class="xmdp"><p class="xmdp menu-btn" data-id="xmdp">项目点评</p></div>
+					<!--严选点评-->
+					<div class="yxdp"><p class="yxdp menu-btn" data-id="yxdp">严选点评</p></div>
+				</div>
+				
+				
+				<div class="line"></div>
+				
+				<!--我的帖子-->
+				<div class="title" id="wdtz-menu">我的帖子</div>
+				<div class="sub-menubox" id="sub-wdtz-menu">
+					<!--我的主贴-->
+					<div class="wdzt"><p class="wdzt menu-btn" data-id="wdtz" data-subid="wdzt">我的主贴</p></div>
+					<!--我的回帖-->
+					<div class="wdht"><p class="wdht menu-btn" data-id="wdtz" data-subid="wdht">我的回帖</p></div>
+				</div>
+				
+			</div><!--data-btns   end-->
+			
+			
+			<!--切换页面-->
+			<div class="data-pages">
+				
+				<!--基本情况内容-->
+				<div class="data-page jbqk-page">
+					<div class="title"><span>基本情况</span></div>
+					<div class="my-infor">
+						<div class="header-box">
+							{if condition="$Think.session.user.headimg eq ''"}
+							<img src="__STATIC__/Home/img/cyq/user1.png" />
+							{else/}
+							<img src="{$Think.session.user.headimg}" />
+							{/if}
+							<input type="file" accept="image/*" />
+						</div>
+						<h5>{$Think.session.user.nickname}</h5>
+						<ul>
+							<li>我的加盟：<span>0</span></li>
+							<li>我的收藏：<span>{$collection}</span></li>
+							<li>我的积分：<span>{if condition="$integral eq ''"}0{else/}{$integral}{/if}</span></li>
+							<li>我的主贴：<span>{$cardCount}</span></li>
+							<li>我的点评：<span>{$review}</span></li>
+						</ul>
+					</div>
+					
+					<div class="xm-title"><span class="wdxm-sub-sub active">我的项目</span><span class="yxxm-sub-sub">严选项目</span></div>
+					<!--项目部分-->
+					<div class="wdxm-sub-sub-page sub-page">
+						<ul>
+							{volist name="myproject" id="vo"}
+							<li>
+								<div class="img-box">
+									<img src="{$vo.imgsrc}" />
+									<!--<div class="xm-header">-->
+										<!--<img src="__STATIC__/Home/img/myself/zdjl1.png" />-->
+									<!--</div>-->
+								</div>
+								<h5>{$vo.name}</h5>
+								{if condition="$vo.status eq 0"}
+								<p>状态：未开店</p>
+								{elseif condition="$vo.status eq 1"}
+								<p>状态：开店中</p>
+								{elseif condition="$vo.status eq 2"}
+								<p>状态：已关店</p>
+								{/if}
+								<a href="{:url('Review/detail')}/id/{$vo.id}">查看详情</a>
+							</li>
+							{/volist}
+						</ul>
+					</div>
+					
+					<!--基本情况严选项目-->
+					<div class="yxxm-sub-sub-page sub-page">
+						<ul>
+							{volist name="strictlyproject" id="vo"}
+							<li>
+								<div class="img-box">
+									<img src="{$vo.imgsrc}" />
+								</div>
+								<h5>{$vo.name}</h5>
+								{if condition="$vo.status eq 0"}
+								<p>状态：未开店</p>
+								{elseif condition="$vo.status eq 1"}
+								<p>状态：开店中</p>
+								{elseif condition="$vo.status eq 2"}
+								<p>状态：已关店</p>
+								{/if}
+								<a href="{:url('Strict/detail')}/id/{$vo.id}">查看详情</a>
+							</li>
+							{/volist}
+						</ul>
+					</div>
+				</div>
+				
+				<!--我的收藏-->
+				<div class="data-page wdsc-page">
+					<div class="xm-title">
+						<span class="xmsc-sub active" data-id="xmsc">项目收藏</span>
+						<span class="dssc-sub" data-id="dssc">导师收藏</span>
+						<span class="tzsc-sub" data-id="tzsc">帖子收藏</span>
+						<span class="gssc-sub" data-id="gssc">故事收藏</span>
+					</div>
+					<!--项目收藏-->
+					<div class="xmsc-sub-page sub-page">
+						<ul>
+							{volist name="project" id="vo"}
+							<li>
+								<div class="img-box">
+									<img src="{$vo.imgsrc}" />
+								</div>
+								<h5>{$vo.name}</h5>
+								<p>&nbsp;</p>
+								<a href="{:url('Strict/detail')}/id/{$vo.id}">查看详情</a>
+							</li>
+							{/volist}
+						</ul>
+					</div>
+					
+					<!--导师收藏-->
+					<div class="dssc-sub-page sub-page">
+						<ul class="daoshi-box-b">
+							{volist name="daoshi" id="vo"}
+							<li class="daoshi-item"><a href="{:url('Tutor/detail')}/id/{$vo.id}">
+								<div class="daoshi-header">
+									<img src="{$vo.headimg}" style="width: 220px;height: 230px"/>
+									<div class="daoshi-describe">
+										<p>{$vo.jieshao}</p>
+									</div>
+									<span class="jianjian"></span>
+								</div>
+								<div class="daoshi-detail">
+									<h1>{$vo.name}</h1>
+									<h3>创业导师</h3>
+									<p class="age" style="width: 115px">年龄：<span>{$vo.old}</span></p>
+									<p class="zili" style="width: 100px">资历：<span>{$vo.zizhi}年</span></p>
+									<p class="obj" style="width: 115px">项目：<span>{$vo.xiangmu}</span></p>
+									<p class="address" style="width: 100px">地址：<span>{$vo.are}</span></p>
+								</div>
+							</a></li>
+							{/volist}
+						</ul>
+					</div>
+
+					<!--帖子收藏-->
+					<div class="tzsc-sub-page sub-page">
+						<ul>
+							{volist name="tiezi" id="vo"}
+							<li>
+								<img src="{$vo.headimg}"/>
+								<div class="tiezi-describe">
+									<h5><a href="{:url('Card/detail')}/id/{$vo.id}">{$vo.title}</a></h5>
+									<span class="user-name"><a href="javascript:;">{$vo.nickname}</a></span>
+									<span class="time">发布于 {$vo.time}</span>
+									<span class="look">查看：<a>{$vo.read_num}</a></span>
+									<span>|</span>
+									<span class="reply">回复：<a>{$vo.count}</a></span>
+								</div>
+								<a href="javascript:;" class="tiezi-more"><img src="__STATIC__/Home/img/cyq/tiezi-list-btn.png" /></a>
+							</li>
+							{/volist}
+						</ul>
+					</div>
+					
+					<!--故事收藏-->
+					<div class="gssc-sub-page sub-page">
+						<ul class="stories">
+							{volist name="gushi" id="vo"}
+							<li>
+								<div class="story-l">
+									<img src="{$vo.banner}" style="width: 200px;height: 100px;"/>
+									<h5>{$vo.title}</h5>
+									<p>{$vo.gushi|htmlspecialchars_decode|strip_tags|mb_substr=0,50,'utf-8'}...</p>
+									<a href="{:url('Story/detail')}/id/{$vo.id}"><img src="__STATIC__/Home/img/cygs/more-btn.png" /></a>
+								</div>
+								<div class="story-r">
+									<span></span>	
+									<h1>{$vo.time|substr=5,10}</h1>
+									<p>-{$vo.time|substr=0,4}</p>
+								</div>
+							</li>
+							{/volist}
+						</ul>
+					</div>
+					
+				</div>
+
+				<!--基本信息-->
+				<div class="data-page jbxx-page">
+					<div class="title"><span>基本信息</span></div>
+					<ul>
+						<li><span>用户名：</span><input type="text" disabled="disabled" value="{$Think.session.user.nickname}" /></li>
+						<li class="sex">
+							<span>性别：</span>
+							<form>
+								<label><input type="radio" name="sex" {if condition="$Think.session.user.sex eq 1"}checked{/if} value="1" />男</label>
+								<label><input type="radio" name="sex" {if condition="$Think.session.user.sex eq 2"}checked{/if} value="2" />女</label>
+								<label><input type="radio" name="sex" {if condition="$Think.session.user.sex eq 0"}checked{/if} value="0" />保密</label>
+							</form>
+						</li>
+						<li><span>真实姓名：</span><input type="text" id="name" value="{$Think.session.user.name}" /></li>
+						<li><span>邮箱：</span><input type="text" id="email" value="{$Think.session.user.email}" /><a class="revise" id="mailer" href="javascript:;">修改</a></li>
+						<li><span>手机：</span><input type="text" id="phone" class="no-border" readonly="readonly" value="{$Think.session.user.mobile}" /><a class="revise" href="javascript:;">修改</a></li>
+						<li><span>微信：</span><input type="text" id="weixin" class="no-border" readonly="readonly" value="mine1125" /><a class="revise" href="javascript:;">修改</a></li>
+						<li><span>QQ：</span><input type="text" id="qq" class="no-border" readonly="readonly" value="1125160768" /><a class="revise" href="javascript:;">修改</a></li>
+						<li>
+							<span>所在地：</span>
+							<div id="target">
+					        <div id="eprovinceName" class="form-group"><select></select></div>
+					        <div id="ecityName" class="form-group"><select></select></div>
+					        <div id="edistrictName" class="form-group"><select></select></div>
+					      </div>
+						</li>
+					</ul>
+					<a class="updata" id="userInfo" href="javascript:;">更新资料</a>
+				</div>
+
+				<!--登录密码-->
+				<div class="data-page dlmm-page">
+					<div class="title"><span>登录密码</span></div>
+					<ul>
+						<li><span>原密码：</span><input id="password" type="text" /></li>
+						<li><span>新密码：</span><input id="newpwd" type="text" /></li>
+						<li><span>确认密码：</span><input id="repwd" type="text" /></li>
+					</ul>
+					<a class="updata" id="changepwd" href="javascript:;">提交</a>
+				</div>
+				
+				<!--手机验证-->
+				<!--<div class="data-page sjyz-page">-->
+					<!--<div class="title"><span>手机验证</span></div>-->
+					<!--<ul>-->
+						<!--<li><span>新的手机号：</span><input class="new-telphone" type="text" /><p class="kong"><a>x</a>手机号码不能为空</p></li>-->
+						<!--<li><span>验证码：</span><input type="text" /><a class="get-code" href="javascript:;">获取验证码</a></li>-->
+					<!--</ul>-->
+					<!--<a class="updata" href="javascript:;">提交</a>-->
+				<!--</div>-->
+
+				<!--诊断记录-->
+				<div class="data-page zdjl-page">
+					<div class="title"><span>诊断记录</span></div>
+					{foreach name="diagnosis" item="v"}
+					<div class="jilu">
+						<div class="header-box">
+							<img src="{$v.imgsrc}" />
+						</div>
+						<div class="jilu-name">
+							<h5>{$v.pinpai}</h5>
+							<p>接收方式：{$v.jsfs}</p>
+						</div>
+						<div class="jilu-time">诊断于：{$v.time}</div>
+					</div>
+					{/foreach}
+				</div>
+				
+				<!--项目咨询-->
+				<div class="data-page jmxm-page">
+					<div class="xm-title">
+						<span class="wdxm-sub active" data-id="wdxm" >我的咨询</span>
+						<span class="yxxm-sub" data-id="yxxm">咨询回复</span>
+					</div>
+
+					<div class="wdxm-sub-page sub-page" v-for="item in advice">
+						<div class="jilu">
+							<div class="header-box">
+								<img :src="item.imgsrc" />
+							</div>
+							<div class="jilu-name">
+								<h5>{{item.name}}</h5>
+								<p>接收方式：{{item.phone}}</p>
+							</div>
+							<div class="jilu-time">咨询于：{{item.time}}</div>
+						</div>
+					</div>
+					<!--咨询回复-->
+					<div class="yxxm-sub-page sub-page" style="display: none">
+						<ul>
+			  			<li v-for="item in getadvice">
+			  				<div class="item-left">
+			  					<div class="header-box"><img :src="item.imgsrc" /></div>
+			  					<h5>{{item.name}}</h5>
+			  					<p style="margin-top: 20px">- 回复时间 -</p>
+			  					<a style="margin-top: 5px">{{item.replytime}}</a>
+			  				</div>
+			  				<div class="item-right">
+			  					<h3>咨询内容：</h3>{{item.message}}
+								<p></p>
+								<h3>回复内容：</h3>{{item.reply}}
+			  				</div>
+			  			</li>
+			  		</ul>
+					</div>
+					
+				</div>
+				
+				<!--项目点评-->
+				<div class="data-page xmdp-page">
+					<div class="title"><span>项目点评</span></div>
+					<ul>
+		  			<li v-for="item in dianping">
+		  				<div class="item-left">
+		  					<div class="header-box"><img :src="item.imgsrc" /></div>
+		  					<h5>{{item.name}}</h5>
+		  					<p>- {{item.hyname}} -</p>
+		  					<a :href="'{:url('Review/detail')}/id/'+item.pinpaiid+''">查看详情</a>
+		  				</div>
+		  				<div class="item-right">
+		  					<div class="header-box"><img src="{$Request.session.user.headimg}" /></div>
+		  					<div class="item-title">{$Request.session.user.nickname}
+
+								<a v-if="item.status==0">未开店</a>
+								<a v-if="item.status==1">开店中</a>
+								<a v-if="item.status==2">已关店</a></div>
+		  					<div class="item-com">
+		  						<div class="star-box">
+			    					<div class="noactive"></div>
+			    					<div class="active" style="width:154px"></div>
+			    				</div>
+		  					</div>
+		  					<div class="item-info">
+			  					<a>加盟费：<span>{{item.jiamengfei}}</span></a>
+			  					<a>总成本：<span>{{item.zongchengben}}</span></a>
+			  					<a>加盟时间：<span>{{item.date}}</span></a>
+			  					<a>月营收：<span>{{item.yueyingshou}}</span></a>
+			  					<a>开店城市：<span>{{item.city}}</span></a>
+			  					<p><img src="__STATIC__/Home/img/myself/jmdp-icon.png" />{{item.company}}</p>
+		  					</div>
+		  					<p>{{item.content}}</p>
+		  					<div class="item-bottom">
+		  						<p>{{item.date}}</p>
+		  					</div>
+		  				</div>
+		  			</li>
+		  		</ul>
+		  		<div class="xmdp-pagination pagination"></div>
+				</div>
+				
+				<!--严选点评-->
+				<div class="data-page yxdp-page">
+					<div class="title"><span>严选点评</span></div>
+					<ul>
+		  			<li v-for="item in yxdianping">
+		  				<div class="item-left">
+		  					<div class="header-box"><img :src="item.imgsrc" /></div>
+		  					<h5>{{item.pinpainame}}</h5>
+		  					<p>- {{item.hyname}} -</p>
+		  					<a :href="'{:url('Review/detail')}/id/'+item.pinpaiid+''">查看详情</a>
+		  				</div>
+		  				<div class="item-right">
+		  					<div class="header-box"><img src="{$Request.session.user.headimg}" /></div>
+		  					<div class="item-title">{$Request.session.user.nickname}
+
+								<a v-if="item.status==0">未开店</a>
+								<a v-if="item.status==1">开店中</a>
+								<a v-if="item.status==2">已关店</a></div>
+		  					<div class="item-com">
+		  						<div class="star-box">
+			    					<div class="noactive"></div>
+			    					<div class="active" style="width:154px"></div>
+			    				</div>
+		  					</div>
+		  					<div class="item-info">
+			  					<a>加盟费：<span>{{item.jiamengfei}}</span></a>
+			  					<a>总成本：<span>{{item.zongchengben}}</span></a>
+			  					<a>加盟时间：<span>{{item.date}}</span></a>
+			  					<a>月营收：<span>{{item.yueyingshou}}</span></a>
+			  					<a>开店城市：<span>{{item.city}}</span></a>
+			  					<p><img src="__STATIC__/Home/img/myself/jmdp-icon.png" />{{item.company}}</p>
+		  					</div>
+		  					<p>{{item.content}}</p>
+		  					<div class="item-bottom">
+		  						<p>{{item.date}}</p>
+		  					</div>
+		  				</div>
+		  			</li>
+
+		  		</ul>
+		  		<div class="yxdp-pagination pagination"></div>
+				</div>
+
+				<!--我的帖子-->
+				<div class="data-page wdtz-page">
+					<div class="xm-title">
+						<span class="wdzt-sub active" data-id="wdzt">我的主贴</span>
+						<span class="wdht-sub" data-id="wdht">我的回贴</span>
+					</div>
+					<!--我的主贴-->
+					<div class="wdzt-sub-page sub-page">
+						<ul>
+							<!--{volist name="mytiezi" id="vo"}-->
+							<li v-for="item in mytiezi">
+								<img :src="item.headimg"/>
+								<div class="tiezi-describe">
+									<h5><a :href="'{:url('Card/detail')}/id/'+item.id+''">{{item.title}}</a></h5>
+									<span class="user-name"><a href="javascript:;">{{item.nickname}}</a></span>
+									<span class="time">发布于 {{item.time}}</span>
+									<span class="look">查看：{{item.read_num}}<a></a></span>
+									<span>|</span>
+									<span class="reply">回复：{{item.count}}<a></a></span>
+								</div>
+							</li>
+
+						</ul>
+						<div class="wdzt-pagination  pagination"></div>
+					</div>
+					<!--我的回帖-->
+					<div class="wdht-sub-page sub-page">
+						<ul>
+							<li v-for="item in reply">
+								<img :src="item.headimg"/>
+								<div class="tiezi-describe">
+									<h5>{$Request.session.user.nickname} 回复 <a href="javascript:;"> {{item.nickname}}</a>的主贴<a :href="'{:url('Card/detail')}/id/'+item.mid+''">{{item.title}}</a></h5>
+									<span class="time">{{item.time}}</span>
+									<p class="tiezi-detail">{{item.content}}<a :href="'{:url('Card/detail')}/id/'+item.mid+''">查看更多&gt;&gt;</a></p>
+									
+								</div>
+							</li>
+						</ul>
+						<div class="wdht-pagination pagination"></div>
+					</div>
+					
+				</div>
+
+			</div><!--data-pages   end-->
+			
+		</div>
+		
+		<!--底部-->
+		{include file="public:footer" /}
+		<script src="__STATIC__/Home/js/swiper.js"></script>
+<script src="__STATIC__/Home/js/distpicker.data.js"></script>
+<script src="__STATIC__/Home/js/jquery.pagination.js"></script>
+		<script src="__STATIC__/Home/js/vue.js" ></script>
+<script>
+    var vm = new Vue({
+        el: '.content',
+        data: {
+            //我的主贴
+            mytiezi: [],
+			//我的回帖
+			reply:[],
+			//项目点评
+			dianping:[],
+			//严选点评
+			yxdianping:[],
+			//我的咨询
+			advice:[],
+			//咨询回复
+            getadvice:[],
+
+        },
+        created: function() {
+            var self = this;
+            $.get("{:url('Ucenter/jsonAll')}",function(data){
+                var data = eval("(" + data + ")");
+                console.log(data)
+                self.mytiezi = data.mytiezi.data;
+                self.reply = data.reply.data;
+                self.dianping = data.dianping.data;
+                self.yxdianping = data.yxdianping.data;
+                self.advice = data.advice.data;
+                self.getadvice = data.getadvice.data;
+                //我的主贴分页
+                $('.wdzt-pagination').pagination({
+                    totalData: data.mytiezi.total,				//总数据条数
+                    showDate: data.mytiezi.per_page,
+                    pageCount : data.mytiezi.last_page, 			//总页数
+                    current: data.mytiezi.current_page,						//当前页
+                    prevContent:'&lang;',
+                    nextContent:'&rang;',
+                    keepShowPN:true,
+                    mode:'fixed',
+                    count: 8,
+                    coping:true,
+                    homePage:'首',
+                    endPage:'末',
+                    isHide:true,
+                    jump:false,
+                    callback:function(apis){
+                        //跳转要做的事件
+                        $.get("{:url('Ucenter/page')}/page/"+apis.getCurrent()+"",function (data) {
+                            self.mytiezi=data.mytiezi.data;
+                        })
+                    }
+                });
+				//分页插件
+                //项目点评分页
+                $('.xmdp-pagination').pagination({
+                    totalData: data.dianping.total,				//总数据条数
+                    showDate: data.dianping.per_page,
+                    pageCount : data.dianping.last_page, 			//总页数
+                    current: data.dianping.current_page,						//当前页
+                    prevContent:'&lang;',
+                    nextContent:'&rang;',
+                    keepShowPN:true,
+                    mode:'fixed',
+                    count: 8,
+                    coping:true,
+                    homePage:'首',
+                    endPage:'末',
+                    isHide:true,
+                    jump:false,
+                    callback:function(apis){
+                        //跳转要做的事件
+                        $.get("{:url('Ucenter/page')}/page/"+apis.getCurrent()+"",function (data) {
+                            self.dianping=data.dianping.data;
+                        })
+                    }
+                }),
+                //严选点评分页
+                $('.yxdp-pagination').pagination({
+                    totalData: data.yxdianping.total,				//总数据条数
+                    showDate: data.yxdianping.per_page,
+                    pageCount : data.yxdianping.last_page, 			//总页数
+                    current: data.yxdianping.current_page,						//当前页
+                    prevContent:'&lang;',
+                    nextContent:'&rang;',
+                    keepShowPN:true,
+                    mode:'fixed',
+                    count: 8,
+                    coping:true,
+                    homePage:'首',
+                    endPage:'末',
+                    isHide:true,
+                    jump:false,
+                    callback:function(apis){
+                        //跳转要做的事件
+                        $.get("{:url('Ucenter/page')}/page/"+apis.getCurrent()+"",function (data) {
+                            self.yxdianping=data.yxdianping.data;
+                        })
+                    }
+                }),
+                //我的回帖分页
+                $('.wdht-pagination').pagination({
+                    totalData: data.reply.total,				//总数据条数
+                    showDate: data.reply.per_page,
+                    pageCount : data.reply.last_page, 			//总页数
+                    current: data.reply.current_page,						//当前页
+                    prevContent:'&lang;',
+                    nextContent:'&rang;',
+                    keepShowPN:true,
+                    mode:'fixed',
+                    count: 5,
+                    coping:true,
+                    homePage:'首',
+                    endPage:'末',
+                    isHide:true,
+                    jump:false,
+                    callback:function(apis){
+                        //跳转要做的事件
+                        $.get("{:url('Ucenter/page')}/page/"+apis.getCurrent()+"",function (data) {
+                            self.reply=data.reply.data;
+                        })
+                    }
+                })
+
+            });
+        }
+        });
+	//选择地区插件
+	$('#target').distpicker({
+		autoSelect: false
+	}),
+	
+	//基本情况-更换头像
+	$('.jbqk-page .header-box input').change(function(){
+		var img = $('.jbqk-page .header-box img').attr('src');
+		console.log(img)
+		var file = this.files[0];
+		var reader = new FileReader();
+		var formData = new FormData();
+		formData.append('file',file);
+		$.ajax({
+			url:"{:url('Upload/uploads')}",
+			data:formData,
+			type:'post',
+			dataType:'json',
+			processData:false,
+			contentType:false,
+			success:function(data){
+				console.log(data);
+				if (data.errno == 0) {
+					$.ajax({
+						url:"{:url('Ucenter/avatar')}",
+						data:{id:"{$Think.session.user.id}",headimg:data.data[0]},
+						type:"post",
+						dataType:"json",
+						success:function(img){
+							console.log(img)
+						}
+					})
+				}
+			}
+		})
+		reader.readAsDataURL(file); 
+		reader.onloadend = function(e){
+			$('.jbqk-page .header-box img').attr('src',e.target.result);
+			$('.banner-box img').attr('src',e.target.result)
+		};
+	})
+	
+	//邮箱
+	$('#mailer').on('click',function(){
+		var email = $("#email").val();
+		$.ajax({
+			url:"{:url('mail/mail')}",
+			data:{email:email},
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				console.log(data)
+			}
+		})
+	})
+
+	//更新资料
+	$('#userInfo').on('click',function(){
+		var sex = $("input[name='sex']:checked").val();
+		var name = $('#name').val();
+		var email = $("#email").val();
+		var phone = $("#phone").val();
+		var uid = "{$Think.session.user.id}";
+
+		var eprovinceName = $('#eprovinceName option:selected').val();
+		var ecityName = $('#ecityName option:selected').val();
+		var edistrictName = $('#edistrictName option:selected').val();
+		var address = eprovinceName + ecityName + edistrictName;
+		$.ajax({
+			url:"{:url('ucenter/userInfo')}",
+			data:{id:uid,sex:sex,name:name,email:email,tel:phone,addr:address},
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				console.log(data);
+				if (data.status == 0) {
+					alert(data.error)
+				}else{
+					alert(data.msg)
+				}
+			}
+		})
+	})
+
+	//账号设置基本信息修改样式
+	 $('.jbxx-page .revise').click(function(){
+	 	$(this).siblings('input').removeAttr('readonly').css('border-color','#e3e3e3');
+	 });
+	$('.jbxx-page .updata').click(function(){
+		$('.no-border').attr('readonly','readonly').css('border-color','#fff');
+	});
+
+	//更换手机号码样式更改
+	$('.sjyz-page .new-telphone').blur(function(){
+		if($(this).val() == ''){
+			$(this).siblings('p.kong').fadeIn(200)
+		}
+		$('.sjyz-page .new-telphone').focus(function(){
+			$(this).siblings('p.kong').fadeOut(200)
+		});
+	});
+	
+	
+
+	
+	
+	//右侧page页面切换
+	$('.menu-btn').click(function(e){
+		clearActive();
+		$('.menu-btn').removeClass('active');
+		$(this).addClass('active');
+		if($(this).data('btn') == 'sub-btn'){
+			$(this).parent().css('color','#12C173').parent('ul').siblings('p').addClass('active');
+		}
+		if($(this).data('subid') == ''){
+			let whichPage = $(this).data('id');
+			$('.'+whichPage+'-page').siblings('.data-page').hide();
+			$('.'+whichPage+'-page').fadeIn(200);
+		}else{
+			let whichPage = $(this).data('id');
+			$('.'+whichPage+'-page').siblings('.data-page').hide();
+			$('.'+whichPage+'-page').fadeIn(200);
+			$('.'+whichPage+'-page').children('.xm-title').children('.'+$(this).data('subid')+'-sub').click();
+		}
+	});
+	function clearActive(){
+		$('.data-btns>div p').removeClass('active');
+		$('.data-btns>div ul li').css('color','#777')
+	}
+	
+	$('.data-btns .title').click(function(){
+		var thisId = $(this).attr('id');
+		if($(this).hasClass('long')){
+			$(this).removeClass('long').siblings('.sub-menubox').slideUp();
+		}else{
+			$(this).siblings('.long').removeClass('long');
+			$(this).addClass('long');
+			$(this).siblings('.sub-menubox').slideUp();
+			$(this).siblings('#sub-'+thisId).slideToggle();
+		}
+		
+	});
+	
+	//page下子菜单切换
+	$('.xm-title span').click(function(){
+		if($(this).hasClass('active')){
+			return false;
+		}else{
+			let pageName = $(this).data('id');
+			$('.menu-btn').removeClass('active');
+			$('.data-btns .'+pageName).addClass('active');
+			$('.data-btns .'+pageName).parent('li').siblings().css('color','#777')
+			$('.data-btns .'+pageName).parent('li').css('color','#12C173')
+			let classname = $(this).attr('class');
+			$('.'+classname+'-page').siblings('.sub-page').stop().hide();
+			$('.'+classname+'-page').fadeIn(200);
+			$(this).siblings('span').removeClass('active');
+			$(this).addClass('active');
+		}
+	});
+	
+	
+	
+	//侧边栏菜单收缩
+	$('.data-btns>div p').click(function(){
+		$(this).siblings().slideToggle(300);
+	});
+	
+	//头部导航选择
+	$('.nav ul li').siblings().removeClass('active');
+	$('.myself').addClass('active');
+	// $('.nav ul li').click(function(){
+	// 	$(this).siblings().removeClass('active');
+	// 	$(this).addClass('active');
+	// });
+
+	$('#changepwd').on('click',function(){
+		var id = '{$Think.session.user.id}';
+		//var token = $('input[name=__token__]').val();
+		var password = $('#password').val();
+		var newpwd = $('#newpwd').val();
+		var repwd = $('#repwd').val();
+		$.ajax({
+			url:"{:url('Ucenter/changePwd')}",
+			data:{id:id,password:password,newpwd:newpwd,repwd:repwd},
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				//console.log(data);
+				if (data.status == 0) {
+					alert(data.error)
+				}else{
+					alert(data.msg);
+				}
+			}
+		})
+	})
+</script>

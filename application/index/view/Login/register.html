@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>注册</title>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/radio.css"/>
+		<link rel="Shortcut Icon" type="image/x-icon" href="__STATIC__/Home/img/fanxiang.ico" />
+		<style>
+			[v-cloak]{ visibility: hidden; }
+			/*全样式*/
+			.register-header{ width: 100%; height: 88px; background: rgba(18,193,115,.5); position: fixed; top: 0; z-index: 1; }
+			.register-header .container a{ float: left; margin-top: 16px; }
+			.register-header .container p{ float: right; margin-top: 30px; font-size: 28px; line-height: 28px; color: #fff; font-family: 'CTLaoSongSJ'; }
+			.register-header .container p img{ float: left; margin: 2px 10px 0 0; }
+			
+			
+			
+			.big-bg{ width: 1920px; height: 876px; position: relative; left: 50%; margin-left: -960px; background: url(__STATIC__/Home/img/log-reg/reg-bg.png)no-repeat; }
+			.big-bg .register-box{ position: absolute; width: 406px; padding: 0 26px; box-sizing: border-box; height: 655px; text-align: center; right: 80px; top: 155px; background: url(__STATIC__/Home/img/log-reg/register-box-bg.png)no-repeat; border-radius: 10px; }
+			.big-bg .register-box .show-error{ display: none; position: absolute; left: 40px; bottom: -40px; font-size: 14px; color: #12C173; }
+			.big-bg .register-box .show-error img{ float: left; margin: 1px 6px; }
+			.big-bg .register-box p{ font-size: 14px; color: #cecece; margin-top: 50px; }
+			.big-bg .register-box h5{ font-size: 24px; color: #666; line-height: 54px; margin-bottom: 20px; background: url(__STATIC__/Home/img/log-reg/list-line.png)no-repeat; }
+			.big-bg .register-box>div{ width: 100%; height: 46px; padding: 0 4px; box-sizing: border-box; position: relative; margin-bottom: 20px; }
+			.big-bg .register-box>div>input{ width: 100%; height: 46px; font-size: 14px; border: 2px solid #f9faf9; border-radius: 6px; box-sizing: border-box; padding-left: 54px; }
+			.big-bg .register-box>div>input.error{ border-color: #fe9700; }
+			/*.big-bg .register-box>div>input::-webkit-input-placeholder{ color: #8c8c8c; }
+			.big-bg .register-box>div>input::-ms-input-placeholder{ color: #8c8c8c; }
+			.big-bg .register-box>div>input::-moz-placeholder{ color: #8c8c8c; }*/
+			.big-bg .register-box>div input:focus{ outline: none; }
+			.big-bg .register-box>div img{ position: absolute; top: 13px; left: 20px; }
+			.big-bg .register-box>div span{ position: absolute; top: 17px; right: 10px; font-size: 12px; line-height: 12px; color: #fe9700; }
+			.big-bg .register-box>div:not(.user-box) img{ top: 10px; }
+			.big-bg .register-box .code-box{ margin-bottom: 15px; }
+			.big-bg .register-box .code-box .code-img{ width: 86px; height: 38px; position: absolute; right: 8px; left: auto; top: 4px; }
+			.big-bg .register-box .code-box .code-img img{ top: 0; left: 0; }
+			.big-bg .register-box .pas-box-test{ margin-bottom: 30px; }
+			.big-bg .register-box .read-box{ height: 20px; margin-bottom: 30px; }
+			.big-bg .register-box .read-box label{ float: left; font-size: 14px; color: #8c8c8c; margin-left: 10px; }
+			.big-bg .register-box .read-box a{ color: #12C173; }
+			.big-bg .register-box .read-box label input{ float: left; margin: 0 6px 0 0; }
+			.big-bg .register-box .register-btn{ background: #ff9800; border-radius: 6px; color: #fff; cursor: pointer; font-size: 20px; line-height: 46px; }
+			.big-bg .register-box .go-log{ line-height: 46px; text-align: right; font-size: 14px; color: #b0afaf; }
+			.big-bg .register-box .go-log a{ color: #12C173; }
+			
+		</style>
+	</head>
+	<body>
+		<!--顶部-->
+		<div class="register-header">
+			<div class="container">
+				<a href="{:url('/')}"><img src="__STATIC__/Home/img/log-reg/logo.png"/></a>
+				<p><img src="__STATIC__/Home/img/log-reg/tel-icon.png"/>400-888-2487</p>
+			</div>
+		</div>
+
+		<!--内容-->
+		<div class="big-bg" id="vm" v-cloak>
+			<div class="container">
+				
+				
+				
+				<div class="register-box">
+					<h3 class="show-error"><img src="__STATIC__/Home/img/log-reg/error-icon.png" />用户名不存在或验证码错误</h3>
+					<p>UESR REGISTRATION</p>
+					<h5>用户注册</h5>
+					{:token()}
+					<!--用户名和手机框-->
+					<div :class="item.className" v-for="(item, index) of inputGroup.slice(0,2)">
+						<img :src="item.icon" />
+						<input :type="item.inputType" :class="{error: item.status}" :id="item.inputId" :placeholder="item.placeholder" @focus="initInput(index)" @blur="testval(index)" v-model="item.value" />
+						<span v-html="item.prompt"></span>
+					</div>
+					<!--验证码框-->
+					<div class="code-box">
+						<img src="__STATIC__/Home/img/log-reg/code-icon.png" />
+						<input type="text" id="code" placeholder="请输入验证码" />
+						<a class="code-img" href="javascript:;"><img src="{:captcha_src()}" onclick="this.src='{:captcha_src()}?'+Math.random()" /></a>
+					</div>
+					<!--密码和验证密码-->
+					<div :class="item.className" v-for="(item, index) of inputGroup.slice(2,4)">
+						<img :src="item.icon" />
+						<input :type="item.inputType" :class="{error: item.status}" :id="item.inputId" :placeholder="item.placeholder" @focus="initInput(index+2)" @blur="testPassword(index+2)" v-model="item.value" />
+						<span v-html="item.prompt"></span>
+					</div>
+					
+					<!--已阅读-->
+					<div class="read-box">
+						<label><input type="checkbox" v-model="isagree" @change="agreeChange" />我已阅读并同意<a href="javascript:;">《返乡创业服务条款》</a></label>
+					</div>
+					
+					<div class="register-btn" v-if="!isagree" title="请同意条款" style="background: #eee; cursor: default;">注册</div>
+					<div class="register-btn" v-else @click="registerClick">注册</div>
+					<div class="go-log">已有返乡创业会员？现在 <a href="{:url('Login/login')}">立即登陆</a></div>
+					
+				</div>
+			</div>
+		</div>
+
+		
+		
+		
+		
+		<!--底部-->
+		
+{include file="public:footer" /}
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script>
+	
+	var vm = new Vue({
+		el: '#vm',
+		data: {
+			isagree: 0,
+			inputGroup:[
+			//用户名
+				{
+					status: false,
+					className: 'user-box',
+					icon: '__STATIC__/Home/img/log-reg/user-icon.png',
+					inputId: 'nickname',
+					inputType: 'text',
+					placeholder: '请输入用户名',
+					value: '',
+					prompt: '',
+				},
+				//手机号
+				{
+					status: false,
+					className: 'phone-box',
+					icon: '__STATIC__/Home/img/log-reg/phone-icon.png',
+					inputId: 'tel',
+					inputType: 'text',
+					placeholder: '手机号',
+					value: '',
+					prompt: '',
+				},
+				//密码
+				{
+					status: false,
+					className: 'pas-box',
+					icon: '__STATIC__/Home/img/log-reg/pas-icon.png',
+					inputId: 'password',
+					inputType: 'password',
+					placeholder: '密码（6-20位数字+字母组合）',
+					value: '',
+					prompt: '',
+				},
+				//二次密码
+				{
+					status: false,
+					className: 'pas-box-test',
+					icon: '__STATIC__/Home/img/log-reg/pas-icon.png',
+					inputId: 'repassword',
+					inputType: 'password',
+					placeholder: '再次输入密码',
+					value: '',
+					prompt: '',
+				},
+			],
+		},
+		created: function(){
+			
+		},
+		methods: {
+			//获取焦点事件
+			initInput: function(i){
+				var self = this;
+				this.inputGroup[i].prompt = '';
+				this.inputGroup[i].status = false;
+			},
+			//验证二次密码
+			testPassword: function(i){
+				var self = this;
+				var data = {};
+				var val = this.inputGroup[i].value;
+				var keyname = this.inputGroup[i].inputId;
+				data[keyname] = val;
+				console.log(data)
+				if(i==2){
+					var reg = /^[0-9a-zA-Z]{6,20}$/;
+					if(!reg.test(this.inputGroup[2].value)){
+						this.inputGroup[2].prompt = '密码格式错误';
+						this.inputGroup[2].status = true;
+					}
+				}else if(i==3){
+					if(this.inputGroup[2].value == this.inputGroup[3].value){
+						
+					}else if(this.inputGroup[2].value!=''&&this.inputGroup[3].value!=''){
+						this.inputGroup[3].prompt = '两次密码不一致';
+						this.inputGroup[3].status = true;
+					}
+				}
+			},
+			//勾选我同意
+			agreeChange: function(){
+				this.isagreeclick = this.isagree;
+			},
+			//失去焦点事件
+			testval: function(i){
+				var self = this;
+				var data = {};
+				var val = this.inputGroup[i].value;
+				var keyname = this.inputGroup[i].inputId;
+				data[keyname] = val;
+				console.log(data)
+				$.ajax({
+					url:"{:url('Login/decideval')}",
+					data:data,
+					type:"post",
+					dataType:"json",
+					success:function(data){
+						console.log(data);
+						if (data.status == 0) {
+							self.inputGroup[i].prompt = data.error;
+							self.inputGroup[i].status = true;
+						}else{
+							//验证手机号
+							if(i == 1){
+								let reg = /^1[34578]\d{9}$/;
+								if(reg.test(self.inputGroup[1].value)){
+									return '电话号正确'
+								}else{
+									self.inputGroup[1].prompt = '电话号格式错误';
+									self.inputGroup[1].status = true;
+								}
+							}
+						}
+					}
+				})
+			},
+			//注册按钮
+			registerClick: function(){
+				var self = this;
+				if(this.isagree){
+					var token = $('input[name=__token__]').val();
+					var username = $('#nickname').val();
+					var phone = $('#tel').val();
+					var code = $('#code').val();
+					var password = $('#password').val();
+					var repassword = $('#repassword').val();
+					
+					$.ajax({
+						url:"{:url('Login/register')}",
+						data:{__token__:token,username:username,phone:phone,code:code,password:password,repassword:repassword},
+						type:"post",
+						dataType:"json",
+						success:function(data){
+							console.log(data);
+							if (data.status == 0) {
+								alert(data.error)
+								$('.code-img img').attr("src","{:captcha_src()}?"+Math.random());
+							}else{
+								alert(data.msg)
+								window.location.href = "{:url('/')}";
+							}
+							
+						}
+					});
+				}else{
+					self.isagreeclick = 0;
+				}
+			}
+		},
+	});
+
+</script>

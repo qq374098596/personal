@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {include file="meta" /}
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span> 会员管理
+    <span class="c-gray en">&gt;</span> {$title}
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<div class="page-container">
+    <form class="form form-horizontal" method="post" action="{:url('member/index')}">
+    <div class="text-c">
+        <input type="text" name="q" value="{$q}" placeholder="用户名，昵称或电话号码" style="width:300px" class="input-text">
+        <button class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+    </div>
+    </form>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a class="btn btn-primary radius" href="{:url('member/member_set')}"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a></span>
+        <span class="r">共有数据：<strong><?php echo count($list); ?></strong> 条</span>
+    </div>
+    <table class="table table-border table-bordered table-bg table-hover table-sort">
+        <thead>
+        <tr class="text-c">
+            <th width="20">序列号</th>
+            <th width="150">昵称</th>
+            <th width="80">真实名称</th>
+            <th width="40">电话</th>
+            <th width="40">头像</th>
+            <th width="20">性别</th>
+            <th width="70">登录时间</th>
+            <th width="20">是否禁言</th>
+            <th width="50">管理操作</th>
+        </tr>
+        </thead>
+        {foreach $list as $key=>$item }
+        <tbody>
+        <tr>
+            <td>{$item.id}</td>
+            <td>{$item.nickname}</td>
+            <td>{$item.name}</td>
+            <td class="center">{$item.tel}</td>
+            <td class="center"><img height="40" width="40" src="{$item.headimg}"></td>
+            <td class="center">{if $item.sex ==0}未知{elseif $item.sex==1}男{elseif $item.sex==2}女{else}保密{/if}</td>
+            <td>{$item.time}</td>
+            <td class="center">{if $item.forbidden == 1 }<span class="label label-success radius">启用</span> {else} <span class="label label-danger radius">禁言</span> {/if}</td>
+            <td class="center">
+                <a class="href-a" href="{:url('member/member_set','id='.$item.id)}" title="编辑">编辑</a>&nbsp;|
+                <a class="href-a" href="javascript:;" title="删除" onclick="confirm_del('{:url(\"member/member_del?id=\".$item.id)}')">删除</a>
+            </td>
+        </tr>
+        </tbody>
+        {/foreach}
+    </table>
+    {$page}
+</div>
+{include file="script" /}
+</body>
+</html>

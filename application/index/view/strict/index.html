@@ -1,0 +1,264 @@
+{include file="public:head" /}
+<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/yxxm.css"/>
+
+	</head>
+	<body>
+		<!--顶部-->
+		
+		{include file="public:header" /}
+
+		<!--轮播图-->
+		<div class="swiper-banner">
+	    <div class="swiper-wrapper">
+	      <div class="swiper-slide"><img src="__STATIC__/Home/img/yxxm/banner1.png"/></div>
+	      <div class="swiper-slide"><a href="{:url('xiangmu/xiangmu')}" target="_blank"><img src="__STATIC__/Home/img/yxxm/banner2.png"/></a></div>
+	      <div class="swiper-slide"><img src="__STATIC__/Home/img/jmdp/middle-banner1.png"/></div>
+	    </div>
+	    <div class="swiper-pagination"></div>
+	  </div>
+	  
+	  
+	  <!--内容部分-->
+	  <div id="content" v-cloak>
+	  	
+	  	<!--选择部分-->
+	  	<div class="select-box">
+	  		<div class="show-select">
+	  			<span>选择</span>
+	  			<a v-if="oneprofession" href="javascript:;">{{oneprofession}}</a>
+	  			<a v-if="onesort" href="javascript:;">{{onesort}}</a>
+	  			<a class="init" v-if="oneprofession || onesort" href="javascript:;" @click="initSelect">重置</a>
+	  			<div class="input-box">
+						<input type="text" name="search" placeholder="请输入你要查找的品牌名称" @keyup.enter="search" />
+						<a @click="search"></a>
+					</div>
+	  		</div>
+	  		
+	  		<div class="select-profession">
+	  			<span>行业:</span>
+	  			<ul>
+	  				<li @click="selectProfession" v-for="item in resule"><a href="javascript:;">{{item}}</a></li>
+	  			</ul>
+	  			<a href="javascript:;" @click="showall">全部</a>
+	  			<ul class="seconed-line">
+						<li @click="selectProfession" v-for="item in seconedline">
+							<a href="javascript:;">{{item}}</a>
+						</li>
+					</ul>
+	  		</div>
+	  		
+	  		<div class="select-sort">
+	  			<span>排序:</span>
+	  			<ul>
+	  				<li @click="selectSort" v-for="item in sorts" :data-name="item.english"><a href="javascript:;">{{item.name}}</a></li>
+	  			</ul>
+	  		</div>
+	  	</div>
+	  	
+	  	
+	  	<!--严选title-->
+	  	<div class="yx-title">
+	  		{if condition="$Think.session.user eq ''"}
+	  		<a href="#" @click="dianping"><img src="__STATIC__/Home/img/yxxm/yxdp-icon.png" />我来点评</a>
+	  		{else/}
+	  		<a href="{:url('review/addreview')}"><img src="__STATIC__/Home/img/yxxm/yxdp-icon.png" />我来点评</a>
+	  		{/if}
+	  	</div>
+	  	
+	  	
+	  	<!--严选项目s-->
+	  	<div class="items-box">
+	  		<ul>
+	  			<li v-for="(item, index) in strictall" v-if="oneprofession == '' ? true : item.hyname ==  oneprofession">
+	  				<div class="item-left">
+	  					<div class="header-box"><img :src="item.imgsrc" /></div>
+	  					<h5>{{item.name}}</h5>
+	  					<p>-{{item.hyname}}-</p>
+	  					<a :href="'{:url('strict/detail')}/id/'+item.id+''">查看详情</a>
+	  				</div>
+	  				
+	  				<div class="item-right">
+	  					<div class="item-title">{{item.name}}
+	  					<!--<a href="javascript:;" :data-index="index" @click="islike($event)"><img v-if="item.islike" :src="likesrc.active" /><img v-else :src="likesrc.normal" /></a>-->
+	  					</div>
+	  					
+	  					<div class="item-com">
+	  						<div class="star-box">
+		    					<div class="noactive"></div>
+		    					<div class="active" :style="{width:Math.floor(item.soure/item.count)*22+'px'}"></div>
+		    				</div>
+		    				<span>{{item.count?item.count+'人点评': '暂无点评'}}</span>
+	  					</div>
+	  					
+	  					<div class="item-info">
+	  						<p>好评率：<span>{{Math.floor(100/7*Math.floor(item.soure/item.count))?Math.floor(100/7*Math.floor(item.soure/item.count))+'%':'暂无数据'}}</span></p>
+		  					<p>加盟费：<span>{{item.jiamengfei?item.jiamengfei+'W':'暂无数据'}}</span></p>
+		  					<p>加盟门店：<span>{{item.jiamengshop?item.jiamengshop:'暂无数据'}}</span> <a>直营门店：<span>{{item.zhiyingshop?item.zhiyingshop:'暂无'}}</span></a></p>
+		  					<p>公司：<span>{{item.company?item.company:'暂无数据'}}</span></p>
+		  					<p>电话：<span>{{item.tel?item.tel:'暂无'}}</span></p>
+	  					</div>
+	  				</div>
+	  			</li>
+	  		</ul>
+	  	</div>
+	  </div>
+		
+		<!--底部-->
+		
+	{include file="public:footer" /}
+
+<script src="__STATIC__/Home/js/swiper.js"></script>
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script>
+	//头部导航选择
+	$('.nav ul li').siblings().removeClass('active');
+	$('.yxxm').addClass('active');
+	// $('.nav ul li').click(function(){
+	// 	$(this).siblings().removeClass('active');
+	// 	$(this).addClass('active');
+	// });
+
+
+	var vm = new Vue({
+		el: '#content',
+		data: {
+			oneprofession: '',
+			onesort: '',
+			showprofession:[
+				
+			],
+			seconedline: {
+				snyz: '三农养殖',
+				jdyl: '酒店娱乐',
+				csdl: '城市代理',
+			},
+			resule: [],
+			sorts: [
+				{ name:'时间', english: '2' },
+				{ name:'热度', english: '1' },
+			],
+			likesrc:{
+				normal: '__STATIC__/Home/img/yxxm/like1.png',
+				active: '__STATIC__/Home/img/yxxm/like2.png'
+			},
+			strictall:[],
+			
+		},
+
+		created:function(){
+			var self = this;
+			var data = {$data};
+			console.log(data);
+			self.strictall = data.strictAll;
+			self.resule = data.resule;
+			//self.showprofession = data.allprofession;
+		},
+		methods:{
+			selectProfession: function(e){
+				$(e.target).parent().siblings().children().removeClass('active');
+				$(e.target).addClass('active');
+				this.oneprofession = $(e.target).html()
+			},
+			//排序时间热度
+			selectSort: function(e){
+				$(e.target).parent().siblings().children().removeClass('active');
+				$(e.target).addClass('active');
+				this.onesort = $(e.target).html();
+				var pro = $(e.target).parent().data('name');
+                var self = this;
+				$.ajax({
+                    type: "post",
+                    url: "{:url('strict/common')}",
+                    data: {pro:pro},
+                    success: function(data) {
+                        self.strictall = data.strictAll;
+                    }
+				})
+				this.strictall.sort(this.paixu(pro));
+			},
+			paixu: function(pro){
+				return function(a,b){
+					var val1 = a[pro];
+					var val2 = b[pro];
+					return val2 - val1;
+				}
+			},
+            //点评
+            dianping:function () {
+                $.ajax({
+                    type: "post",
+                    url: "{:url('Review/addreview')}",
+                    success: function(data){
+                        if(data.code==500){
+                            if(window.confirm('您还未登陆确认去登陆吗？')){
+                                window.location.href="{:url('login/login')}";
+                            }else{
+                                return false;
+                            }
+                        }
+                    }
+                })
+            },
+			//搜索功能
+			search:function () {
+			    var self=this;
+                var search=$('input[name="search"]').val();
+				if(!search){
+				    return;
+				}
+                $.ajax({
+                    type: "post",
+                    url: "{:url('strict/Search')}",
+                    data: {search:search},
+                    success: function(data){
+                        if(data.code==500){
+                            alert('您搜索的品牌名称不在列表,请重新输入')
+							return;
+						}
+                        self.strictall = data;
+                    }
+                })
+            },
+			initSelect: function(){
+				this.oneprofession = '';
+				this.onesort = '';
+				$('.select-profession li a').removeClass('active');
+				$('.select-sort li a').removeClass('active');
+
+        var data = {$data};
+				console.log(data);
+				this.strictall = data.strictAll;
+				this.resule = data.resule;
+//				this.strictall.sort(this.paixu('zonghe'));
+			},
+//			islike: function(e){
+//				let self =this;
+//				if('是否登陆'){
+//					let index = $(e.currentTarget).data('index');
+//					self.strictall[index].islike = self.strictall[index].islike == '' ? 1 : '';
+//				}else{
+//					console.log('去登陆')
+//				}
+//			},
+			showall: function(){
+				$('.seconed-line').slideToggle(300)
+			},
+		}
+	
+	});
+	
+	
+	
+	//轮播图
+	var bannerSwiper = new Swiper ('.swiper-banner', {
+    loop: true, // 循环模式选项
+		autoplay: {
+			disableOnInteraction: false,
+			delay: 3000,
+		},
+		pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+</script>

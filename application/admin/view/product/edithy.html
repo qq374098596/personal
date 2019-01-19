@@ -1,0 +1,38 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	{include file="meta" /}
+</head>
+<body>
+<div class="page-container">
+	{volist name="hangye" id="v"}
+	<form action="{:url('Product/hyedit')}?id={$v.id}"  role="form" enctype="multipart/form-data" method="post" class="form form-horizontal" id="form-article-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>行业名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$v.hyname}" name="name" style="width: 400px">
+			</div>
+		</div>
+		<div class="row cl" style="margin-top: 30px">
+			<label class="form-label col-xs-4 col-sm-2">背景颜色：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="{$v.bgcolor}" name="bgcolor" style="width: 400px">
+			</div>
+		</div>
+		<div class="row cl" style="margin-top: 30px">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 提交修改</button>
+			</div>
+		</div>
+	</form>
+	{/volist}
+</div>
+
+            {include file="script" /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

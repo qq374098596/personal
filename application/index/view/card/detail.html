@@ -1,0 +1,509 @@
+	{include file="public:head" /}
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/cyq-detail.css"/>
+	</head>
+	<body>
+		<!--顶部-->
+		
+		{include file="public:header" /}
+
+
+		<!--弹窗-->
+		<div id="tanchuang"></div>
+		
+		<!--内容-->
+		<div class="container" id="content" v-cloak>
+			
+			<!--帖子部分-->
+			<div class="tiezi-box">
+				<!--帖子左侧部分-->
+				<div class="tiezi-box-l">
+					<div class="nav-title">
+						<a href="{:url('Card/index')}">创业圈</a>
+						<a>&gt; </a>
+						<a>帖子</a>
+					</div>
+					
+					<div class="tiezi-title">
+						<img :src="headimg" onerror="this.src='__STATIC__/Home/img/loading.gif'"/>
+						<div class="tiezi-describe">
+							<h5><a>{{title}}</a></h5>
+							<span class="user-name"><a :href="authorsrc">{{nickname}}</a></span>
+							<span class="time">发布于 {{time}}</span>
+							<span class="look">查看：<a>{{read_num}}</a></span>
+							<span>|</span>
+							<span class="reply">回复：<a>{{allcomment}}</a></span>
+						</div>
+					</div>
+					
+					<div class="text-box" v-html="content">
+						
+					</div>
+					
+					<div class="text-bottom">
+						
+						<p v-if="collec" @click="getshoucang()">收藏({{shoucang}})</p>
+						<p v-else @click="getshoucang()">已收藏({{shoucang}})</p>
+
+						<p v-if="status" @click="getchick()">点赞({{chick}})</p>
+						<p v-else @click="getchick()">已点赞({{chick}})</p>
+						
+						<a href="javascript:;" id="share"><img src="__STATIC__/Home/img/cyq/share-icon.png" />分享</a>
+						<a href="javascript:;" @click="commentClick"><img src="__STATIC__/Home/img/cyq/replay-icon.png" />评论</a>
+					</div>
+					<div class="writeCom">
+						<textarea ref="mainComVal"></textarea>
+						<p @click="mainComment($event)">评论</p>
+					</div>
+					
+					<div class="comment-title">共有 {{allcomment}} 条评论</div>
+					
+					<div class="comments">
+						<div class="comment" v-for="(item,index) in comments">
+							<a :href="item.authorsrc" class="header-box">
+								<img style="width:80px;height:80px" :src="item.uidimg" />
+								<p>{{item.uidname}}</p>
+							</a>
+							<div class="comment-content">
+								<p>{{item.content}}</p>
+								<ul class="sub-comment-box" v-if="item.child.length">
+									<li class="sub-comment" v-for="(sub,subindex) in item.child">
+										<!--<div class="uid1name"><span>{{sub.uid1name}}</span></div>-->
+										<div class="to"><span>{{sub.uid1name}}</span> 回复 <span>{{sub.uid2name}} </span> ：</div>
+										<!--<div class="maohao" v-else>：</div>--> 
+										<span class="sub-content" @click="subReplayClick('a'+index,sub.uid1name,subindex,$event)">{{sub.content}}</span>
+										<p>{{dateFormat(sub.time * 1000)}}</p>
+										<div class="sub-replay-box">
+											<textarea :class="'a'+index" style="min-height: 80px;"></textarea>
+											<p @click="replaySubComment(item.id,sub.uid1,'a'+index,sub.uid1name,index,subindex,$event)">评论</p>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div class="footnote">
+								<div class="floor">第{{nums+1+index}}楼</div>
+								<div class="time">{{dateFormat(item.time * 1000)}}</div>
+
+								<p class="good" @click="dianzan(mid,item.id)" v-if="item.status==1" ><img src="__STATIC__/Home/img/cygs/good-icon2.png" /> {{item.cou||0}}</p>
+								<p class="good" @click="dianzan(mid,item.id)" v-else><img src="__STATIC__/Home/img/cygs/good-icon1.png" /> {{item.cou ||0}}</p>
+
+								<p class="replay" :data-id="index" @click="replayClick(index,$event)">回复</p>
+							</div>
+							<div class="replay-box">
+								<textarea :id="index" style="min-height: 80px;"></textarea>
+								<p @click="replayComment(item.id,index,$event)">评论</p>
+							</div>
+						</div>
+						<div class="page"></div>
+					</div>
+					
+				
+					
+				</div>
+				
+				<!--帖子右侧部分-->
+				<div class="tiezi-box-r">
+					<!--右侧上-->
+					<div class="right-box">
+					  <div class="btn-box">
+						
+						{if condition="$Think.session.user eq ''"}
+					  		<!-- <a href="javascript:;" @click="isuser()" target="_blank"> -->
+						  <a href="javascript:;">
+              <img src="__STATIC__/Home/img/cyq/new-icon2.png" />发布新贴</a>
+						{else/}
+							<a href="{:url('Card/editing')}">
+					  	<img src="__STATIC__/Home/img/cyq/new-icon2.png" />发布新贴</a>
+								{/if}
+					  	</div>
+					  <div class="hot-box">
+					  	<div class="title"><img src="__STATIC__/Home/img/cyq/hot-icon.png"/>热门话题</div>
+					  	<ul class="huati-box">
+					  		<li v-for="item in topicall"><a :href="'{:url('topic')}/id/'+item.id+''">{{item.name}}</a></li>
+					  	</ul>
+					  	<a href="javascript:;"><img src="__STATIC__/Home/img/cyq/replace-btn.png" />换一批</a>
+					  </div>
+					</div>
+					<!--创圈之星-->
+					<div class="cq-star">
+						<div class="title"><img src="__STATIC__/Home/img/cyq/star-icon.png" />创圈之星</div>
+						<ul>
+							<li v-for="item in userall">
+								<div class="header-box"><img :src="item.headimg" /><div class="product"></div></div>
+								<a :href="item.usersrc">{{item.nickname}}</a>
+								<p>发帖数量：<span>{{item.commentNum}}</span></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--底部-->
+		
+		{include file="public:footer" /}
+
+<script src="__STATIC__/Home/js/swiper.js"></script>
+<script src="__STATIC__/Home/js/jquery.pagination.js"></script>
+<script src="__STATIC__/Home/js/vue.js" ></script>
+<script>
+	var vm = new Vue({
+  	el: '#content',
+  	data:{
+  		status:"",
+  		collec:"",
+  		title: "",
+  		nickname: "",
+  		headimg: "",
+  		authorsrc: 'javascript:;',
+  		time: "",
+  		read_num: "",
+  		collect: 457,
+  		good: 56,
+  		allcomment: "",
+  		content: "",
+  		comments: [],
+  		
+  		//热门话题
+  		topicall:[],
+  		//文章点赞数
+			chick:"",
+			//文章收藏数
+			shoucang:"",
+  		//创圈之星
+  		userall:[],
+		//评论点赞数
+		getdianzan:[],
+
+
+  	},
+
+  	created:function(){
+  		var self = this;
+  		 $.get("{:url('Card/detail',['id'=>$id])}",function(data){
+  			var data = {$data};
+  			console.log(data)
+  			self.title = data.detail.title;
+  			self.mid = data.detail.id;
+  			self.nickname = data.detail.nickname;
+  			self.headimg = data.detail.headimg;
+  			self.time = data.detail.time;
+  			self.content = data.detail.content;
+  			self.allcomment = data.detail.commentCount;
+  			self.read_num = data.detail.read_num;
+  			self.reply = data.detail.reply;
+  			self.topicall = data.topicAll;
+  			self.current_page = data.comment.current_page;
+        	self.last_page = data.comment.last_page;
+        	self.total = data.comment.total;
+        	self.per_page = data.comment.per_page;
+  			self.chick = data.chick;
+  			self.status = data.chickStatus;
+        	self.shoucang = data.shoucang;
+        	self.collec = data.collectStatus;
+  			self.userall = data.userAll;
+  			self.comments = data.comment.data;
+  			self.nums=data.comment.per_page*data.comment.current_page-data.comment.per_page
+
+        	var bannerSwiper = new Swiper('.swiper-banner', {
+            	loop: true, // 循环模式选项
+            	autoplay: {
+                	disableOnInteraction: false,
+                	delay: 3000,
+            	},
+            	pagination: {
+                	el: '.swiper-pagination',
+                	clickable: true,
+            	},
+        	});
+            //分页插件
+        	$('.page').pagination({
+                totalData: data.comment.total,				//总数据条数
+                showDate: data.comment.per_page,
+                pageCount : data.comment.last_page, 			//总页数
+                current: data.comment.current_page,						//当前页
+                prevContent:'&lang;',
+                nextContent:'&rang;',
+                keepShowPN:true,
+                mode:'fixed',
+                count: 8,
+                coping:true,
+                homePage:'首',
+                endPage:'末',
+                isHide:true,
+                jump:false,
+                callback:function(apis){
+                    //跳转要做的事件
+
+                    $.get("{:url('Card/detailPage',['id'=>$id])}/page/"+apis.getCurrent()+"",function (data) {
+                        self.comments = data.data;
+                        self.nums=data.per_page*data.current_page-data.per_page;
+                        self.current_page = data.current_page;
+                    })
+                    console.log(apis.getCurrent());
+                }
+            })
+         })
+  	},
+  	
+  	methods:{
+        //评论点赞/取消点赞
+        dianzan: function (mid,id1) {
+            var self = this;
+            var mid = mid;
+            var pid = id1;
+            var page=this.current_page;
+            $.ajax({
+                url:"{:url('Card/changedianzan')}",
+                data:{mid:mid,pid:pid,page:page},
+                type:"post",
+                success:function(data) {
+                    self.comments=data.data;
+                }
+			})
+        },
+  		isuser:function(){
+  			alert(Session());
+  		},
+  		//展开评论框
+  		commentClick: function(){
+  			$('.writeCom').fadeToggle(200);
+  		},
+  		//主评论
+  		mainComment: function(e){
+  			var content = this.$refs.mainComVal.value;
+  			let uid1 = "{$Think.session.user.id}";
+  			let uid2 = '';
+  			var mid = {$id};
+  			var self = this;
+  			var myDate = new Date();
+  			$.ajax({
+  				url:"{:url('Card/comment')}",
+  				data:{uid1:uid1,uid2:uid2,mid:mid,gid:0,content:content},
+  				type:"post",
+  				dataType:"json",
+  				success:function(data){
+  					if('{$Think.session.user.id}'){
+	  					if (data.status == 0) {
+	  						alert(data.error);
+	  					}else{
+	  						self.comments.unshift({
+	  							id: "{$Think.session.user.id}",
+	  							content: content,
+	  							uidname: "{$Think.session.user.nickname}",
+	  							time: data.time,
+				  				uidimg: data.headimg,
+				  				child: [],
+	  						});
+							$(e.target).parent().fadeOut(100);
+	  					}
+					}else{
+						if(confirm('还未登录，是否前往登录')){
+							location.href="{:url('Login/login')}"
+						}
+					}
+  				}
+  			})
+//			var data = {
+//				"id":52,
+//				"content":content,
+//				"time":"2018/11/07 11:51",
+//				"uid1":19,
+//				"uidname":"子明",
+//				"uidimg":"https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLaxiautcIMBjicVmM10WibrNibWwyb8LWIyFqWn53icPOMPmTQ6ownWfUZAOXocoIW7J9mTGXILBswWYg/132",
+//				"child":[],
+//			}
+//			this.comments.unshift(data);
+  		},
+  		//回复主回复
+  		replayComment: function(id,i,e){
+  			let content = $('#'+i).val();
+  			let uid1 = "{$Think.session.user.id}";
+  			let uid2 = this.comments[i].uid1;
+  			let mid = {$id};
+  			var myDate = new Date();
+  			$('#'+i).val('');
+  			var self = this;
+  			$.ajax({
+  				url:"{:url('Card/comment')}",
+  				data:{uid1:uid1,uid2:uid2,mid:mid,gid:id,content:content},
+  				type:"post",
+  				dataType:"json",
+  				success:function(data){
+  					if (data.status == 0) {
+  						alert(data.error);
+  					}else{
+  						self.comments[i].child.push({content: content,uid1name: "{$Think.session.user.nickname}",uid2name:self.comments[i].uidname, time: data.time});
+							$(e.target).parent().fadeOut(100);
+  					}
+
+  				}
+  			})
+			
+  		},
+  		//回复评论下的回复
+  		replaySubComment: function(gid,id,cla,ele,i,ii,e){
+  			let content = $($('.'+cla)[ii]).val();
+  			let uid1 = "{$Think.session.user.id}";
+  			let mid = {$id};
+  			var self = this;
+  			var myDate = new Date();
+  			$.ajax({
+  				url:"{:url('Card/Comment')}",
+  				data:{uid1:uid1,uid2:id,mid:mid,gid:gid,content:content},
+  				type:"post",
+  				dataType:"json",
+  				success:function(data){
+  					if (data.status == 0) {
+  						alert(data.error);
+  					}else{
+  						$($('.'+cla)[ii]).val('');
+  						console.log(i,ii)
+  						self.comments[i].child.push({ content:content, uid1name: "{$Think.session.user.nickname}", uid2name:ele, time: data.time })
+						$(e.target).parent().fadeOut(100);
+  					}
+  				}
+  			})		
+  		},
+  		//文章点赞事件
+    getchick:function() {
+    	if ("{$Think.session.user.id}" != "") {
+      		var self = this;
+			$.get("{:url('Card/getChick',['id'=>$id])}",function (data) {
+        		if (data.code==200){
+        			self.status = data.status;
+        			if (self.status == "") {
+        				self.chick = self.chick+1;
+        			}else{
+        				self.chick = self.chick-1;
+        			}
+        		}
+    		})
+		}
+    },
+			//收藏事件
+    getshoucang:function() {
+    	if ("{$Think.session.user.id}" != "") {
+    		var self = this;
+        	$.get("{:url('Card/getShoucang',['id'=>$id])}",function (data) {
+        	  	if (data.code==200){
+        	    	self.collec = data.status;
+        	    	if (self.collec == "") {
+        	    		self.shoucang = self.shoucang+1;
+        	    	}else{
+        	    		self.shoucang = self.shoucang-1;
+        	    	}	
+        	  	}
+      		})
+      	}
+    },
+        dateFormat:function(time) {
+            var date=new Date(time);
+            var year=date.getFullYear();
+			/* 在日期格式中，月份是从0开始的，因此要加0
+			 * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+			 * */
+            var month= date.getMonth()+1<10 ? "0"+(date.getMonth()+1) : date.getMonth()+1;
+            var day=date.getDate()<10 ? "0"+date.getDate() : date.getDate();
+            var hours=date.getHours()<10 ? "0"+date.getHours() : date.getHours();
+            var minutes=date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes();
+            var seconds=date.getSeconds()<10 ? "0"+date.getSeconds() : date.getSeconds();
+            // 拼接
+            return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+        },
+
+  		//点击回复出现回复框
+  		replayClick: function(i,e){
+  			if ("{$Think.session.user.id}" != "") {
+  				$(e.target).parent().siblings('.replay-box').fadeToggle(100);
+  				let thisreplay = document.getElementById(i);
+  				this.textareaAutoHeight(thisreplay);
+  			}else{
+  				alert("未登录，不能回复！请登录后进行回复！")
+  			}
+  		},
+  		//回复的回复框
+  		subReplayClick: function(cla,ele,i,e){
+  			if ("{$Think.session.user.id}" != "") {
+  				$(e.target).siblings('.sub-replay-box').fadeToggle(100);
+  				let thisreplay = document.getElementsByClassName(cla)[i];
+  				this.textareaAutoHeight(thisreplay);
+  			}else{
+  				alert("未登录，不能回复！请登录后进行回复！")
+  			}
+  			
+  		},
+  		//高度自适应
+  		textareaAutoHeight: function(elem, extra, maxHeight){
+	  		extra = extra || 0;
+	  		var isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,
+	  			isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera'),
+	  			addEvent = function(type, callback) {
+	  				elem.addEventListener ?
+	  					elem.addEventListener(type, callback, false) :
+	  					elem.attachEvent('on' + type, callback);
+	  			},
+	  			getStyle = elem.currentStyle ? function(name) {
+	  				var val = elem.currentStyle[name];
+	
+	  				if(name === 'height' && val.search(/px/i) !== 1) {
+	  					var rect = elem.getBoundingClientRect();
+	  					return rect.bottom - rect.top -
+	  						parseFloat(getStyle('paddingTop')) -
+	  						parseFloat(getStyle('paddingBottom')) + 'px';
+	  				}
+	
+	  				return val;
+	  			} : function(name) {
+	  				return getComputedStyle(elem, null)[name];
+	  			},
+	  			minHeight = parseFloat(getStyle('height'));
+	
+	  		elem.style.resize = 'none';
+	
+	  		var change = function() {
+	  			var scrollTop, height,
+	  				padding = 0,
+	  				style = elem.style;
+	
+	  			if(elem._length === elem.value.length) return;
+	  			elem._length = elem.value.length;
+	
+	  			if(!isFirefox && !isOpera) {
+	  				padding = parseInt(getStyle('paddingTop')) + parseInt(getStyle('paddingBottom'));
+	  			}
+	  			scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+	
+	  			elem.style.height = minHeight + 'px';
+	  			if(elem.scrollHeight > minHeight) {
+	  				if(maxHeight && elem.scrollHeight > maxHeight) {
+	  					height = maxHeight - padding;
+	  					style.overflowY = 'auto';
+	  				} else {
+	  					height = elem.scrollHeight - padding;
+	  					style.overflowY = 'hidden';
+	  				};
+	  				style.height = height + extra + 'px';
+	  				scrollTop += parseInt(style.height) - elem.currHeight;
+	  				document.body.scrollTop = scrollTop;
+	  				document.documentElement.scrollTop = scrollTop;
+	  				elem.currHeight = parseInt(style.height);
+	  			}
+	  		}
+	  		addEvent('propertychange', change);
+	  		addEvent('input', change);
+	  		addEvent('focus', change);
+		  		change();
+  		},
+  	},
+  });
+
+</script>
+<script>
+	//头部导航选择
+	$('.nav ul li').removeClass('active');
+	$('.nav ul li.cyq').addClass('active');
+
+
+
+</script>
+

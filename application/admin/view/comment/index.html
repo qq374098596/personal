@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {include file="meta" /}
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span> 会员管理
+    <span class="c-gray en">&gt;</span> {$title}
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<div class="page-container">
+    <form class="form form-horizontal" method="post" action="{:url('comment/index')}">
+        <div class="text-c">
+            <input type="text" name="q" value="{$q}" placeholder="用户名，昵称或电话号码" style="width:300px" class="input-text">
+            <button class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+        </div>
+    </form>
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a class="btn btn-primary radius" href="{:url('comment/comment_set')}"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a></span>
+        <span class="r">共有数据：<strong><?php echo count($list); ?></strong> 条</span>
+    </div>
+    <table class="table table-border table-bordered table-bg table-hover table-sort">
+        <thead>
+        <tr class="text-c">
+            <th width="20">序列号</th>
+            <th width="150">发表者</th>
+            <th width="80">评论者</th>
+            <th width="40">目标类型</th>
+            <th width="40">时间</th>
+            <th width="50">管理操作</th>
+        </tr>
+        </thead>
+        {foreach $list as $key=>$item }
+        <tbody>
+        <tr>
+            <td class="center">{$item.id}</td>
+            <td class="center">{if $item.name1} {$item.name1} {else} {$item.nickname1} {/if}</td>
+            <td class="center">{if $item.name2} {$item.name2} {else} {$item.nickname2} {/if}</td>
+            <td class="center">{$item.mkind}</td>
+            <td class="center">{$item.time|date="Y-m-d H:i:s",###}</td>
+            <td class="center">
+                <a class="href-a" href="{:url('comment/comment_set','id='.$item.id)}" title="编辑">编辑</a>&nbsp;|
+                <a class="href-a" href="javascript:;" title="删除" onclick="confirm_del('{:url(\"comment/comment_del?id=\".$item.id)}')">删除</a>
+            </td>
+        </tr>
+        </tbody>
+        {/foreach}
+    </table>
+    {$page}
+</div>
+{include file="script" /}
+</body>
+</html>

@@ -1,0 +1,8 @@
+.idea
+composer.lock
+*.log
+/application/database.php
+thinkphp
+/public/static/Uploads/*
+/public/static/qrcode/*
+/public/static/access_token

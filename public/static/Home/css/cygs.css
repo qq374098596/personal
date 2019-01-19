@@ -1,0 +1,35 @@
+[v-cloak]{ visibility: hidden; }
+.swiper-banner{ width: 1200px; height: 380px; margin: 20px auto; overflow: hidden; position: relative; }
+.swiper-banner img{ width: 100%; }
+.swiper-banner .swiper-pagination{ width: 100%; left: 0; bottom: 40px; }
+.swiper-banner .swiper-pagination span{ width: 12px; height: 12px; border-radius: 0; }
+.swiper-banner .swiper-pagination-bullet{ opacity: .2; }
+.swiper-banner .swiper-pagination-bullet-active{ opacity: 1; }
+
+
+
+
+
+/*创业故事*/
+.story-box{ width: 1200px; height: auto; background: #fff; margin: 0 auto 20px; border-radius: 5px; padding: 60px 0; position: relative; }
+.story-box ul{ width: 100%; padding: 0 36px; box-sizing: border-box; margin: 36px 0 75px; }
+.story-box ul li{ width: 100%; height: 180px; margin-bottom: 30px; }
+.story-box ul li>div{ float: left; }
+.story-box ul li .story-l{ width: 880px; height: 100%; padding-top: 36px; box-sizing: border-box; background: url(../img/cygs/line.png) no-repeat 5px 0; }
+.story-box ul li .story-l img{ float: left; margin-right: 28px; }
+.story-box ul li .story-l h5 a{ font-size: 18px; color: #333; }
+.story-box ul li .story-l p{ font-size: 14px; color: #333; line-height: 22px; margin: 8px 0 22px 0; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+
+
+.story-box .story-r{ width: 248px; height: 100%; text-align: right; position: relative; }
+.story-box .story-r span{ position: absolute; right: 0; top: 0; width: 74px; height: 5px; background: #ffcc02; }
+.story-box .story-r h1{ font-size: 42px; color: #333; margin-top: 50px; }
+.story-box .story-r p{ font-size: 14px; color: #9f9f9f; }
+
+/*分页样式*/
+.page{ position: absolute; left: 50%; overflow: hidden; }
+.page a,.page span{ float:left; width: 40px; height: 40px; box-sizing: border-box; border-radius: 50%; text-align: center; line-height: 38px; margin:10px 5px; color:#bababa; transition: .2s; border:1px solid #bababa; }
+.page a.prev, .page a.next{ font-size: 18px; }
+.page a:not(.next):not(.prev):hover{ background: #12C173; color: #fff; border-color: #12C173; }
+.page input{ width: 30px; height: 40px; float: left; margin-top: 11px; box-sizing: border-box; }
+.page .active{ background:#12C173; color: white; border-color: #12C173; }

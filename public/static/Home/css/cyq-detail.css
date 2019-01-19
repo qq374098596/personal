@@ -1,0 +1,109 @@
+[v-cloak]{ visibility: hidden; }
+/*弹窗样式*/
+#tanchuang{ display: none; position: fixed; z-index: 999; font-size: 28px; letter-spacing: 2px; line-height: 60px; text-align: center; top: 80px; left: 50%; margin-left: -100px; width: 200px; height: 60px; background: rgba(0,0,0,.2); color: #12C173; border-radius: 6px; padding: 0 10px; }
+
+
+/*banner部分样式*/
+.right-box{ width:280px; overflow: hidden; }
+.right-box .btn-box{ float: right; }
+.right-box .btn-box a{ display: block; position: relative; padding-left: 50px; text-align: center; width: 280px; height: 70px; font-size: 28px; margin-bottom: 20px; border: 2px solid #ff9800; border-radius: 10px; background: #ff9800; color: #fff; box-sizing: border-box; line-height: 68px; }
+.right-box .btn-box a.sign-in{ background: #fff; color: #12C173; border-color: #12C173; }
+.right-box .btn-box a.sign-ined{ background: #fff; color: #bcbbbb; border-color: #bcbbbb; cursor: default; }
+.right-box .btn-box a img{ position: absolute; top: 15px; left: 60px; }
+.right-box .hot-box{ width: 280px; height: 220px; float: right; background: #fff; border-radius: 5px; }
+.right-box .hot-box .title{ width: 100%; height: 55px; border-bottom: 1px solid #f2f2f2; font-size: 22px; color: #ff9800; line-height: 55px; }
+.right-box .hot-box .title img{ float: left; margin: 13px 9px 0 20px; }
+.right-box .hot-box .huati-box{ width: 100%; padding: 10px 5px 0 5px; box-sizing: border-box; overflow: hidden; }
+.right-box .hot-box .huati-box li{ float: left; margin: 5px; }
+.right-box .hot-box .huati-box li a{ float: left; padding: 6px 16px; color: #a3a3a3; transition: .1s; font-size: 14px; line-height: 14px; background: #f2f2f2; border-radius: 6px; }
+.right-box .hot-box .huati-box li a:hover{ background: #ff9800; color: #fff; }
+.right-box .hot-box>a{ display: block; width:70px; margin: 10px auto 0; color: #535353; font-size: 12px; line-height: 25px; }
+.right-box .hot-box>a img{ float: left; margin: 5px; }
+
+/*帖子部分样式*/
+.tiezi-box{ width: 100%; margin: 20px 0; overflow: hidden; }
+.tiezi-box .nav-title{ color: #313131; font-size: 14px; }
+.tiezi-box .nav-title :nth-child(1){ color: #313131; }
+.tiezi-box .nav-title :nth-child(3){ color: #afafaf; }
+/*左侧部分样式*/
+.tiezi-box-l{ width: 900px; float: left; height: auto; background: #fff; border-radius: 10px; padding: 20px 40px 30px; box-sizing: border-box; }
+.tiezi-box-l .tiezi-title{ overflow: hidden; margin-top: 20px; }
+.tiezi-box-l .tiezi-title img{ float: left; width: 80px; height: 80px; border-radius: 50%; margin-right: 20px; }
+.tiezi-box-l .tiezi-title .tiezi-describe{ float: left; }
+.tiezi-box-l .tiezi-title .tiezi-describe h5{ margin: 10px 0; max-width: 720px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.tiezi-box-l .tiezi-title .tiezi-describe h5 a{ font-size: 18px; color: #009151; }
+.tiezi-box-l .tiezi-title .tiezi-describe span{ font-size: 14px; color: #989898; margin-right: 15px; }
+.tiezi-box-l .tiezi-title .tiezi-describe span.user-name{ display: inline-block; padding-left: 20px; background: url(../img/cyq/user-icon.png)no-repeat 0 2px; }
+.tiezi-box-l .tiezi-title .tiezi-describe span.user-name a{ color: #1a1a1a; }
+.tiezi-box-l .tiezi-title .tiezi-describe span.look a, .tiezi-box-l .tiezi-title .tiezi-describe span.reply a{ color: #ff0000; }
+
+/*文章内容样式*/
+.tiezi-box-l .text-box{ width: 100%; margin-top: 25px; }
+.tiezi-box-l .text-box p{ font-size: 14px; line-height: 28px; margin-bottom: 10px; text-indent: 2em; }
+.tiezi-box-l .text-box img{ max-width: 100%; }
+.tiezi-box-l .text-bottom{ margin-top: 30px; overflow: hidden; }
+.tiezi-box-l .text-bottom p{ float: left; cursor: pointer; margin-right: 30px; width: 160px; height: 40px; border: 1px solid #12C173; background: #fff; color: #12C173; line-height: 38px; text-align: center; font-size: 18px; border-radius: 20px; box-sizing: border-box; }
+.tiezi-box-l .text-bottom p.active{ background: #12C173; color: #fff; }
+.tiezi-box-l .text-bottom a{ float: right; line-height: 40px; font-size: 14px; color: #12C173; margin-left: 20px; padding-left: 20px; } 
+.tiezi-box-l .text-bottom a img{ float: left; margin: 13px 5px 0 0; }
+.tiezi-box-l .text-bottom a.share img{ margin-top: 12px; }
+
+.tiezi-box-l .writeCom{ float: left; width: 100%; height: auto; margin: 20px 0; }
+.tiezi-box-l .writeCom textarea{ resize: none; padding: 10px; box-sizing: border-box; width: 100%; height: 120px; border: none; border: 1px solid rgba(18,193,115,.3); outline: none; background: #fff; }
+.tiezi-box-l .writeCom p{ float: right; width: 100px; height: 32px; background: #FE9B12; border-radius: 10px; line-height: 32px; text-align: center; color: #fff; font-size: 18px; cursor: pointer; }
+
+/*评论样式*/
+.tiezi-box-l .comment-title{ font-size: 22px; color: #313131; padding: 15px 0; border-bottom: 1px solid #e8e8e8; margin-top: 20px; }
+.tiezi-box-l .comments .comment{ position: relative; overflow: hidden; padding: 20px 0; border-bottom: 1px dashed #c9c9c9; }
+.tiezi-box-l .comments .comment .header-box{ float: left; width: 100px; height: auto; text-align: center; }
+.tiezi-box-l .comments .comment .header-box img{ border-radius: 50% ; }
+.tiezi-box-l .comments .comment .header-box p{ color: #313131; max-width: 100px; font-size: 14px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.tiezi-box-l .comments .comment .comment-content{ float: left; width: 700px; margin: 10px 10px 40px 10px; text-indent: 2em; }
+.tiezi-box-l .comment-content>p{ line-height: 40px; }
+.tiezi-box-l .comment-content ul{ width: 100%; padding: 10px 30px 20px; box-sizing: border-box; border-radius: 3px; height: auto; border: 1px solid #ececec; margin-top: 20px; position: relative; }
+.tiezi-box-l .comment-content ul:before{ content: ''; position: absolute; top: -14px; left: 50px; width: 0; height: 0; border-bottom: 14px solid #ececec; border-left: 11px solid transparent; border-right: 11px solid transparent; }
+.tiezi-box-l .comment-content ul:after{ content: ''; position: absolute; top: -13px; left: 51px; width: 0; height: 0; border-bottom: 13px solid #fff; border-left: 10px solid transparent; border-right: 10px solid transparent; }
+.tiezi-box-l .comment-content ul li{ text-indent: 0; padding: 10px 0; border-bottom: 1px dashed #ececec; overflow: hidden; font-size: 16px; line-height: 32px; }
+.tiezi-box-l .comment-content ul li span.sub-content{ cursor: pointer; }
+.tiezi-box-l .comment-content ul li div{ float: left; margin-left: 5px; }
+.tiezi-box-l .comment-content ul li div span{ color: #12C173; cursor: pointer; }
+.tiezi-box-l .comment-content ul li>p{ width: 100%; float: left; font-size: 14px; color: #989898; margin-left: 5px; }
+.tiezi-box-l .comments .footnote{ float: right; margin-bottom: 20px; }
+.tiezi-box-l .comments .footnote div, .tiezi-box-l .comments .footnote p{ float: left; margin-left: 20px; font-size: 14px; color: #989898; }
+.tiezi-box-l .comments .footnote p{ color: #12C173; cursor: pointer; }
+.tiezi-box-l .comments .replay-box{ width: 100%; float: left; position: relative; display: none; }
+.tiezi-box-l .comments .replay-box textarea{ width: 100%; height: auto; resize: none; box-sizing: border-box; border-color: #ececec; border-radius: 3px; outline: none; padding: 10px; }
+.tiezi-box-l .comments .replay-box p{ float: right; margin-right: 10px; font-size: 14px; color: #12C173; cursor: pointer; }
+.tiezi-box-l .comments .sub-replay-box{ width: 100%; float: left; position: relative; margin: 0; display: none; }
+.tiezi-box-l .comments .sub-replay-box textarea{ width: 100%; height: auto; resize: none; box-sizing: border-box; border-color: #ececec; border-radius: 3px; outline: none; padding: 10px; }
+.tiezi-box-l .comments .sub-replay-box p{ float: right; margin-right: 10px; font-size: 14px; color: #12C173; cursor: pointer; }
+/*分页样式*/
+.page{ position: relative; width: 650px; left: 50%; margin: 50px 0 0 -325px; overflow: hidden; }
+.page a,.page span{ float:left; width: 40px; height: 40px; box-sizing: border-box; border-radius: 50%; text-align: center; line-height: 38px; margin:10px 5px; color:#bababa; transition: .2s; border:1px solid #bababa; }
+.page a.prev, .page a.next{ font-size: 18px; }
+.page a:not(.next):not(.prev):hover{ background: #12C173; color: #fff; border-color: #12C173; }
+.page input{ width: 30px; height: 40px; float: left; margin-top: 11px; box-sizing: border-box; }
+.page .active{ background:#12C173; color: white; border-color: #12C173; }
+
+
+/*右侧部分样式*/
+.tiezi-box-r{ width: 280px; float: right; }
+
+/*创圈之星样式*/
+.tiezi-box-r .cq-star{ width: 100%; height: auto; background: #fff; border-radius: 10px; margin-top: 20px; }
+.tiezi-box-r .cq-star .title{ width: 100%; height: 40px; padding-top: 60px; font-size: 22px; border-bottom: 1px solid #f2f2f2; color: #ff9800; }
+.tiezi-box-r .cq-star .title img{ float: left; margin: 0 10px 0 20px; }
+.tiezi-box-r .cq-star ul{ width: 100%; height: auto; padding: 15px; box-sizing: border-box; }
+.tiezi-box-r .cq-star ul li{ overflow: hidden; width: 100%; margin: 5px 0; }
+.tiezi-box-r .cq-star ul li .header-box{ float: left; width: 105px; margin-right: 10px; position: relative; }
+.tiezi-box-r .cq-star ul li .header-box img{ width: 80px; height: 80px; border-radius: 50%; border: 4px solid #fff; }
+.tiezi-box-r .cq-star ul li:first-child .header-box img{ border-color: #ffc600; }
+.tiezi-box-r .cq-star ul li:nth-child(2) .header-box img{ border-color: #d0d0d0; }
+.tiezi-box-r .cq-star ul li:nth-child(3) .header-box img{ border-color: #d6b970; }
+.tiezi-box-r .cq-star ul li .header-box .product{ width: 29px; height: 39px; position: absolute; right: 0; top: 30px; }
+.tiezi-box-r .cq-star ul li:first-child .header-box .product{ background: url(../img/cyq/first-icon.png); }
+.tiezi-box-r .cq-star ul li:nth-child(2) .header-box .product{ background: url(../img/cyq/second-icon.png); }
+.tiezi-box-r .cq-star ul li:nth-child(3) .header-box .product{ background: url(../img/cyq/third-icon.png); }
+.tiezi-box-r .cq-star ul li a{ float: left; width: 135px; margin-top: 20px; font-size: 14px; color: #ff9800; font-weight: bold; }
+.tiezi-box-r .cq-star ul li p{ float: left;width: 135px; font-size: 14px; color: #989898; line-height: 26px; }
+.tiezi-box-r .cq-star ul li p span{ color: #ff0000; }

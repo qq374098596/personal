@@ -1,0 +1,41 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	{include file="meta" /}
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 品牌管理 <span class="c-gray en">&gt;</span> {$title} <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-sort">
+			<thead>
+				<tr class="text-c">
+					<th width="60">ID</th>
+					<th width="260">品牌名称</th>
+					<th width="380">LOGO</th>
+					<th >访问量</th>
+					<th width="100">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			{volist name="access" id="vo"}
+				<tr class="text-c">
+					<td>{$vo.pid}</td>
+					<td style="font-size: 15px">{$vo.name}</td>
+					<td><img src="{$vo.imgsrc}" style="width: 180px;height: 100px"></td>
+					<td>{$vo.count} </td>
+					<td class="f-14 product-brand-manage">
+						<a style="text-decoration:none" href="{:url('Product/askaccess')}?id={$vo.id}" title="详情">详情</i></a>
+				</tr>
+			{/volist}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+</script>
+{include file="script" /}
+</body>
+</html>

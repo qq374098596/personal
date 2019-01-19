@@ -1,0 +1,36 @@
+[v-cloak]{ visibility: hidden; }
+/*弹窗样式*/
+#tanchuang{ display: none; position: fixed; z-index: 999; font-size: 28px; letter-spacing: 2px; line-height: 60px; text-align: center; top: 80px; left: 50%; margin-left: -100px; width: 200px; height: 60px; background: rgba(0,0,0,.2); color: #12C173; border-radius: 6px; padding: 0 10px; }
+
+/*内容样式*/
+#content{ background: #fff; border-radius: 10px; margin: 20px auto; padding: 40px 0; } 
+#content>img{ width: 100%; }
+#content .creat-box{ width: 100%; padding: 50px 40px 0; box-sizing: border-box; overflow: hidden; }
+#content .creat-box .input-box input{ width: 1020px; height: 50px; outline: none; box-sizing: border-box; font-size: 14px; border: 1px solid #12C173; padding-left: 20px; }
+#content .creat-box .input-box input::-webkit-input-placeholder{ color: #bebec0; }
+#content .creat-box .input-box>div{ float: right; font-size: 14px; padding-bottom: 10px; position: relative; color: #12C173; line-height: 24px; margin-top: 13px; margin-right: 16px; }
+#content .creat-box .input-box>div>p{ cursor: pointer; } 
+#content .creat-box .input-box>div img{ float: left; margin-right: 5px; }
+#content .creat-box .input-box>div .huati-hover{ display: none; width: 200px; height: 300px; padding: 10px; z-index: 6; position: absolute; top: 34px; left: -142px; background: url(../img/cyq/huati-box-bg.png); }
+#content .creat-box .input-box>div:hover .huati-hover{ display: block; }
+#content .creat-box .input-box>div .huati-hover .title{ line-height: 34px; font-size: 14px; }
+#content .creat-box .input-box>div .huati-hover h5{ font-size: 14px; color: #313131; }
+#content .creat-box .input-box>div .huati-hover ul li{ width: 100%; overflow: hidden; cursor: pointer; margin-top: 10px; }
+#content .creat-box .input-box>div .huati-hover ul li a,
+#content .creat-box .input-box>div .huati-hover ul li p,
+#content .creat-box .input-box>div .huati-hover ul li span{ float: left; font-size: 14px; color: #313131; line-height: 16px; }
+#content .creat-box .input-box>div .huati-hover ul li a{ text-align: center; color: #313131; width: 16px; margin-right: 10px; }
+#content .creat-box .input-box>div .huati-hover ul li:nth-child(1) a,
+#content .creat-box .input-box>div .huati-hover ul li:nth-child(2) a,
+#content .creat-box .input-box>div .huati-hover ul li:nth-child(3) a{ color: #fff; background: #ff9800; }
+#content .creat-box .input-box>div .huati-hover ul li span{ float: right; color: #bebebe; }
+#content .creat-box>ul{ padding: 20px 0; overflow: hidden; }
+#content .creat-box>ul li{ float: left; font-size: 14px; margin-right: 10px; transition: .1s; line-height: 26px; padding: 0 6px; background: #c9c9c9; color: #fff; border-radius: 3px; cursor: pointer; }
+#content .creat-box>ul li:hover{ background: #ff9800; border-radius: 6px; }
+#content .creat-box .textarea{ width: 100%; height: auto; min-height: 380px; border: 1px solid #f2f2f2; padding: 20px; box-sizing: border-box; }
+#content .creat-box ul.showhuati{ padding:  0 0 20px; overflow: hidden; }
+#content .creat-box ul.showhuati li{ float: left; font-size: 14px; margin-right: 10px; transition: .1s; line-height: 26px; padding: 0 6px; background: #ff9800; color: #fff; border-radius: 6px; cursor: pointer; }
+#content .creat-box .fabiao{ float: right; width: 268px; line-height: 45px; margin-top: 40px; border-radius: 10px; cursor: pointer; background: #12C173; color: #fff; text-align: center; font-size: 22px; }
+
+#div2>div{ min-height: 300px; }
+.w-e-text{ overflow-y: hidden !important; }

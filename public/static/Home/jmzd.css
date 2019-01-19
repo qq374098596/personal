@@ -1,0 +1,30 @@
+#big-box{ width: 100%; height: 1468px; position: relative; }
+.big-bg{ width: 1920px; height: 100%; position: absolute; left: 50%; margin-left: -960px; background: url(../img/jmzd/bigbg.png)no-repeat; background-size: 100%; }
+
+#succModel{ display: none; border-radius: 10px; z-index: 99; width: 500px; height: 300px; position: fixed; top: 50%; left: 50%; margin-top: -150px; margin-left: -200px; background: rgb(72,72,72); text-align: center; padding: 50px 20px; box-sizing: border-box; color: #fff; }
+#succModel span{ margin-top: 10px; font-size: 14px; cursor: pointer; }
+
+.container .titletitle{ width: 100%; height: 400px; background: url(../img/jmzd/title-bg.png)no-repeat; position: relative; }
+.container .title-text{ width: 100%; text-align: center; position: absolute; bottom: 0; padding-right: 10px; box-sizing: border-box; }
+.container .title-text h5{ font-size: 24px; color: #fff; margin-bottom: 25px; letter-spacing: 1.5px; padding-right: 5px; }
+.container .title-text h5 span{ font-size: 30px; color: #fff600; }
+.container .title-text p{ font-size: 14px; color: #fff; letter-spacing: 1px; }
+.container .title-text p span{ color: #fff600; }
+
+.input-group{ width: 800px; height: auto; margin: 30px auto 40px; border-bottom: 1px solid #6dc858; }
+.input-group .input-box{ width: 800px; height: 50px; margin-bottom: 20px; border-radius: 25px; background: rgba(0,0,0,.6); line-height: 50px; color: #fff; padding: 0 30px; box-sizing: border-box; }
+.input-group .input-box span{ width: 100px; line-height: 50px; float: left; font-size: 20px; }
+.input-group .input-box input{ width: 640px; height: 50px; color: #fff; float: left; font-size: 14px; padding-left: 20px; box-sizing: border-box; border: none; outline: none; background: transparent; }
+.input-group .input-box input::-webkit-input-placeholder{ color: #c4c4c4; }
+.input-group .kszd-btn{ width: 268px; height: 54px; background: #ff9800; border-radius: 23px; margin: 40px auto; letter-spacing: 5px; cursor: pointer; text-align: center; color: #fff; font-size: 24px; line-height: 54px; }
+
+.container .zdxz{ text-align: center; }
+
+/*底部*/
+.bottom-swiper{ width: 870px; height: 344px; background: url(../img/jmzd/bottom-bg.png)no-repeat; margin: 45px 0 0 134px; }
+.bottom-swiper .swiper-banner{ width: 531px; height: 344px; margin-left: 205px; position: relative; overflow: hidden; }
+.bottom-swiper .swiper-banner .swiper-wrapper{ height: 300px; }
+.bottom-swiper .swiper-banner .swiper-slide{ text-align: center; padding-top: 45px; box-sizing: border-box; }
+.bottom-swiper .swiper-banner .swiper-pagination{ margin: 0 auto; position: relative; }
+.bottom-swiper .swiper-banner .swiper-pagination span{ width: 10px; height: 10px; border-radius: 50%; background: #bebebe; }
+.bottom-swiper .swiper-banner .swiper-pagination .swiper-pagination-bullet-active{ background: #12C173; opacity: 1; }

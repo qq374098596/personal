@@ -1,0 +1,119 @@
+{include file="public:head" /}
+<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/cygs.css"/>
+</head>
+<body>
+<!--顶部-->
+
+{include file="public:header" /}
+
+<!--视口-->
+<div id="app" v-cloak>
+	<!--轮播图-->
+	<div class="swiper-banner">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide" v-for="item in banner"><a :href="item.jump"><img :src="item.img"/></a></div>
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
+	<!--内容-->
+	<div class="story-box">
+		<div class="title"><img src="__STATIC__/Home/img/cygs/story-title.png" /></div>
+		<ul class="stories">
+			{foreach name="story" item="v"}
+			<li>
+				<div class="story-l">
+					<img style="width:180px;height:140px" src="{$v.banner}"/>
+					<h5><a href="{:url('story/detail',['id'=>$v.id])}">{$v.title}</a></h5>
+					<p>{$v.gushi|htmlspecialchars_decode|strip_tags|mb_substr=0,50,'utf-8'}...</p>
+					<a href="{:url('story/detail',['id'=>$v.id])}"><img src="__STATIC__/Home/img/cygs/more-btn.png" /></a>
+				</div>
+				<div class="story-r">
+					<span></span>
+					<h1>{$v.time|substr=5,10}</h1>
+					<p>-{$v.time|substr=0,4}</p>
+				</div>
+			</li>
+			{/foreach}
+		</ul>
+		{$story->render()}
+	</div>
+
+</div>
+
+
+<!--底部-->
+
+{include file="public:footer" /}
+
+<script src="__STATIC__/Home/js/swiper.js"></script>
+<script src="__STATIC__/Home/js/jquery.pagination.js"></script>
+<script src="__STATIC__/Home/js/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            //轮播图
+            banner: [
+                { jump: 'javascript:;', img: '__STATIC__/Home/img/cygs/banner1.png' },
+                { jump: 'javascript:;', img: '__STATIC__/Home/img/jmdp/banner1.png' },
+                { jump: 'javascript:;', img: '__STATIC__/Home/img/jmdp/middle-banner1.png' },
+                { jump: 'javascript:;', img: '__STATIC__/Home/img/jmdp/bottom-banner1.png' },
+            ],
+            //创业故事
+            gushi:[
+                { img: 'img/cygs/gushi1.png', title: '不要问怎么做，要问为什么做？', src: 'javascript:;', day: '2018-10-28', describe: '<div style="color:red">111</div>'  },
+                { img: 'img/cygs/gushi2.png', title: '不要问怎么做，要问为什么做？', src: 'javascript:;', day: '10-28', year: '2018', describe: '当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨伤怀而感慨伤怀当别的毕业生还在为逝时光与再也无法追业......'  },
+                { img: 'img/cygs/gushi3.png', title: '不要问怎么做，要问为什么做？', src: 'javascript:;', day: '10-28', year: '2018', describe: '当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨伤怀而感慨伤怀当别的毕业生还在为逝时光与再也无法追业......'  },
+                { img: 'img/cygs/gushi4.png', title: '不要问怎么做，要问为什么做？', src: 'javascript:;', day: '10-28', year: '2018', describe: '当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨伤怀而感慨伤怀当别的毕业生还在为逝时光与再也无法追业......'  },
+                { img: 'img/cygs/gushi5.png', title: '不要问怎么做，要问为什么做？', src: 'javascript:;', day: '10-28', year: '2018', describe: '当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨伤怀而感慨伤怀当别的毕业生还在为逝时光与再也无法追业......'  },
+                { img: 'img/cygs/gushi6.png', title: '不要问怎么做，要问为什么做？', src: 'javascript:;', day: '10-28', year: '2018', describe: '当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨伤怀而感慨伤怀当别的毕业生还在为逝时光与再也无法追业......'  },
+                { img: 'img/cygs/gushi7.png', title: '不要问怎么做，要问为什么做？', src: 'javascript:;', day: '10-28', year: '2018', describe: '当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨伤怀而感慨伤怀当别的毕业生还在为逝时光与再也无法追业......'  },
+                { img: 'img/cygs/gushi8.png', title: '不要问怎么做，要问为什么做？', src: 'javascript:;', day: '10-28', year: '2018', describe: '当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨伤怀而感慨伤怀当别的毕业生还在为逝时光与再也无法追业......'  },
+                { img: 'img/cygs/gushi9.png', title: '不要问怎么做，要问为什么做？', src: 'javascript:;', day: '10-28', year: '2018', describe: '当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨伤怀而感慨伤怀当别的毕业生还在为逝时光与再也无法追业......'  },
+                { img: 'img/cygs/gushi10.png', title: '不要问怎么做，要问为什么做？', src: 'javascript:;', day: '10-28', year: '2018', describe: '当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨当别的毕业生还在为逝去的大学时光与再也无法追回的青川而感慨伤怀而感慨伤怀当别的毕业生还在为逝时光与再也无法追业......'  }
+            ]
+        },
+
+//		 created:function(){
+//		 	var self = this;
+//		 	$.get("{:url('Story/getStory')}",function(data){
+//		 		console.log(data);
+//		 		var data = eval("("+data+")");
+//		 		self.gushi = data.gushi;
+//		 	})
+//		 },
+
+        methods: {
+
+        }
+    });
+</script>
+<script>
+    //头部导航选择
+    $('.nav ul li').siblings().removeClass('active');
+    $('.cygs').addClass('active');
+    // $('.nav ul li').click(function(){
+    // 	$(this).siblings().removeClass('active');
+    // 	$(this).addClass('active');
+    // });
+
+    //轮播图
+    var bannerSwiper = new Swiper ('.swiper-banner', {
+        loop: true, // 循环模式选项
+        autoplay: {
+            disableOnInteraction: false,
+            delay: 3000,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+
+
+    $(function(){
+        var pageWidth = $('.page').width();
+        console.log(pageWidth);
+        $('.page').css('marginLeft',-pageWidth/2)
+    });
+</script>

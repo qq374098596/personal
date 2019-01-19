@@ -1,0 +1,259 @@
+{include file="public:head" /}
+		<link rel="stylesheet" type="text/css" href="__STATIC__/Home/css/cyq-jmts.css"/>
+	</head>
+	<body>
+		<!--顶部-->
+		
+		{include file="public:header" /}
+
+		<!--弹窗-->
+		<div id="tanchuang"></div>
+		
+		<!--内容-->
+		<div class="container" id="content" v-cloak>
+			
+			<!--帖子部分-->
+			<div class="tiezi-box">
+				<!--帖子左侧部分-->
+				<div class="tiezi-box-l">
+					<div class="nav-title">
+						<a href="{:url('card/index')}">创业圈</a>
+						<a>&gt; </a>
+						<a href="javascript:;">热门话题</a>
+						<a>&gt; </a>
+						<a>{$topicName}</a>
+					</div>
+					
+					<div class="title-box">
+						<img src="__STATIC__/Home/img/cyq/user1.png"/>
+						<h5>{$topicName}</h5>
+						<p>今日新帖：<span>{{nowNum}}</span></p>
+						<p>|</p>
+						<p>帖子总数：<span>{{allNum}}</span></p>
+					</div>
+					
+					
+					<div class="btn-box">
+						<a href="javascript:;" @click="tieziall(1,{$id})">全部帖子</a>
+						<a href="javascript:;" @click="tieziall(2,{$id})">最新热贴</a>
+						<a href="javascript:;" @click="tieziall(3,{$id})">创圈精华</a>
+						<!--<p class="sort-btn">默认排序</p>-->
+					</div>
+					
+					<ul>
+						<li v-for="item in cardall">
+							<img :src="item.headimg"/>
+							<div class="tiezi-describe">
+								<h5><a :href="'{:url('detail')}/id/'+item.id+''">{{item.title}}</a></h5>
+								<span class="user-name"><a :href="item.authorsrc">{{item.nickname}}</a></span>
+								<span class="time">发布于{{dateFormat(item.time*1000)}}</span>
+								<span class="look">查看：<a>{{item.read_num}}</a></span>
+								<span>|</span>
+								<span class="reply">回复：<a>{{item.count}}</a></span>
+							</div>
+							<a href="javascript:;" class="tiezi-more"><img src="__STATIC__/Home/img/cyq/tiezi-list-btn.png" /></a>
+						</li>
+					</ul>
+					
+					<div class="page"></div>
+				</div>
+				
+				<!--帖子右侧部分-->
+				<div class="tiezi-box-r">
+					<!--右侧上-->
+					<div class="right-box">
+					  <div class="btn-box">
+					  	
+						{if condition="$Think.session.user eq ''"}
+			  				<a href="javascript:;">
+			  			{else/}
+							<a href="{:url('Card/editing')}">
+			  			{/if}
+						
+					  		<img src="__STATIC__/Home/img/cyq/new-icon2.png" />发布新贴</a>
+					  </div>
+					  <div class="hot-box">
+					  	<div class="title"><img src="__STATIC__/Home/img/cyq/hot-icon.png"/>热门话题</div>
+					  	<ul class="huati-box">
+					  		<li v-for="item in topicall"><a :href="'{:url('Card/topic')}/id/'+item.id+''">{{item.name}}</a></li>
+					  	</ul>
+					  	<a href="javascript:;" @click="chage"><img src="__STATIC__/Home/img/cyq/replace-btn.png" />换一批</a>
+					  </div>
+					</div>
+					<!--创圈之星-->
+					<div class="cq-star">
+						<div class="title"><img src="__STATIC__/Home/img/cyq/star-icon.png" />创圈之星</div>
+						<ul>
+							<li v-for="item in userall">
+								<div class="header-box"><img :src="item.headimg" /><div class="product"></div></div>
+								<a :href="item.usersrc">{{item.nickname}}</a><br><br>
+								<p>发帖数量：<span>{{item.commentNum}}</span></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--底部-->
+		
+	{include file="public:footer" /}
+
+<script src="__STATIC__/Home/js/swiper.js"></script>
+<script src="__STATIC__/Home/js/jquery.pagination.js"></script>
+<script src="__STATIC__/Home/js/vue.js" ></script>
+<script>
+	var vm = new Vue({
+  	el: '#content',
+  	data:{
+  		nowNum: 155,
+  		allNum: '',
+  		//热门话题
+  		topicall:[],
+  		//帖子列表
+  		cardall:[],
+  		//创圈之星
+  		userall:[],
+		//分页
+		list:[]
+  	},
+
+  	created:function(){
+  		var self = this;
+  		$.get("{:url('Card/topicJson',['id'=>$id])}",function(data){
+  			var data = eval("("+data+")");
+  			self.nowNum = data.cardNum.nowNum;
+  			self.userall = data.userAll;
+            self.allNum = data.allNum;
+  			self.topicall = data.topicAll;
+  			self.cardall = data.list.data;
+            self.current_page = data.list.current_page;
+            self.last_page = data.list.last_page;
+            self.per_page = data.list.per_page;
+            self.total = data.list.total;
+
+            //分页插件
+            $('.page').pagination({
+                totalData: self.total,				//总数据条数
+                showDate: self.per_page,
+                pageCount : self.last_page, 			//总页数
+                current: self.current_page,						//当前页
+                prevContent:'&lang;',
+                nextContent:'&rang;',
+                keepShowPN:true,
+                mode:'fixed',
+                count: 8,
+                coping:true,
+                homePage:'首',
+                endPage:'末',
+                isHide:true,
+                jump:false,
+                callback:function(apis){
+                    //跳转要做的事件
+                    $.get("{:url('Card/zhutiPage',['id'=>$id])}/page/"+apis.getCurrent()+"",function (data) {
+                        self.cardall=data.data;
+                    })
+                }
+            });
+        })
+  	},
+  	
+  	
+  	methods:{
+  		qiandao: function(){
+  			this.isqiandao = 1;
+  			this.tanchuang('签到成功')
+  		},
+		//换一批
+        chage:function () {
+            var self = this;
+            $.get("{:url('Card/chage')}",function (data) {
+                self.topicall=data;
+            })
+        },
+        tieziall:function (num,id) {
+            var self=this;
+            $.ajax({
+                url:"{:url('Card/tieziall')}",
+                data:{num:num,id:id},
+                type:"post",
+                success:function(data) {
+                    self.cardall=data.data;
+                    self.current_page = data.current_page;
+                    self.last_page = data.last_page;
+                    self.per_page = data.per_page;
+                    self.total = data.total;
+                    //分页插件
+                    $('.page').pagination({
+                        totalData: self.total,				//总数据条数
+                        showDate: self.per_page,
+                        pageCount : self.last_page,
+                        current: self.current_page,						//当前页
+                        prevContent:'&lang;',
+                        nextContent:'&rang;',
+                        keepShowPN:true,
+                        mode:'fixed',
+                        count: 8,
+                        coping:true,
+                        homePage:'首页',
+                        endPage:'末页',
+                        isHide:true,
+                        jump:false,
+                        callback:function(apis){
+                            //跳转要做的事件
+                            var param={num:num,page:apis.getCurrent()}
+                            $.get("{:url('Card/zhutiPage',['id'=>$id])}",param,function (data) {
+                                self.cardall=data.data;
+                            })
+                        }
+                    });
+                }
+            })
+        },
+  		tanchuang: function(content){
+  			$('#tanchuang').html(content).fadeIn(1000).fadeOut(1000);
+  		},
+        dateFormat:function(time) {
+            var date=new Date(time);
+            var year=date.getFullYear();
+			/* 在日期格式中，月份是从0开始的，因此要加0
+			 * 使用三元表达式在小于10的前面加0，以达到格式统一  如 09:11:05
+			 * */
+            var month= date.getMonth()+1<10 ? "0"+(date.getMonth()+1) : date.getMonth()+1;
+            var day=date.getDate()<10 ? "0"+date.getDate() : date.getDate();
+            var hours=date.getHours()<10 ? "0"+date.getHours() : date.getHours();
+            var minutes=date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes();
+            var seconds=date.getSeconds()<10 ? "0"+date.getSeconds() : date.getSeconds();
+            // 拼接
+            return year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+        }
+  	}
+  });
+	
+</script>
+<script>
+	//头部导航选择
+	$('.nav ul li').removeClass('active');
+	$('.nav ul li.cyq').addClass('active');
+	// $('.nav ul li').click(function(){
+	// 	$(this).siblings().removeClass('active');
+	// 	$(this).addClass('active');
+	// });
+	
+
+	
+	//顶部轮播
+	var bannerSwiper = new Swiper ('.swiper-banner', {
+    loop: true, // 循环模式选项
+		autoplay: {
+			disableOnInteraction: false,
+			delay: 3000,
+		},
+		pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+</script>
+
+

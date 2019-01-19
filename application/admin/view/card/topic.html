@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {include file="meta" /}
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span> 创业圈
+    <span class="c-gray en">&gt;</span> {$title}
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a class="btn btn-primary radius" href="{:url('card/topic_set')}"><i class="Hui-iconfont">&#xe600;</i> 添加主题</a></span>
+        <span class="r">共有数据：<strong>{$count}</strong> 条</span>
+    </div>
+    <table class="table table-border table-bordered table-bg table-hover table-sort">
+        <thead>
+        <tr class="text-c">
+            <th width="80">ID</th>
+            <th width="100">主题名称</th>
+            <th width="80">管理操作</th>
+        </tr>
+        </thead>
+        {foreach $topic as $key=>$item }
+        <tbody>
+        <tr>
+            <td class="center">{$item.id}</td>
+            <td class="center">{$item.name}</td>
+            <td class="center">
+                <a class="href-a" href="{:url('card/topic_set','id='.$item.id)}" title="编辑">编辑</a>&nbsp;|
+                <a class="href-a" href="javascript:if(confirm('确实要删除该内容吗?')){location='{:url('card/delTopic')}?id={$item.id}'}" title="删除">删除</a>
+            </td>
+        </tr>
+        </tbody>
+        {/foreach}
+    </table>
+</div>
+{include file="script" /}
+</body>
+</html>

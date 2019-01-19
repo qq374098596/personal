@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {include file="meta"}
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i> 首页
+    <span class="c-gray en">&gt;</span> 创业圈
+    <span class="c-gray en">&gt;</span> {$title}
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<article class="page-container">
+    <form class="form form-horizontal" id="form-admin-set" method="post" action="{:url('card/card_post?id='.$id)}">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>帖子名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{if $card} {$card.title} {/if}" placeholder="" id="title" name="title">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发布者：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="hidden" value="{if $card}{$card.uid}{/if}" name="uid">
+                <input type="text" class="input-text" value="{if $card} {$card.nickname} {/if}" placeholder="" id="name" name="name">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>帖子主题：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <select name="option" class="input-text">
+                {foreach $topic as $key=>$item}
+                    <option {if $card} value="{$item.id}" selected {else/} value="{$item.id}" {/if}>{$item.name}</option>
+                {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>内容：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <div id="we">
+                    {$card.content}
+                </div>
+                <textarea id="content" name="content" style="width:100%; height:200px;display: none;"></textarea>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <input class="btn btn-primary radius" value="&nbsp;&nbsp;保存&nbsp;&nbsp;" type="submit">
+                <button onClick="window.history.go(-1);" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </form>
+</article>
+{include file="script" /}
+<script type="text/javascript" src="__STATIC__/Admin/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__STATIC__/Admin/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__STATIC__/Admin/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<!-- <script type="text/javascript" src="__STATIC__/Admin/lib/wangueditor/3.1.1/wangEditor.min.js"></script> -->
+<script type="text/javascript" src="__STATIC__/Admin/lib/wangueditor/3.1.1/wangEditor.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+    });
+
+    var E = window.wangEditor;
+    var editor = new E('#we');
+    var content = $('#content');
+    editor.customConfig.uploadImgServer = "{:url('card/uploads')}";
+    editor.customConfig.uploadVideoServer = "{:url('card/uploads')}";
+    editor.customConfig.uploadFileName = 'file';
+    editor.customConfig.onchange = function (html) {
+        // 监控变化，同步更新到 textarea
+        content.val(html)
+    }
+    editor.create();
+    content.val(editor.txt.html())
+</script>
+</body>
+</html>
